@@ -1,0 +1,13 @@
+package pa.microservicios.Triatleta;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class TriatletaApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}

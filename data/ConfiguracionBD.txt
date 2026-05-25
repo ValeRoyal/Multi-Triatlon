@@ -1,0 +1,49 @@
+========================================================
+ DESCRIPCIÓN DE LA BASE DE DATOS — PROYECTO TRIATLON
+========================================================
+
+Nombre de la base de datos : triatlon
+Motor de base de datos     : MySQL
+Puerto                     : 3306 (se recomienda verificar en el XAMPP)
+Host                       : localhost
+
+----------------------------------------------------------------
+HERRAMIENTAS Y VERSIONES NECESARIAS
+-------------------------------------
+- XAMPP                  v3.3.0 o superior  (gestor del entorno local)
+- Java JDK               21
+- Conector JDBC          Dependencia de spring MySQL JDBC Driver 
+- NetBeans IDE           25
+
+--------------------------------------------------------
+ CREDENCIALES DE ACCESO
+--------------------------------------------------------
+Usuario    : root
+Contraseña : (vacía / sin contraseña)
+
+--------------------------------------------------------
+ TABLA: se genera automaticamente
+--------------------------------------------------------
+
+Descripción: Almacena la información de cada triatleta registrado en el sistema.
+
+--------------------------------------------------------
+ SCRIPT DE CREACIÓN
+--------------------------------------------------------
+Ver archivo: data/triatlon.sql
+
+El script incluye:
+  1. Creación de la base de datos
+
+--------------------------------------------------------
+ CONFIGURACIÓN EN ARCHIVO PROPERTIES
+--------------------------------------------------------
+El archivo application.properties contiene las claves:
+
+spring.datasource.url=jdbc:mysql://localhost:3306/triatlon
+spring.datasource.username=root
+spring.datasource.password=
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.jpa.hibernate.ddl-auto=update
+logging.pattern.console=%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n 
+logging.level.org.hibernate.SQL=debug
