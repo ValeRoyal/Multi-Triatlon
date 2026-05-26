@@ -1,0 +1,551 @@
+PAGINAS: 12
+
+
+===== PAGINA 1 =====
+
+Universidad Distrital Francisco José de Caldas 
+Ingeniería de Sistemas 
+Programación Avanzada – Segundo Parcial 
+ 
+Competencia Olímpica – El Triatlón 
+ 
+El triatlón es un deporte que implica la realización de 3 disciplinas deportivas, natación, ciclismo y 
+carrera a pie, que se realizan en orden y sin interrupción entre una prueba y la siguiente.  El orden a 
+realizar las pruebas es: 
+ 
+   
+ 
+El tiempo que el triatleta tarda en cambiar de una disciplina a la siguiente se denomina transición; la 
+transición de natación a ciclismo se conoce como T1 y la de ciclismo a carrera a pie como T2. 
+ 
+ 
+ 
+Las carreras de triatlón se clasifican en varias modalidades según:  
+ 
+ 
+ 
+a) su distancia habiendo corta y larga distancia,  
+b) si el circuito de ciclismo es en carretera o cross (por caminos y montaña) y  
+c) si permiten el drafting: Cuando un ciclista avanza pedaleando por la carretera, la resistencia del 
+aire ejerce presión sobre él, frenándolo. Al abrirse paso a través del aire, deja tras de sí una 
+estela de aire turbulento, similar a la que deja un barco en el agua. Generalmente, la turbulencia 
+
+
+===== PAGINA 2 =====
+
+Universidad Distrital Francisco José de Caldas 
+Ingeniería de Sistemas 
+Programación Avanzada – Segundo Parcial 
+ 
+es mayor justo detrás del ciclista, y cuanto más lejos se encuentre la estela, menor será su 
+turbulencia. Esta turbulencia en la corriente de aire ofrece menor resistencia que el aire en 
+reposo a los ciclistas que entran en ella desde atrás , lo que significa que el ciclista que viene 
+detrás necesita menos potencia para atravesarla a una velocidad determinada. Este es el 
+concepto de drafting o cola de ciclista. Los pelotones de ciclismo profesional ruedan en grupo y 
+comparten el esfuerzo de i r en cabeza, lo que les permite alcanzar velocidades medias mucho 
+mayores que las de un ciclista solitario.  Si bien en algunas modalidades del triatlón se permite 
+el drafting, como en las pruebas de élite de la Serie Mundial de Triatlón y en los Juegos 
+Olímpicos, en la mayoría de los triatlones no está permitido. Este deporte se concibe como un 
+esfuerzo individual, sin colaboración para obtener una ventaja injusta sobre los demás. (Fuente: 
+https://www.raceranger.com/)  
+ 
+Dentro de cada modalidad las competiciones más conocidas son: 
+ 
+1) Series mundiales de triatlón (conocidas como WTS por sus siglas en inglés): Campeonato 
+mundial de varias carreras de corta distancia donde el ciclismo es en carretera y con drafting. El 
+ganador del campeonato es el triatleta que obtenga más puntos tomando los 5 mejores 
+resultados obtenidos en las pruebas de la temporada. 
+2) Ironman: Campeonato de distancia ironman donde no se permite el drafting. El ganador del 
+campeonato es el vencedor del Ironman de Kona. Las plazas para correr este triatlón se otorgan 
+a los primeros clasificados en alguna de las otras pruebas del circuito Ironman. 
+3) Xterra: Campeonato de corta distancia en modalidad triatlón cross. El ganador del campeonato 
+es el vencedor del Triatlón de Maui. Las plazas para correr este triatlón se otorgan a los primeros 
+clasificados en alguna de las otras pruebas del circuito Xterra. 
+ 
+El triatlón se convirtió en deporte olímpico en los Juegos Olímpicos de Sídney 2000 en la modalidad de 
+corta distancia con drafting. 
+ 
+Dentro de la federación de triatlón se agrupan otros deportes que también se basan en la unión de 
+varias disciplinas deportivas como: 
+ 
+• el duatlón (carrera a pie-ciclismo-carrera a pie),  
+• acuatlón (carrera a pie-natación-carrera a pie),   
+• triatlón de invierno (carrera a pie-ciclismo-esquí de fondo). 
+ 
+Dependiendo de la distancia del triatlón (nivel de exigencia), las categorías se dividen en: 
+ 
+• Distancia SuperSprint: 350m de natación + 10km de ciclismo + 2,5km de carrera a pie 
+• Distancia Sprint: 750m de natación + 20km de ciclismo + 5km de carrera a pie 
+• Distancia Estándar u Olímpica: 1,5km de natación + 40km de ciclismo + 10km de carrera a pie 
+• Media Distancia: 1,9-3km de natación + 80-90km de ciclismo + 20km de carrera a pie 
+• Larga Distancia: 1-4km de natación+ 100-200km de ciclismo+ 42km de carrera a pie (a este tipo 
+pertenece el Ironman) 
+
+===== PAGINA 3 =====
+
+Universidad Distrital Francisco José de Caldas 
+Ingeniería de Sistemas 
+Programación Avanzada – Segundo Parcial 
+ 
+• Ultraman: 10km de natación + 415km de ciclismo+ 85km de carrera a pie (estos triatlones son 
+los únicos en los que no se hacen todas las disciplinas seguid as. Se dividen en 3 días: el primer 
+día se hace la natación y 145km de ciclismo, el segundo día se hacen los 270km de ciclismo 
+restantes y el tercer día se corren 85km) 
+ 
+Variantes:  
+Existe el triatlón cross (natación, BTT y trail running) , también conocido como triatlón de montaña o 
+triatlón todoterreno, es una modalidad muy popular que combina natación en aguas abiertas, ciclismo 
+de montaña (BTT) y trail running. 
+ 
+Se sustituye la bicicleta de carretera por la BTT y la carrera a pie por caminos de montaña, manteniendo 
+el orden natación -ciclismo-carrera sin descanso.  Las carreras de la marca Xterra son el referente 
+mundial en esta disciplina. El formato estándar suele ser: Natación: 1 km (aproximadamente, en aguas 
+abiertas), BTT: Suele ser la parte más exigente, con desnivel técnico, y Trail running: 6 km (en formato 
+cross estándar). 
+ 
+La complejidad del triatlón radica en la necesidad de poder adquirir un dominio técnico y físico correcto 
+en tres disciplinas diferentes, así como en sus grande s exigencias fisiológicas. Ellas son la base para 
+poder llevar a cabo un posterior trabajo a nivel táctico que interrelacione las tres . (Fuente: 
+https://es.wikipedia.org/wiki/Triatl%C3%B3n) 
+ 
+Categorías de triatlón en cuanto a edad y genero 
+Se establece una categoría absoluta masculina y otra femenina: 
+ 
+Edad Categoría 
+24-39 Absoluta 
+ 
+Además de la categoría absoluta a la que pertenecen todos los deportistas, estos podrán pertenecer a 
+las siguientes categorías según sus edades e independientemente de su sexo: 
+ 
+Edad Categoría 
+14-15 Cadetes 
+16-17 Juvenil 
+18-19 Júnior 
+20-23 Sub-23 
+40-49 Veterano 1 
+50-59 Veterano 2 
+60 o más años Veterano 3 
+ 
+
+===== PAGINA 4 =====
+
+Universidad Distrital Francisco José de Caldas 
+Ingeniería de Sistemas 
+Programación Avanzada – Segundo Parcial 
+ 
+La categoría de edad estará determinada por la edad del participante el 31 de diciembre del año en que 
+se celebre la competición.  Como alternativa a las categorías relacionadas puede establecerse una 
+competición por grupos de edad. En este caso los grupos de edad se agruparán de la siguiente manera: 
+1. xx-19 años 2. 20-24 años 3. 25-29 años 4. 30-34 años, etc. 
+ 
+Se podrán organizar campeonatos y competiciones oficiales para las siguientes categorías y sobre las 
+siguientes distancias: 
+ 
+• Cadete - Distancia Sprint 
+• Júnior - Distancias Sprint y Estándar 
+ 
+En una competición, todos los deportistas optan a la clasificación absoluta además de a la propia de 
+su edad, si exístela hubiera. Ningún deportista podrá competir en una categoría diferente a la de su 
+edad. Las Categorías en Edad Escolar: 
+ 
+Edad Categoría 
+7 Pre-benjamín 
+8-9 Benjamín 
+10-11 Alevín 
+12-13 Infantil 
+14-15 Cadetes 
+ 
+Después de revisar el contexto de las competencias de Triatlón, se requiere diseñar e implementar un 
+sistema basado en microservicios, desarrollados en Spring Boot y Java Script. Dicho sistema consta de 
+tres proyectos de microservicios totalmente independientes, como se define en los sustentos teóricos 
+de los microservicios. A continuación se detallan las respectivas particularidades: 
+ 
+Manejo de las llamadas REST 
+Considerando que son tres proyectos independientes, al trabajar con API REST en Spring Boot, se debe 
+elegir el cliente HTTP adecuado puede tener un impacto significativo en el rendimiento, la usabilidad y 
+el mantenimiento. Con el tiempo, Spring ha ofrecido diferentes opciones para realizar llamadas REST, 
+como RestTemplate, WebClient y RestClient. Para el desarrollo de este sistema y la correspondiente 
+comunicación a través de llamadas REST, se define para la entrega de este examen final, el uso exclusivo 
+de WebClient o RestClient. Cada grupo deberá elegir una de estas dos estrategias para comunicar los 
+diferentes proyectos. 
+ 
+En cuanto al primer proyecto de microservicios, este se enfoca en el competidor o triatleta . 
+considerando que un triatleta se registra, cambia o actualiza sus datos de forma total o parcial, o en 
+último caso, se da de ba ja como deportista de estas justas ; el aplicativo debe proveer los respectivos 
+microservicios que permitan realizar los siguientes procesos: 
+ 
+
+===== PAGINA 5 =====
+
+Universidad Distrital Francisco José de Caldas 
+Ingeniería de Sistemas 
+Programación Avanzada – Segundo Parcial 
+ 
+a) Creación del perfil del triatleta: El deportista crea un perfil que incluye su nombre, identificación, 
+edad, género, categoría según edad. 
+b) Configuración de preferencias del triatleta: Se establecen las preferencias de participación tales 
+como:  especialidad de triatlón según distancia, y si participa en modalidad cross o no. 
+c) Tenga en cuenta que su diseño debe ser escalable, lo que implica que a futuro, de la jerarquía 
+de herencia de Persona – Atleta, también se podría desprender Persona – Juez, por ende, su 
+diseño y anotaciones deberá manejar la herencia respectiva. 
+d) El registro de un atleta debe manejar la foto del mismo. 
+e) Al registrarse un triatleta se le debe enviar un correo de registro. Para tal fin puede usar 
+JavaMailServer de Spring (https://docs.spring.io/spring-boot/reference/io/email.html). 
+f) La visualización del FrontEnd deberá  actualizarse ante cualquier evento realizado por los 
+microservicios. 
+ 
+Para seleccionar las preferencias, el FrontEnd debe  presentar dichas preferencias en un carrete de 
+imágenes, permitiendo d eslizamiento (Swiping) , dando clic y almacenando la especialidad.  
+Seguidamente, el aplicativo también deberá proveer los siguientes microservicios sobre el triatleta: 
+ 
+1) Modificar una característica particular del triatleta (nombre, identificación, o categoría por edad 
+o genero ). Para cada una de estas características deben proveerse los respectivos 
+microservicios. 
+2) Consultar el triatleta por identificación 
+3) Consultar grupos de triatletas por  género, categoría  (por edad o genero ), especialidad, 
+modalidad cross. Deben proveerse los cuatro microservicios independientes. 
+4) Eliminar un triatleta 
+5) Registrar al competidor en una carrera de triatlón especifica (tenga en cuenta que este registro 
+afecta a dos proyectos diferentes). 
+6) Consultar en que carrera de triatlón esta registrado el competidor (esta consulta deberá proveer 
+todos los datos del competidor junto con los datos de la carrera , estos últimos datos vendrán 
+de otro proyecto). 
+ 
+En la visualización desplegada en el FrontEnd para los microservicios del  triatleta, debe aparecer la 
+información del triatleta, junto con todas sus características . Permitiendo adicionalmente, usar los 
+diferentes microservicios relacionados al triatleta (insertar, modificar, eliminar, etc., y demás servicios 
+CRUD y consultas especificadas que se realicen bajo Spring Boot).  
+ 
+En cuanto al segundo proyecto de microservicios, este se enfoca en  la carrera de triatlón. Tanto si 
+busca su primer triatlón de distancia sprint como si quiere  participar en el más grande del mundo, 
+existen los eventos de triatlón más emblemáticos, pintorescos y desafiantes del planeta. Desde 
+ascensos a gran altitud hasta natación nocturna y ambientes festivos . Ningún otro deporte ofrece la 
+amplitud de belleza y experiencias que te brinda el triatlón. Desde puertos de montaña brutalmente 
+escarpados hasta idílicos mares turquesa, y desde lagos glaciares gélidos hasta paisajes tropicales de 
+postal, los triatlones te ofrecen la oportunidad de competir en los lugares más increíbles del planeta. 
+ 
+
+===== PAGINA 6 =====
+
+Universidad Distrital Francisco José de Caldas 
+Ingeniería de Sistemas 
+Programación Avanzada – Segundo Parcial 
+ 
+Cómo elegir el triatlón ideal para ti?. No todos los triatlones son iguales, así que ¿cómo elegir la carrera 
+perfecta?: 
+ 
+a) Nivel de habilidad: ¿ Usted es nuevo en el triatlón? Empieza con una distanc ia Sprint o Super 
+Sprint. ¿Tiene confianza en su resistencia? Considera los formatos Olímpico, Medio Ironman o 
+Ironman. 
+b) Entorno: ¿Le encanta las montañas? Opte por carreras con mucho desnivel como Alpe d’Huez o 
+Norseman. ¿Prefiere el sol y el mar? Noosa o Phuket ofrecen paisajes tropicales. 
+c) Época del año: Planifique su carrera según su periodo de entrenamiento y las estaciones locales. 
+¿Quieres competir en primavera? Alcudia-Mallorca o Wildflower podrían ser perfectas. 
+d) Objetivos de viaje: Conviértalo en un viaje. Piense en la región vinícola de Canadá, una escapada 
+a la costa australiana o un desafío urbano en Londres o San Francisco. 
+e) Estilo: Algunas carreras son pura resistencia ( Savageman). Otras se centran en la diversión y el 
+ambiente festivo (Noosa, Wildflower). 
+ 
+Una vez que haya  reducido sus opciones, consult e los tiempos límite, los perfiles de altitud y las 
+condiciones meteorológicas; y siempre inscríbase con anticipación en carreras populares como Roth o 
+Norseman. ¡Las plazas se agotan rápidamente! 
+ 
+Algunas de las carreras de triatlón mas importantes a nivel mundial son  (Fuente: 
+https://www.redbull.com/au-en/best-triathlons-in-the-world): 
+ 
+IRONMAN 70.3 Hawái: Uno de los mejores triatlones para disfrutar del calor, las colinas y los paisajes 
+ 
+• Ubicación: Costa de Kohala, Hawái 
+• Fecha: 31 de mayo de 2025 
+• Distancia: Medio Ironman – 1,9 km de natación, 90 km de ciclismo, 21,1 km de carrera 
+• Nivel de dificultad: ★★★★☆ (4/5) 
+• ¿Para quién es?: Un desafío al nivel de Kona sin la distancia de un Ironman, con calor, colinas y 
+vistas inolvidables del océano. O bien, puedes completar la distancia completa. 
+ 
+Desafío DATEV Roth: El triatlón de distancia Ironman más rápido de Alemania 
+ 
+• Lugar: Roth, Alemania 
+• Fecha: 6 de julio de 2025 
+• Distancia: Ironman – 3,8 km de natación, 180 km de ciclismo, 42,2 km de carrera a pie 
+• Nivel de dificultad: ★★★☆☆ (3/5) 
+• Para quién es: Ideal para triatletas experimentados que buscan batir su marca personal o 
+participar en uno de los eventos de triatlón más importantes del mundo. Perfecto si buscas 
+velocidad, la energía del público y la experiencia de un triatlón con récord mundial. 
+ 
+Zalaris Norseman Xtreme: Uno de los triatlones más duros y famosos del mundo 
+ 
+
+===== PAGINA 7 =====
+
+Universidad Distrital Francisco José de Caldas 
+Ingeniería de Sistemas 
+Programación Avanzada – Segundo Parcial 
+ 
+• Ubicación: Eidfjord, Noruega 
+• Fecha: 2 de agosto de 2025 
+• Distancia: Ironman – 3,8 km de natación, 180 km de ciclismo, 42,2 km de carrera a pie 
+• Nivel de dificultad: ★★★★★ (5/5) 
+• Para quién es: Diseñado para atletas de élite de resistencia con piernas de montaña y  gran 
+fortaleza mental. Esta no es una carrera para principiantes; es para aquellos que buscan el 
+triatlón más duro del mundo y una llegada inolvidable en un paisaje espectacular. 
+ 
+Triatlón de Noosa: Uno de los mejores eventos de triatlón en Australia para principiantes 
+ 
+• Ubicación: Noosa, Queensland, Australia 
+• Fecha: Del 29 de octubre al 2 de noviembre de 2025 
+• Distancia: Olímpica – 1,5 km de natación, 40 km de ciclismo, 10 km de carrera 
+• Nivel de dificultad: ★★☆☆☆ (2/5) 
+• Para quién es: Una excelente opción para  unas vacaciones de triatlón, tanto para principiantes 
+como para quienes buscan una experiencia más relajada. Ideal si buscas un triatlón de distancia 
+olímpica en Australia, con un ambiente festivo y el encanto de la costa. 
+ 
+Bajo este contexto, se debe gestionar los servicios (crearlas, consultarlas, modificarlas, eliminarlas) para 
+las carreras de triatlón: 
+ 
+1) Crear una carrea de triatlón: cada carrera tiene como características un nombre, una ubicación, 
+una fecha de ejecución,  nivel de dificultad, categoría, y para quien está diseñada. Tenga en 
+cuenta que la información de categoría se maneja en el tercer proyecto de microservicios. 
+2) Modificar una característica particular de la carrera (ubicación o fecha de ejecución). Para cada 
+una de estas características deben proveerse los respectivos microservicios. 
+3) Consultar una carrera por identificación 
+4) Consultar todos los triatletas (todos su datos) inscritos en la carrera. 
+5) Consultar la categoría en la que se circunscribe o registra la carrera. 
+6) Eliminar una carrera 
+7) Eliminar a un atleta de una carrera de triatlón específica (tenga en cuenta que esta eliminación 
+afecta a dos proyectos diferentes). 
+ 
+En cuanto al tercer proyecto de microservicios, este se basa en las categorías en las que se clasifican 
+las carreras de triatlón. En triatlón, las categorías se ag rupan principalmente por distancia (según el 
+nivel de exigencia), edad/sexo y por la naturaleza del terreno. Todas comparten el mismo orden: 
+natación, ciclismo y carrera a pie, unidos por transiciones cronometradas (T1 y T2).A continuación, se 
+detallan las características principales de las categorías más destacadas: 
+ 
+1. Categorías por Distancia 
+• Súper Sprint: 400 m natación, 10 km ciclismo, 2.5 km carrera.  Característica: Ideal para 
+principiantes, jóvenes y eventos rápidos de velocidad. 
+
+===== PAGINA 8 =====
+
+Universidad Distrital Francisco José de Caldas 
+Ingeniería de Sistemas 
+Programación Avanzada – Segundo Parcial 
+ 
+• Sprint: 750 m natación, 20  km ciclismo, 5 km carrera.  Característica: Muy popular, rápida y 
+accesible para casi cualquier nivel físico. 
+• Olímpica / Estándar: 1.5 km natación, 40 km ciclismo, 10 km carrera.  Característica: Es la 
+distancia oficial en los Juegos Olímpicos. Exige un equilibrio técnico alto en las tres disciplinas. 
+• Media Distancia (ej. Ironman 70.3): 1.9 km natación, 90 km ciclismo, 21.1 km carrera.  
+Característica: Requiere alta resistencia aeróbica y control de la nutrición en carrera. 
+• Larga istancia (ej. Ironman): 3.8 km nat ación, 180 km ciclismo, 42.2 km carrera.  Característica: 
+La prueba definitiva de resistencia. Exige una gran planificación nutricional y mental. 
+ 
+2. Categorías por Edad y Género (Grupos de Edad) : Las competencias oficiales de la World Triathlon 
+dividen a los atletas en categorías para asegurar una competencia justa: 
+• Grupos de Edad (Age Groupers): Agrupados en rangos de 5 en 5 años (por ejemplo, 18 -24, 25-
+29, 30-34, etc.) tanto en la rama femenil como varonil. 
+• Junior y Cadetes: Categorías juveniles (menores de 18 o  20 años) con distancias adaptadas 
+progresivamente. 
+ 
+3. Categorías por Modalidad y Terreno 
+• Triatlón Cross: Combina natación en aguas abiertas, ciclismo de montaña (MTB) y trail running 
+(campo a través). 
+• Triatlón de Invierno: Combina carrera, ciclismo (o mountain bike) y esquí de fondo. 
+• Paratriatlón: Adaptado para atletas con discapacidades físicas o visuales. Se divide en subclases 
+funcionales según la limitación (uso de handbikes, guías, etc.). 
+ 
+Bajo este contexto, se debe gestionar los servicios (crearlas, consultarlas, modificarlas, eliminarlas) para 
+las categorías de triatlón: 
+ 
+1) Crear una categoría de triatlón: cada categoría tiene como características un nombre  de 
+categoría, un tipo, una descripción y su recomendación. Por ejemplo: Categoría por distancia, 
+Super Sprint, 400 m natación + 10 km ciclismo + 2.5 km carrera, Ideal para principiantes. 
+2) Modificar una característica particular de la categoría (descripción o recomendación). Para cada 
+una de estas características deben proveerse los respectivos microservicios. 
+3) Consultar una categoría por identificación 
+4) Consultar todas las categorías almacenadas. 
+5) Consultar todas las carreras (todos su datos) que registran la misma categoría. 
+6) Eliminar una categoría 
+7) Eliminar una carrera de una  categoría de triatlón específica ( tenga en c uenta que esta 
+eliminación afecta a dos proyectos diferentes). 
+ 
+En general, para los tres proyectos de microservicios, se realizan las siguientes aclaraciones: 
+ 
+Se debe utilizar las anotaciones y/o parametrizaciones respectivas de:  
+ 
+• Lombok y thymeleaf 
+
+===== PAGINA 9 =====
+
+Universidad Distrital Francisco José de Caldas 
+Ingeniería de Sistemas 
+Programación Avanzada – Segundo Parcial 
+ 
+• Validation: dependencia que permite validar ciertos parámetros  del usuario o de procesos . 
+Fuente: https://dev.to/gianfcop98/spring-boot-and-validation-a-complete-guide-with-valid-
+and-validated-471p  
+• Debe manejar las políticas CORS, dado que el proyecto FrontEnd estará en un proyecto HTML, 
+mientras que el BackEnd se encontrará en un proyecto Spring Boot. 
+• Para la construcción del FrontEnd, puede usar plantillas de html descargadas de repositorios, y 
+ajustadas debidamente. Por otro lado, use hojas de estilos, JSP, y Java Script para realizar la 
+decoración y procesamiento en el FrontEnd. 
+ 
+En cuanto al BackEnd y FrontEnd, se deben proveer: 
+ 
+• Los controles (con sus respectivos endpoints y mapeos), modelos y repositorios respectivos. 
+• La comunicación desde el FrontEnd hacia cada uno de l os BackEnd de cada proyecto y viceversa, 
+deberá hacerse usando JavaScript, específicamente usando peticiones asíncronas tipo Fetch a cada 
+uno de los  endpoint expuestos en el backend. Los mapeos de los endpoint deben realizarse 
+haciendo uso de la anotación @RequestMapping como mapeo base de la clase y como método de 
+mapeo de cada método. 
+• Para el manejo del controlador  de cada proyecto independiente, puede usar @RestController o 
+@Controler. Sin embargo, tenga en cuenta que la información de request y response de los 
+microservicios debe ser desplegada en el FrontEnd. 
+• Las páginas a usar no de ben estar almacenadas en main/resources/templates. Por el contrario, 
+deben manejarse en un proyecto Html externo. Tanto el backend de cada proyecto, como el 
+FrontEnd deben ser desarrollados en Netbeans. 
+• En cada uno de los backend se debe conservar la respectiva separación de responsabilidades entre: 
+controlador, repositorio, servicios y modelo.  
+• Se deben conservar y manejar las políticas CORS para la c omunicación entre el front (proyecto 
+html) y cada uno de los back (proyectos Spring Boot) 
+• Para la persistencia o almacenamiento de los datos en cada proyecto, se debe hacer uso de MySql 
+como base de datos  (con el fin de no estar recargándola constantemente), persistencia que deberá 
+ser mapeada usando JPA. 
+• El envío de correo se debe desarrollar como investigación para el parcial. 
+• Debe tener la separación SOLID respectiva (Controladores, Servicios, Repositorios y modelos) 
+• No se recibirán páginas planeas, llenas de texto, con enlaces href. Para tal fin puede usar los iconos 
+de las fuentes de Google ( https://fonts.google.com/icons), y a estos iconos asignarles las 
+respectivas acciones. 
+• El diseño de las páginas debe ser vi sualmente agradable, decorado, estéticamente presentable, y 
+tener una excelente presentación gráfica y visual. Además, debe ofrecer toda la interactividad 
+posible a través de menús, botones, tablas creadas dinámicamente, etc. Puede usar plantillas o 
+templates publicados en la Web, dando el respectivo crédito. 
+• El diseño usado en el FrontEnd deberá aportar una imagen institucional y contenido acerca del 
+deporte, los participantes, las los tipos de categorías, etc. P uede usar hojas de estilo, plantillas 
+descargables en la web o frameworks como Bootstrap.  
+
+===== PAGINA 10 =====
+
+Universidad Distrital Francisco José de Caldas 
+Ingeniería de Sistemas 
+Programación Avanzada – Segundo Parcial 
+ 
+• Los elementos del FrontEnd deben ser decorados haciendo uso de CSS y efectos JavaScript.  No se 
+avalan diseños simplistas ni minimalistas. Debe presentarse la información del deporte y de los 
+atletas en todo su esplendor. 
+• Toda la información debe ser diligenciada manualmente al momento de la ejecución del proyecto. 
+• El proyecto debe contar con un esquema de navegación que permita acceder a todas las páginas, 
+y de igual forma, regresar siempre a la página principal. 
+• Cualquier plugin, librearía, etc., necesaria para el funcionamiento del proyecto, debe ser cargada 
+en el mismo. Si al momento de cargar el proyecto, este no funciona por falta de alguna librería, por 
+ejemplo, N O se realizará ninguna configuración para intentar ver si el proyecto funciona. Será 
+catalogado como entrega que no funciona, y por ende, tendrá una nota de 0.0 
+• En la sustentación se evaluará adicionalmente el uso e interacción de la base de datos seleccionada, 
+por ejemplo, cambiando a través de SQL algún parámetro de una publicación o usuario, y su 
+correspondiente visualización actualizada a través de los endpoints. 
+ 
+Referencias de Soporte 
+• Templates HTML: https://formbold.com/templates 
+• Templates HTML: https://codepen.io/  
+• Guía de Procesos Spring: https://spring.io/guides 
+• Conexión entre FrontEnd y Backend con Spring Boot y una API REST para realizar un CRUD: 
+https://www.youtube.com/watch?v=00_36HIaicA&ab_channel=AraOverFlow  
+• Ejemplo de consumo Spring: https://sacavix.com/2020/03/consumo-de-api-rest-con-spring-boot/  
+• Manejo de fetch: https://www.freecodecamp.org/espanol/news/fetch-api-como-realizar-un-get-
+request-y-un-post-request-en-javascript/ 
+• Conexión entre Frontend y Backend con Spring Boot y una API REST: 
+https://www.youtube.com/watch?v=00_36HIaicA&ab_channel=AraOverFlow 
+• Problemas con CORS: https://www.youtube.com/watch?v=jJTfuiyEqb8&ab_channel=YoAndroide 
+• Cómo realizar un GET Request y un POST Request en JavaScript: 
+https://www.freecodecamp.org/espanol/news/fetch-api-como-realizar-un-get-request-y-un-post-
+request-en-javascript/ 
+• Spring desde 0: https://jose-antonio-henriquez-chavarria.gitbook.io/spring-desde-0 
+• Desarrollo web con Spring - Consumo de api de Spring con Javascript: 
+https://www.youtube.com/watch?v=goejciblEGs&ab_channel=JandroCode 
+ 
+Aspectos a tener en cuenta 
+ 
+a) El aplicativo debe estar organizado en paquetes  como se explicó en la arquitectura MVC. Si no 
+cumple con este requerimiento, a la nota definitiva del corte se le descontará una unidad completa. 
+b) El aplicativo debe cumplir con los principios de diseño de clases (específicamente los SOLID). Si no 
+cumple con este requerimiento, a la nota definitiva del corte se le descontará una unidad completa. 
+c) El aplicativo debe contar con buenas prácticas de documentac ión. Aplique las anotaciones 
+respectivas ofrecidas por JavaDoc. TODOS los elementos del aplicativo deben estar documentados. 
+Si no cumple con este requerimiento, a la nota definitiva del corte se le descontará una unidad 
+completa. 
+
+===== PAGINA 11 =====
+
+Universidad Distrital Francisco José de Caldas 
+Ingeniería de Sistemas 
+Programación Avanzada – Segundo Parcial 
+ 
+d) El aplicativo debe contar  con la aplicación de estándares de codificación . Si no cumple con este 
+requerimiento, a la nota definitiva del corte se le descontará una unidad completa. 
+e) La entrega debe llevar una imagen JPG del diagrama de Clases del proyecto , almacenada en la 
+carpeta “Specs”.  Este diagrama de clases debe estar organizado en paquetes. Lo especificado en 
+el diagrama de clases DEBE corresponder a lo desarrollado en el aplicativo . De lo contrario se le 
+descontara una unidad a la nota definitiva. 
+f) La entrega constará de dos  partes: el producto de software funcionando, la sustentación del 
+mismo. Si el estudiante hace la entrega, pero no identifica sus componentes, no encuentra los 
+requerimientos o sus partes, su entrega se anulará, y su nota será 0.0.  
+g) La entrega la subirá un a sola persona del grupo, y adicionará un txt con los nombres de los 
+integrantes del grupo (en un txt ubicado en la carpeta “Docs” dentro del proyecto). Si no se adiciona 
+este documento en dicha ubicación,  esta entrega será registrada únicamente bajo el n ombre de 
+la persona que subió el proyecto al aula. Las otras personas tendrán nota de 0.0 en el 100% de la 
+nota del corte, y será catalogado como no entregado. Las entregas remitidas por correo 
+electrónico, serán borradas y no se tendrán en cuenta, y su nota de entrega será 0.0. No se aceptará 
+que los nombres de los integrantes vengan en los comentarios del aula, o en un correo, o dentro 
+de alguna clase o imagen. 
+h) Evítese plagio entre compañeros. 
+i) El examen se realizará en los grupos definidos en las reglas d el curso. A pesar de que el parcial es 
+en grupo, la sustentación será individual, y se computarán las notas de sustentación individual para 
+obtener una sola, que se sumará a la entrega: Por esta razón, es necesario que las personas del 
+grupo tengan conocimiento del proyecto y sustenten las respectivas preguntas. 
+j) La sustentación puede ser: completar un segmento de código borrado, argumentar como se 
+desarrolló un requerimiento, explicar un conjunto de líneas de código . También se podrá solicitar 
+como sustentación la escritura de uno o varios métodos, y su correspondiente explicación línea a 
+línea.  
+k) En la web puede encontrar clases, métodos o librerías que le permitan resolver algún 
+requerimiento, pero al implementarlas deben tener claro conocimiento de su uso y aplicación, para 
+poder sustentar la entrega. Al igual, se debe dar crédito respectivo al autor de dicho código. 
+l) Si requiere de alguna librería adicional, o de algún plugin, recuerde traerlo e instalarlo para la 
+sustentación, además de adjuntarlo a la entrega por el aula. 
+m) Entrega que no esté registrada en el aula, no será recibida. En la sustentación es lo primero que se 
+revisará. Si no tiene usuario activo en UDIN, por favor realizar la gestión pertinente para activarlo. 
+Cualquier correo con la entrega del proyecto, recibido anterior o posterior a la entrega, será 
+eliminado y su nota será de 0.0. La entrega debe contener el proy ecto comprimido con todas las 
+clases necesarias. No se recibirá como envío un enlace a un drive. Si sube al aula cualquier otra 
+cosa que no sea el proyecto completo y comprimido, su nota será de 0.0. 
+n) Los turnos de sustentación serán sorteados la clase previa a la evaluación. 
+o) Toda la comunicación del BackEnd debe ser expuesta por el FrontEnd, bien sea a través de páginas 
+html o de envíos JSON. No se admiten envíos de mensajes con ventanas emergentes o con salidas 
+en consola. De lo contrario se le descontara una unidad a la nota definitiva. 
+p) El FrontEnd debe estar construido y usado en un proyecto Html externo al proyecto Spring. De lo 
+contrario se le descontara una unidad a la nota definitiva. 
+
+===== PAGINA 12 =====
+
+Universidad Distrital Francisco José de Caldas 
+Ingeniería de Sistemas 
+Programación Avanzada – Segundo Parcial 
+ 
+q) Tengan en cuenta la hora y fecha de la entrega en el aul a. Suba su entrega por lo menos unos 30 
+minutos antes de la fecha y hora fijadas. Si no subió su entrega al aula en la hora y fecha indicada, 
+así argumente que trato de subirla un minuto antes pero que la velocidad de internet lo dejo por 
+fuera, etc., su entrega total (Sustentación y Entrega), será evaluada como “No entregada” con nota 
+total de 0.0. 
+r) El FrontEnd debe tener un adecuado uso de elementos Html, Hojas de Estilo, etc. 
+s) Por último, y dado el uso que se le puede dar a la Inteligencia Artificial (IA),  además de tener en 
+cuenta el acuerdo realizado en clase, cualquier indicio del uso de IA  para construir bien sea una 
+línea de código , una clase o todo el proyecto, por más mínimo que este sea, generará la anulación 
+por fraude de toda la entrega del examen (tanto la entrega del producto como la sustentación del 
+mismo). De acuerdo al estatuto estudiantil, un fraude en una prueba debe ser reportado, la prueba 
+anulada en su totalidad, y es causal de matrícula condicional. 
+t) Por otro lado, y acogiéndonos a los acuerdos de clase, si usted hizo uso de la IA para la construcción 
+del proyecto, y no da el respectivo crédito, no tiene idea de la funcionalidad del código, evade las 
+preguntas, no contesta las preguntas, pretende trasladar las preguntas a otro compañero, espera 
+que los otros compañeros le digan que hace o donde está la respuesta, no puede explicar cualquier 
+segmento o módulo del proyecto, entre otros aspectos, su entrega y sustentación será considerada 
+como fraude en prueba, con las respectivas consecuencias. 
+ 
+Profesor: Jhon Herrera Cubides 
