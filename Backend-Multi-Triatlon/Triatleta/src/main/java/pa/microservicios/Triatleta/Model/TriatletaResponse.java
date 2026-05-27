@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 /**
@@ -17,6 +18,7 @@ import lombok.experimental.FieldDefaults;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
+@NoArgsConstructor
 public class TriatletaResponse {
     Long id;
     String nombre;
@@ -27,7 +29,7 @@ public class TriatletaResponse {
     Boolean activo;
     
     String urlFoto;
-    String categoria;
+    String categoriaEdad;
     Boolean modalidadCross;
     String especialidad;
     

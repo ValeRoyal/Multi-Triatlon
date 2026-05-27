@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 /**
@@ -26,6 +27,7 @@ import lombok.experimental.FieldDefaults;
 @Entity //Entidad a mapear ORM => objet relational mapping
 @Table(name = "triatleta") //Nombre de la tabal que lo va a representar en la BD
 @FieldDefaults(level = AccessLevel.PRIVATE) //Todos los atributos de nivel de acceso privado
+@NoArgsConstructor
 public class TriatletaDTO extends Persona {
 
     @NotBlank //No puede ser en blanco
@@ -35,7 +37,7 @@ public class TriatletaDTO extends Persona {
 
     @NotBlank
     @Column(name = "categoria", nullable = false, unique = false, length = 30)
-    String categoria;
+    String categoriaEdad;
 
     @NotNull
     @Column(name = "modalidad_cross", nullable = false)
@@ -47,10 +49,10 @@ public class TriatletaDTO extends Persona {
     //Especialidad de triatlon
     String especialidad;
 
-    public TriatletaDTO(String urlFoto, String categoria, Boolean modalidadCross, String especialidad, String nombre, LocalDate fechaNacimiento, String identificacion, String correo, String genero, Boolean activo) {
+    public TriatletaDTO(String urlFoto, String categoriaEdad, Boolean modalidadCross, String especialidad, String nombre, LocalDate fechaNacimiento, String identificacion, String correo, String genero, Boolean activo) {
         super(nombre, fechaNacimiento, identificacion, correo, genero, activo);
         this.urlFoto = urlFoto;
-        this.categoria = categoria;
+        this.categoriaEdad = categoriaEdad;
         this.modalidadCross = modalidadCross;
         this.especialidad = especialidad;
     }

@@ -16,6 +16,7 @@ import jakarta.validation.constraints.Past;
 import java.time.LocalDate;
 import lombok.AccessLevel;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 /**
@@ -26,6 +27,7 @@ import lombok.experimental.FieldDefaults;
 @Data //Getters y Setters
 @FieldDefaults(level = AccessLevel.PRIVATE) //Todos los atributos de nivel de acceso privado
 @MappedSuperclass //Permite heredad campos persistentes en entidades hijas
+@NoArgsConstructor
 public class Persona {
 
     @Id //Llave primaria
