@@ -79,12 +79,12 @@ public class TriatletaService {
 
         TriatletaDTO guardado = triatletaRepository.save(triatletaDTO);
 
-        try {
-            String contenido = mensajeRegistro.replace("{nombre}", guardado.getNombre()); //remplazar la variable nombre por el nombre del triatleta creado
-            enviarCorreoConfirmacion(guardado, asuntoRegistro, contenido); //usamos el metodo
-        } catch (Exception e) {
-            throw new RuntimeException("No fue posible enviar correo");
-        }
+//        try {
+//            String contenido = mensajeRegistro.replace("{nombre}", guardado.getNombre()); //remplazar la variable nombre por el nombre del triatleta creado
+//            enviarCorreoConfirmacion(guardado, asuntoRegistro, contenido); //usamos el metodo
+//        } catch (Exception e) {
+//            throw new RuntimeException("No fue posible enviar correo");
+//        }
 
         return mapper.map(guardado, TriatletaResponse.class);
     }
