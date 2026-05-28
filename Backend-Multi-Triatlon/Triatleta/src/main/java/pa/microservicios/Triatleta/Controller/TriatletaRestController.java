@@ -48,11 +48,16 @@ public class TriatletaRestController {
         }
     }
 
-    @RequestMapping(value = "/identificacion/{identificacion}", method = RequestMethod.GET)
-    public ResponseEntity<?> getTriatletaByIdentificacion(@PathVariable("identificacion") String identificacion) {
+    /**
+     * Define y expone el endpoint tipo GET para consultar un triatleta por su identificacion
+     * @param identificacion
+     * @return
+     */
+    @RequestMapping(value = "/identificacion/{identificacion}", method = RequestMethod.GET)//define el endpoint y el verbo http
+    public ResponseEntity<?> getTriatletaByIdentificacion(@PathVariable("identificacion") String identificacion) {//toma el id como parametro de la url
         try {
-            TriatletaResponse consultado = triatletaService.getTriatletaByIdentificacion(identificacion);
-            return ResponseEntity.ok(consultado);
+            TriatletaResponse consultado = triatletaService.getTriatletaByIdentificacion(identificacion);//delega al service para que le de el triatleta consultado
+            return ResponseEntity.ok(consultado);//200OK
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage()); //retorna 400 si algo falla
         }
@@ -73,12 +78,12 @@ public class TriatletaRestController {
      * Expone y define el endpoint para consultar todos los triatletas por
      * categoria
      *
-     * @param categoria
+     * @param categoriaEdad
      * @return HTTP 200 ok
      */
-    @RequestMapping(value = "/categoria", method = RequestMethod.GET)
-    public ResponseEntity<List<TriatletaResponse>> getTraitletasByCategoria(@RequestParam String categoria) { //viene en la url despues del ?categoria=...
-        List<TriatletaResponse> triatletasPorCategoria = triatletaService.getTriatletasByCategoria(categoria);//delega a service
+    @RequestMapping(value = "/categoria-edad", method = RequestMethod.GET)
+    public ResponseEntity<List<TriatletaResponse>> getTraitletasByCategoria(@RequestParam String categoriaEdad) { //viene en la url despues del ?categoria=...
+        List<TriatletaResponse> triatletasPorCategoria = triatletaService.getTriatletasByCategoria(categoriaEdad);//delega a service
         return ResponseEntity.ok(triatletasPorCategoria); //retorna un HTTP 200 ok
     }
 

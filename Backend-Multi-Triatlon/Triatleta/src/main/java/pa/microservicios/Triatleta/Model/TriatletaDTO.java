@@ -36,7 +36,7 @@ public class TriatletaDTO extends Persona {
     String urlFoto;
 
     @NotBlank
-    @Column(name = "categoria", nullable = false, unique = false, length = 30)
+    @Column(name = "categoria_edad", nullable = false, unique = false, length = 30)
     String categoriaEdad;
 
     @NotNull
