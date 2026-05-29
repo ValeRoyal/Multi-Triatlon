@@ -25,10 +25,14 @@ public class Config {
         return new ModelMapper();
     }
     
+    /**
+     * Bean de configuracion para el Cliente de comunicacion entre apis en este caso WebClient
+     * @return
+     */
     @Bean
     public WebClient webClient(){
         return WebClient.builder()
-                .baseUrl("http://localhost:9092")
+                .baseUrl("http://localhost:9092")//url del proyecto carrera
                 .build();
     }
 }

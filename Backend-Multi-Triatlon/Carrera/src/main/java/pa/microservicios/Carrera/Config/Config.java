@@ -4,10 +4,38 @@
  */
 package pa.microservicios.Carrera.Config;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.reactive.function.client.WebClient;
+
 /**
  *
  * @author Asus
  */
+@Configuration
 public class Config {
-    
+
+    /**
+     * Bean de configuracion para el model mapper
+     *
+     * @return
+     */
+    @Bean
+    public ModelMapper modelMapperBean() {
+        return new ModelMapper();
+    }
+
+    /**
+     * Bean de configuracion para el Cliente de comunicacion entre apis en este
+     * caso WebClient
+     *
+     * @return
+     */
+    @Bean
+    public WebClient webClient() {
+        return WebClient.builder()
+                .baseUrl("http://localhost:9091")//url del proyecto triatleta
+                .build();
+    }
 }
