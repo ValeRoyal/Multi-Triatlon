@@ -34,25 +34,25 @@ public class CarreraDTO {
     Long id;
 
     @NotBlank
-    @Column(name = "nombre_carrera", nullable = false, length = 100)
+    @Column(name = "nombre_carrera", nullable = false, unique = true, length = 100)//unica porque no pueden haber dos carreras con el mismo nombre
     String nombreCarrera;
-    
+
     @NotBlank
     @Column(name = "ubicacion", nullable = false, length = 100)
     String ubicacion;
-    
-    @NotBlank
-    @Column(name = "fecha_ejecucion", nullable = false, length = 100)
+
+    @NotNull
+    @Column(name = "fecha_ejecucion", nullable = false)
     LocalDateTime fechaEjecucion;
-    
+
     @NotBlank
     @Column(name = "nivel_dificultad", nullable = false, length = 40)
     String nivelDificultad;
-    
+
     @NotBlank
     @Column(name = "para_quien", nullable = false, length = 300)
     String paraQuien;
-    
+
     @NotNull
     @Column(name = "categoria_id", nullable = false)
     Long categoriaId;
