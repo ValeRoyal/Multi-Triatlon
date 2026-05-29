@@ -17,7 +17,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Configuration
 public class Config {
 
-    @Value("${webclient.url.triatleta}") //EXTRAIDO DE: https://docs.spring.io/spring-framework/reference/core/beans/annotation-config/value-annotations.html
+    @Value("${webclient.url.triatleta}") //EXTRAIDO DE:
+    //https://docs.spring.io/spring-framework/reference/core/beans/annotation-config/value-annotations.html
+    
     private String urlTriatleta; //extrae del application properties y lo guarda en esta variable global
 
     /**
