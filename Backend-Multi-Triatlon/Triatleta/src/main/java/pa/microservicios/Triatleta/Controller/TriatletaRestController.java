@@ -38,8 +38,8 @@ public class TriatletaRestController {
      * @return HTTP 200 (exito) HTTP 400 si falla
      */
     @RequestMapping(value = "/crear", method = RequestMethod.POST) //define el endpoint y el verbo http
-    public ResponseEntity<?> createTriatletaDTO(@Valid @RequestBody TriatletaDTO triatletaDTO) { //toma el JSON del body
-        //y lo valida con Bean Validation
+    public ResponseEntity<?> createTriatleta(@Valid @RequestBody TriatletaDTO triatletaDTO) { //toma el JSON del body para convertirlo a objeto java
+        //y lo valida con Validation
         try {
             TriatletaResponse creado = triatletaService.createTriatletaDTO(triatletaDTO); //llama al servicio para guardar el triatleta
             return ResponseEntity.ok(creado); //retorna HTTP 200 OK con el objeto creado
@@ -49,7 +49,9 @@ public class TriatletaRestController {
     }
 
     /**
-     * Define y expone el endpoint tipo GET para consultar un triatleta por su identificacion
+     * Define y expone el endpoint tipo GET para consultar un triatleta por su
+     * identificacion
+     *
      * @param identificacion
      * @return
      */
@@ -64,7 +66,9 @@ public class TriatletaRestController {
     }
 
     /**
-     *  Define y expone el endpoint tipo GET para consultar un triatleta por su identificacion
+     * Define y expone el endpoint tipo GET para consultar un triatleta por su
+     * identificacion
+     *
      * @param genero
      * @return HTTP 200 (exito) HTTP 400 si falla
      */
@@ -122,9 +126,8 @@ public class TriatletaRestController {
      * @return HTTP 200 (exito) HTTP 404 si no existe
      */
     @RequestMapping(value = "/actualizar/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<?> updateCompleto(@PathVariable("id") Long id, @Valid @RequestBody TriatletaDTO triatletaDTO) {//el parametro id viene de la url. 
-        //toma el JSON del body 
-        //y lo valida con @Valid
+    public ResponseEntity<?> updateCompleto(@PathVariable("id") Long id, @RequestBody TriatletaDTO triatletaDTO) {//el parametro id viene de la url. 
+        //toma el JSON del body para convertirlo a objeto java
         try {
             TriatletaResponse actualizado = triatletaService.updateCompleto(id, triatletaDTO); //actualiza el triatleta delegando al service
             return ResponseEntity.ok(actualizado); //retorna HTTP 200 ok si todo sale bien
@@ -142,8 +145,8 @@ public class TriatletaRestController {
      * @return HTTP 200 (exito) HTTP 404 si falla
      */
     @RequestMapping(value = "/{id}/nombre", method = RequestMethod.PATCH)//PATCH porque solo es un campo, no todo el objeto
-    public ResponseEntity<?> updateNombre(@PathVariable("id") Long id, @Valid @RequestBody Map<String, String> body) {//toma el id de la URL
-        //toma el JSON del body @RequestBody lo valida con  @Valid y lo guarda en el Map<>
+    public ResponseEntity<?> updateNombre(@PathVariable("id") Long id, @RequestBody Map<String, String> body) {//toma el id de la URL
+        //toma el JSON del body @RequestBody
         try {
             triatletaService.updateNombre(id, body.get("nombre")); //llama al service y extrae el nombre del Map<>
             return ResponseEntity.ok("Nombre actualizado"); //200 ok 
@@ -161,8 +164,8 @@ public class TriatletaRestController {
      * @return 200 ok si todo sale bien, 404 si no lo encontro
      */
     @RequestMapping(value = "/{id}/identificacion", method = RequestMethod.PATCH) //PATCH porque solo modificamos un campo, no todo el objeto
-    public ResponseEntity<?> updateIdentificacion(@PathVariable("id") Long id, @Valid @RequestBody Map<String, String> body) {//extrae el id de la URL
-        //toma el JSON del body con la etiqueta @RequestBody, lo valida con @Valid y luego lo guarda en el Map<>
+    public ResponseEntity<?> updateIdentificacion(@PathVariable("id") Long id,  @RequestBody Map<String, String> body) {//extrae el id de la URL
+        //toma el JSON del body con la etiqueta @RequestBody
         try {
             triatletaService.updateIdentificacion(id, body.get("identificacion"));//llama al service y extrae la identificacion del Map<>
             return ResponseEntity.ok("Indentificacion actualizada"); //200 ok 
@@ -180,8 +183,8 @@ public class TriatletaRestController {
      * @return 200 si todo salio bien, 404 si no lo encontro
      */
     @RequestMapping(value = "/{id}/categoria-edad", method = RequestMethod.PATCH)//PATCH porque solo modificamos un campo, no todo el objeto
-    public ResponseEntity<?> updateCategoria(@PathVariable("id") Long id, @Valid @RequestBody Map<String, String> body) {//Extrae el id de la URL, 
-        //toma el JSON del body, lo valida con @Valid, luego lo guarda en el Map<>
+    public ResponseEntity<?> updateCategoria(@PathVariable("id") Long id, @RequestBody Map<String, String> body) {//Extrae el id de la URL, 
+        //toma el JSON del body, luego lo guarda en el map
         try {
             triatletaService.updateCategoria(id, body.get("categoriaEdad")); //delega a service para actualizar la categoria mandandole como parametro lo que extraiga de el campo categoria del Map<>
             return ResponseEntity.ok("Categoria actualizada"); //200 ok
@@ -199,8 +202,8 @@ public class TriatletaRestController {
      * @return 200 si todo salio bien, 404 si no lo encontro
      */
     @RequestMapping(value = "/{id}/genero", method = RequestMethod.PATCH)
-    public ResponseEntity<?> updateGenero(@PathVariable("id") Long id, @Valid @RequestBody Map<String, String> body) {
-        //toma el JSON del body, lo valida con @Valid, luego lo guarda en el Map<>
+    public ResponseEntity<?> updateGenero(@PathVariable("id") Long id, @RequestBody Map<String, String> body) {
+        //toma el JSON del body, luego lo guarda en el Map<>
         try {
             triatletaService.updateGenero(id, body.get("genero")); //delega a service para actualizar la categoria mandandole como parametro lo que extraiga de el campo categoria del Map<>
             return ResponseEntity.ok("Genero actualizado"); //200 ok

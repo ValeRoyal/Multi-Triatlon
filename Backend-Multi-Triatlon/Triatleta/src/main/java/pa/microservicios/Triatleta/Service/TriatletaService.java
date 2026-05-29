@@ -33,7 +33,7 @@ public class TriatletaService {
 
     @Autowired
     private ModelMapper mapper;
-    
+
     @Autowired
     private WebClient webClient;
 
@@ -46,8 +46,9 @@ public class TriatletaService {
 
     /**
      * Metodo para mapear listas de objetos TriatletasDTO's a TriatletasResponse
+     *
      * @param dtos
-     * @return  Lista de Responses 
+     * @return Lista de Responses
      */
     public List<TriatletaResponse> mapperAResponse(List<TriatletaDTO> dtos) {
         //Creo mi nueva lista de responses donde los voy a guardar
@@ -85,7 +86,6 @@ public class TriatletaService {
 //        } catch (Exception e) {
 //            throw new RuntimeException("No fue posible enviar correo");
 //        }
-
         return mapper.map(guardado, TriatletaResponse.class);
     }
 
@@ -199,12 +199,12 @@ public class TriatletaService {
             throw new RuntimeException("No existe triatleta con id: " + id);
         }
     }
-    
+
     /**
      * Actualiza el genero de un triatleta por su id delegando a repository
      *
      * @param id
-     * @param nuevoGenero 
+     * @param nuevoGenero
      */
     public void updateGenero(Long id, String nuevoGenero) {
         int filas = triatletaRepository.actualizarGenero(id, nuevoGenero);//delega a repository
