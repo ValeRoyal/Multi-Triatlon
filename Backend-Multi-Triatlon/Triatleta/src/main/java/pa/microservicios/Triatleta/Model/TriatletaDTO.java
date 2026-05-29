@@ -49,12 +49,18 @@ public class TriatletaDTO extends Persona {
     //Especialidad de triatlon
     String especialidad;
 
-    public TriatletaDTO(String urlFoto, String categoriaEdad, Boolean modalidadCross, String especialidad, String nombre, LocalDate fechaNacimiento, String identificacion, String correo, String genero, Boolean activo) {
+    @NotNull
+    @Column(name = "carrera_id", nullable = false)
+    Long carreraId;
+
+    public TriatletaDTO(String urlFoto, String categoriaEdad, Boolean modalidadCross, String especialidad, Long carreraId, String nombre, LocalDate fechaNacimiento, String identificacion, String correo, String genero, Boolean activo) {
         super(nombre, fechaNacimiento, identificacion, correo, genero, activo);
         this.urlFoto = urlFoto;
         this.categoriaEdad = categoriaEdad;
         this.modalidadCross = modalidadCross;
         this.especialidad = especialidad;
+        this.carreraId = carreraId;
     }
 
+    
 }

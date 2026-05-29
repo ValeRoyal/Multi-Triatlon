@@ -20,6 +20,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TriatletaResponse {
+    
     Long id;
     String nombre;
     LocalDate fechaNacimiento;
@@ -27,11 +28,13 @@ public class TriatletaResponse {
     String correo;
     String genero;
     Boolean activo;
-    
+
     String urlFoto;
     String categoriaEdad;
     Boolean modalidadCross;
     String especialidad;
     
+    //datos de la carrera que vienen de otro microservicio se guarda el id de esta carrera como referencia externa
+    Long carreraId;
     CarreraResponse carrera;
 }
