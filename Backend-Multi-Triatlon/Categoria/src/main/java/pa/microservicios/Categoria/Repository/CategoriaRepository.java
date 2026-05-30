@@ -45,7 +45,7 @@ public interface CategoriaRepository extends JpaRepository<CategoriaDTO, Long> {
      */
     @Modifying
     @Transactional
-    @Query("UPDATE CategoriaDTO cat SET cat.recomendacion :nuevaRecomendacion WHERE cat.id = :id")
+    @Query("UPDATE CategoriaDTO cat SET cat.recomendacion = :nuevaRecomendacion WHERE cat.id = :id")
     int updateRecomendacion(@Param("id") Long id, @Param("nuevaRecomendacion") String nuevaRecomendacion);
 
     Optional<CategoriaDTO> findByNombreCategoria(String nombreCategoria);

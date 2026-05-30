@@ -25,7 +25,7 @@ import pa.microservicios.Triatleta.Service.TriatletaService;
  * @author Asus
  */
 @RestController
-@RequestMapping("/api-triatleta")
+@RequestMapping("/api/triatletas")
 public class TriatletaRestController {
 
     @Autowired
@@ -164,7 +164,7 @@ public class TriatletaRestController {
      * @return 200 ok si todo sale bien, 404 si no lo encontro
      */
     @RequestMapping(value = "/{id}/identificacion", method = RequestMethod.PATCH) //PATCH porque solo modificamos un campo, no todo el objeto
-    public ResponseEntity<?> updateIdentificacion(@PathVariable("id") Long id,  @RequestBody Map<String, String> body) {//extrae el id de la URL
+    public ResponseEntity<?> updateIdentificacion(@PathVariable("id") Long id, @RequestBody Map<String, String> body) {//extrae el id de la URL
         //toma el JSON del body con la etiqueta @RequestBody
         try {
             triatletaService.updateIdentificacion(id, body.get("identificacion"));//llama al service y extrae la identificacion del Map<>
@@ -223,7 +223,7 @@ public class TriatletaRestController {
         try {
             triatletaService.deleteTriatletaDTO(id); //delega al service para que lo borre por su id
             return ResponseEntity.ok("Triatleta Eliminado"); //200 ok
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());//404 si no lo encontro
         }
     }

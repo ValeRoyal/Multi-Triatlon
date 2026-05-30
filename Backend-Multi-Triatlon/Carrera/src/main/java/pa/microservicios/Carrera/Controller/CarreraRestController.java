@@ -24,7 +24,7 @@ import pa.microservicios.Carrera.Service.CarreraService;
  * @author Asus
  */
 @RestController
-@RequestMapping("/api-carrera")
+@RequestMapping("/api/carreras")
 public class CarreraRestController {
 
     @Autowired
@@ -47,6 +47,21 @@ public class CarreraRestController {
         }
     }
 
+    /**
+     * Expone y define el endpoint tipo GET para consultar una carrera por su id
+     *
+     * @param id
+     * @return HTTP 200 si todo ok, o 404 si no lo encontro
+     */
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> getCarreraById(@PathVariable("id") Long id) {
+        try {
+            CarreraResponse consultado = carreraService.getCarreraById(id);
+            return ResponseEntity.ok(consultado);//200 OK
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage()); //404 si no lo encontro
+        }
+    }
     /**
      * Expone y define el endpoint tipo PATCH para actualizar la ubicacion de
      * una carrera por su id
@@ -85,21 +100,6 @@ public class CarreraRestController {
         }
     }
 
-    /**
-     * Expone y define el endpoint tipo GET para consultar una carrera por su id
-     *
-     * @param id
-     * @return HTTP 200 si todo ok, o 404 si no lo encontro
-     */
-    @RequestMapping(value = "/consultar-id/{id}", method = RequestMethod.GET)
-    public ResponseEntity<?> getCarreraById(@PathVariable("id") Long id) {
-        try {
-            CarreraResponse consultado = carreraService.getCarreraById(id);
-            return ResponseEntity.ok(consultado);//200 OK
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage()); //404 si no lo encontro
-        }
-    }
 
     /**
      * Expone y define el endpoint tipo DELETE para borrar una carrera
@@ -112,7 +112,7 @@ public class CarreraRestController {
         try {
             carreraService.deleteCarrera(id); //delega al service para que lo borre por su id
             return ResponseEntity.ok("Carrera Eliminada"); //200 ok
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());//404 si no lo encontro
         }
     }
