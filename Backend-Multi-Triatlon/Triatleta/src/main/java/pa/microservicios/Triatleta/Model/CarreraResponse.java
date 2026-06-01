@@ -22,10 +22,9 @@ import lombok.experimental.FieldDefaults;
 public class CarreraResponse {
 
     Long id;
-    String nombre;
+    String nombreCarrera;
     String ubicacion;
     LocalDateTime fechaEjecucion;
     String nivelDificultad;
     String paraQuien;
-    Long categoriaId;
 }

@@ -39,7 +39,7 @@ public class Config {
     @Bean
     public WebClient webClient() {
         return WebClient.builder()
-                .baseUrl(urlCarrera)//url del proyecto carrera
+                .baseUrl(urlCarrera)//url del proyecto carrera no usamos el .Builder() porque en este caso solo llamará a la api de carreras
                 .build();
     }
 }

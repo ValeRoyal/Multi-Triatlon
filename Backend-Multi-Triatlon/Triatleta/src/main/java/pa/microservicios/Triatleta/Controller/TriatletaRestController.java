@@ -228,4 +228,15 @@ public class TriatletaRestController {
         }
     }
 
+    @RequestMapping(value = "/{idTriatleta}/registrar-en-carrera/{idCarrera}", method = RequestMethod.PATCH)
+    public ResponseEntity<?> registrarEnCarrera(@PathVariable("idTriatleta") Long idTriatleta, @PathVariable("idCarrera") Long idCarrera) {
+        try {
+            TriatletaResponse registradoEnCarrera = triatletaService.registrarEnCarrera(idTriatleta, idCarrera);
+            return ResponseEntity.ok(registradoEnCarrera);
+        } catch (RuntimeException e) {
+            // Si la carrera no existe o falla el servicio, retornamos el error (400 Bad Request)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
 }

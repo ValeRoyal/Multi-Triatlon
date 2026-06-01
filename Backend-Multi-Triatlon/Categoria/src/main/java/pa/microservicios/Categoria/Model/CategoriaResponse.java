@@ -4,6 +4,7 @@
  */
 package pa.microservicios.Categoria.Model;
 
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,6 +27,6 @@ public class CategoriaResponse {
     String descripcion;
     String recomendacion;
     
-    CarreraResponse carreraResponse;
+    List<CarreraResponse> carreras;
 
 }

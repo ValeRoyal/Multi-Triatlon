@@ -5,7 +5,6 @@
 package pa.microservicios.Carrera.Config;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -16,11 +15,6 @@ import org.springframework.web.reactive.function.client.WebClient;
  */
 @Configuration
 public class Config {
-
-    @Value("${webclient.url.triatleta}") //EXTRAIDO DE:
-    //https://docs.spring.io/spring-framework/reference/core/beans/annotation-config/value-annotations.html
-    
-    private String urlTriatleta; //extrae del application properties y lo guarda en esta variable global
 
     /**
      * Bean de configuracion para el model mapper
@@ -39,9 +33,8 @@ public class Config {
      * @return
      */
     @Bean
-    public WebClient webClient() {
-        return WebClient.builder()
-                .baseUrl(urlTriatleta)//url del proyecto triatleta
-                .build();
+    public WebClient.Builder webClientBuilder() {
+        return WebClient.builder();
     }
+
 }

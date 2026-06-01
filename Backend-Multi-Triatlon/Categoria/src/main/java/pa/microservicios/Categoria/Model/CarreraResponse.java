@@ -4,10 +4,28 @@
  */
 package pa.microservicios.Categoria.Model;
 
+import java.time.LocalDateTime;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
+
 /**
  *
  * @author Asus
  */
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class CarreraResponse {
+    Long id;
+    String nombreCarrera;
+    String ubicacion;
+    LocalDateTime fechaEjecucion;
+    String nivelDificultad;
+    String paraQuien;
     
+    Long categoriaId;
 }

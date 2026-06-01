@@ -6,6 +6,7 @@ package pa.microservicios.Carrera.Repository;
 
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -51,4 +52,11 @@ public interface CarreraRepository extends JpaRepository<CarreraDTO, Long> {
      * @return la carrera por su nombre
      */
     Optional<CarreraDTO> findByNombreCarrera(String nombreCarrera);
+    
+    /**
+     * Encuentra todas las carreras que compartan el id de su categoria
+     * @param categoriaId 
+     * @return  Lista de dtos
+     */
+    List<CarreraDTO> findByCategoriaId(Long categoriaId);
 }

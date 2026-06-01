@@ -126,4 +126,10 @@ public class CategoriaRestController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());//404 si no lo encontro
         }
     }
+    
+    @RequestMapping(value = "/consultar-carreras-por-categoria/{categoriaId}", method = RequestMethod.GET)
+    public ResponseEntity<CategoriaResponse> getCarreras(@PathVariable("categoriaId") Long categoriaId){
+        CategoriaResponse response = categoriaService.getCarreras(categoriaId);
+        return ResponseEntity.ok(response);
+    }
 }

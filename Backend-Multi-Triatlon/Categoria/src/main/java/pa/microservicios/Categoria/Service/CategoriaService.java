@@ -11,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import pa.microservicios.Categoria.Model.CarreraResponse;
 import pa.microservicios.Categoria.Model.CategoriaDTO;
 import pa.microservicios.Categoria.Model.CategoriaResponse;
 import pa.microservicios.Categoria.Repository.CategoriaRepository;
@@ -120,4 +121,20 @@ public class CategoriaService {
         }
         categoriaRepository.deleteById(id);//delega a repository    
     }
+
+    //recibir id de la categoria a consultar con sus carreras asociadas
+    public CategoriaResponse getCarreras(Long categoriaId) {
+        //uso mi metodo ya creado en el service para buscar la categoria por su id
+        CategoriaResponse response = getCategoriaById(categoriaId);
+        //creo una lista de carreras response para consumir el endpoint del proyecto carrera
+        List<CarreraResponse> carreras = webClient.get()//bean ya configurado, usamos su metodo get
+                .uri("/carreras-por-categoria/{categoriaId}", categoriaId)//colocamos el resto de la url, junto con su parametro
+                .retrieve()//extraemos los objetos este metodo reterieve() nos permite declarar como extraeremos la respuesta
+                .bodyToFlux(CarreraResponse.class)//convertir el JSON de respuesta en un flujo de objetos CarreraResponse
+                .collectList()//recolectamos los objetos
+                .block();//bloqueante para esperar la respuesta de forma sincrona
+        response.setCarreras(carreras);
+        return response;
+    }
+
 }

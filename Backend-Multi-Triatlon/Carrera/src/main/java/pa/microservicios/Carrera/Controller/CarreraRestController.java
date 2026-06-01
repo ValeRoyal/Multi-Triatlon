@@ -6,6 +6,7 @@ package pa.microservicios.Carrera.Controller;
 
 import jakarta.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import pa.microservicios.Carrera.Model.CarreraDTO;
 import pa.microservicios.Carrera.Model.CarreraResponse;
+import pa.microservicios.Carrera.Model.CategoriaResponse;
 import pa.microservicios.Carrera.Service.CarreraService;
 
 /**
@@ -62,6 +64,7 @@ public class CarreraRestController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage()); //404 si no lo encontro
         }
     }
+
     /**
      * Expone y define el endpoint tipo PATCH para actualizar la ubicacion de
      * una carrera por su id
@@ -100,7 +103,6 @@ public class CarreraRestController {
         }
     }
 
-
     /**
      * Expone y define el endpoint tipo DELETE para borrar una carrera
      *
@@ -116,4 +118,23 @@ public class CarreraRestController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());//404 si no lo encontro
         }
     }
+
+    /**
+     * metodo llamado para consultar todas las carreras asociadas a una
+     * categoria, lo llama la api de categorias, CATEGORIA LLAMA ESTE ENDPOINT
+     *
+     * @param id
+     * @return Lista de Carreras que comparten el mismo id de una categoria
+     */
+    @RequestMapping(value = "/carreras-por-categoria/{categoriaId}", method = RequestMethod.GET)
+    public ResponseEntity<List<CarreraResponse>> getAllCarrerasByCategoria(@PathVariable("categoriaId") Long id) {
+        List<CarreraResponse> responses = carreraService.getAllCarrerasByCategoria(id);
+        return ResponseEntity.ok(responses);//ok
+    }
+
+    @RequestMapping(value = "/categoria/{id}", method = RequestMethod.GET)
+    public ResponseEntity<CategoriaResponse> getCategoria(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(carreraService.consultarCategoria(id));
+    }
+
 }

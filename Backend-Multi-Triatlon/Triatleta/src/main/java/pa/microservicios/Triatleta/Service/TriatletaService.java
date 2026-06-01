@@ -14,9 +14,11 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import pa.microservicios.Triatleta.Model.CarreraResponse;
 import pa.microservicios.Triatleta.Model.TriatletaDTO;
 import pa.microservicios.Triatleta.Model.TriatletaResponse;
 import pa.microservicios.Triatleta.Repository.TriatletaRepository;
+import reactor.core.publisher.Mono;
 
 /**
  *
@@ -227,12 +229,43 @@ public class TriatletaService {
     }
 
     //====================CORREO DE REGISTRO===============
+    /**
+     * Crea un objeto de tipo SimpleMailMessage
+     *
+     * @param triatletaDTO
+     * @param asunto
+     * @param contenido
+     */
     public void enviarCorreoConfirmacion(TriatletaDTO triatletaDTO, String asunto, String contenido) {
-        SimpleMailMessage mensaje = new SimpleMailMessage();
-        mensaje.setTo(triatletaDTO.getCorreo());
-        mensaje.setSubject(asunto);
-        mensaje.setText(contenido);
-        mailSender.send(mensaje);
+        SimpleMailMessage mensaje = new SimpleMailMessage();//instancia nuestro objeto de mensaje de  correo simple
+        mensaje.setTo(triatletaDTO.getCorreo());//extrae el correo del TriatletaDTO
+        mensaje.setSubject(asunto);//le pone un asunto, estas variables fueron extraidas del properties con ayuda de @Value
+        mensaje.setText(contenido);//contenido del correo
+        mailSender.send(mensaje);//envia el mensaje
+    }
+
+    /**
+     * Registra en una carrera al triatleta modificando el registro que hace de
+     * referencia externa al id de una carrera asociada
+     *
+     * @param idTriatleta
+     * @param idCarrera
+     * @return TriatletaResponse
+     */
+    public TriatletaResponse registrarEnCarrera(Long idTriatleta, Long idCarrera) {
+
+        Optional<TriatletaDTO> extraido = triatletaRepository.findById(idTriatleta);
+        TriatletaDTO dto = extraido.get();
+
+        CarreraResponse carrera = webClient.get()
+                .uri("/{id}", idCarrera)
+                .retrieve()
+                .bodyToMono(CarreraResponse.class)
+                .block();
+
+        dto.setCarreraId(idCarrera);
+        TriatletaDTO guardado = triatletaRepository.save(dto);
+        return mapper.map(guardado, TriatletaResponse.class);
     }
 
 }

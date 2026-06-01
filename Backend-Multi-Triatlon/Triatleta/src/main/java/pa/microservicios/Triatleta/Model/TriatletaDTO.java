@@ -22,7 +22,7 @@ import lombok.experimental.FieldDefaults;
  * String urlFoto String categoria String modalidadCross String especialidad
  * LocalDate fechaNacimiento (tipo de dato abstracto de java)
  */
-@EqualsAndHashCode(callSuper = true) //Para que incluya los campos de la superclase (clase padre) por eso esta en true
+@EqualsAndHashCode(callSuper = true) //Para que incluya solo los campos de la superclase (clase padre) requeridos
 @Data //Getters y Setters
 @Entity //Entidad a mapear ORM => objet relational mapping
 @Table(name = "triatleta") //Nombre de la tabal que lo va a representar en la BD
@@ -48,9 +48,8 @@ public class TriatletaDTO extends Persona {
     @Column(name = "especialidad", nullable = false, unique = false, length = 20)
     //Especialidad de triatlon
     String especialidad;
-
-    @NotNull
-    @Column(name = "carrera_id", nullable = false)
+    
+    @Column(name = "carrera_id")
     Long carreraId;
 
     public TriatletaDTO(String urlFoto, String categoriaEdad, Boolean modalidadCross, String especialidad, Long carreraId, String nombre, LocalDate fechaNacimiento, String identificacion, String correo, String genero, Boolean activo) {
