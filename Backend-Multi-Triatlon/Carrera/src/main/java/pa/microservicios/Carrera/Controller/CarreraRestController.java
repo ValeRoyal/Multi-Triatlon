@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pa.microservicios.Carrera.Model.CarreraDTO;
 import pa.microservicios.Carrera.Model.CarreraResponse;
 import pa.microservicios.Carrera.Model.CategoriaResponse;
+import pa.microservicios.Carrera.Model.TriatletaResponse;
 import pa.microservicios.Carrera.Service.CarreraService;
 
 /**
@@ -121,7 +122,7 @@ public class CarreraRestController {
 
     /**
      * metodo llamado para consultar todas las carreras asociadas a una
-     * categoria, lo llama la api de categorias, CATEGORIA LLAMA ESTE ENDPOINT
+     * categoria, lo llama la api de categorias
      *
      * @param id
      * @return Lista de Carreras que comparten el mismo id de una categoria
@@ -132,9 +133,43 @@ public class CarreraRestController {
         return ResponseEntity.ok(responses);//ok
     }
 
+    /**
+     * Expone y define el endpoint tipo GET para consultar la categoria asociada
+     * a una carrera.
+     *
+     * @param id id de la carrera a consultar
+     * @return CategoriaResponse con los datos de la categoria asociada
+     */
     @RequestMapping(value = "/categoria/{id}", method = RequestMethod.GET)
     public ResponseEntity<CategoriaResponse> getCategoria(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(carreraService.consultarCategoria(id));
+        return ResponseEntity.ok(carreraService.consultarCategoria(id));//200 ok y delegamos a service
+    }
+
+    /**
+     * Expone y define el endpoint tipo GET para listar todos los triatletas
+     * inscritos en una carrera.
+     *
+     * @param id id de la carrera a consultar
+     * @return Lista de triatletas inscritos en la carrera
+     */
+    @RequestMapping(value = "/{id}/triatletas", method = RequestMethod.GET)
+    public ResponseEntity<List<TriatletaResponse>> getTriatletas(@PathVariable("id") Long id){
+        return ResponseEntity.ok(carreraService.consultarTriatletas(id));//200 ok y delegamos a service
+    }
+
+    /**
+     * Expone y define el endpoint tipo DELETE para eliminar un triatleta de una
+     * carrera. No borra al triatleta, solo quita su carrera asociada en la API
+     * de triatletas.
+     *
+     * @param idCarrera id de la carrera desde la que se va a quitar
+     * @param idTriatleta id del triatleta a quitar de la carrera
+     * @return HTTP 204 sin contenido si todo salio bien
+     */
+    @RequestMapping(value = "/{idCarrera}/eliminar-de-carrera/{idTriatleta}", method = RequestMethod.DELETE)//delete porque semanticamente hacemos una eliminacion de la relacion
+    public ResponseEntity<Void> eliminarTriatletaDeCarrera(@PathVariable("idCarrera") Long idCarrera, @PathVariable("idTriatleta") Long idTriatleta){
+        carreraService.eliminarTriatletaDeCarrera(idCarrera, idTriatleta);//delegamos
+        return ResponseEntity.noContent().build();//sin contenido
     }
 
 }

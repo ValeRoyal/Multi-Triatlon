@@ -47,7 +47,9 @@ public class CategoriaRestController {
     }
 
     /**
-     * Define y expone el endpoint de tipo GET para consultar una categoria por su id
+     * Define y expone el endpoint de tipo GET para consultar una categoria por
+     * su id
+     *
      * @param id
      * @return 200 si todo salio bien, 404 si no lo encontro
      */
@@ -62,7 +64,9 @@ public class CategoriaRestController {
     }
 
     /**
-     * Define y expone el endpoint de tipo GET para consultar todas las categorias disponibles
+     * Define y expone el endpoint de tipo GET para consultar todas las
+     * categorias disponibles
+     *
      * @return 200 si todo salio bien
      */
     @RequestMapping(value = "/todas", method = RequestMethod.GET)
@@ -72,8 +76,8 @@ public class CategoriaRestController {
     }
 
     /**
-     * Expoen y define el endpoint tipo PATCH para actualizar el campo descripcion
-     * de la categoria
+     * Expone y define el endpoint tipo PATCH para actualizar el campo
+     * descripcion de la categoria
      *
      * @param id
      * @param body
@@ -92,8 +96,8 @@ public class CategoriaRestController {
     }
 
     /**
-     * Expoen y define el endpoint tipo PATCH para actualizar el campo recomendacion
-     * de la categoria
+     * Expone y define el endpoint tipo PATCH para actualizar el campo
+     * recomendacion de la categoria
      *
      * @param id
      * @param body
@@ -127,9 +131,36 @@ public class CategoriaRestController {
         }
     }
     
+    /**
+     * Expone y define el endpoint tipo GET para consultar una categoria junto
+     * con todas las carreras asociadas a esa categoria.
+     *
+     * @param categoriaId id de la categoria a consultar
+     * @return CategoriaResponse con sus datos y su lista de carreras
+     */
     @RequestMapping(value = "/consultar-carreras-por-categoria/{categoriaId}", method = RequestMethod.GET)
     public ResponseEntity<CategoriaResponse> getCarreras(@PathVariable("categoriaId") Long categoriaId){
-        CategoriaResponse response = categoriaService.getCarreras(categoriaId);
-        return ResponseEntity.ok(response);
+        CategoriaResponse response = categoriaService.getCarreras(categoriaId);//delega a service para consultar categoria y carreras
+        return ResponseEntity.ok(response);//200 ok
+    }
+
+    /**
+     * Expone y define el endpoint tipo DELETE para eliminar una carrera de una
+     * categoria especifica. Se elimina completamente la carrera desde la API de
+     * carreras.
+     *
+     * @param categoriaId id de la categoria asociada
+     * @param carreraId id de la carrera a eliminar
+     * @return 200 si todo salio bien, 404 si no encontro la categoria o carrera
+     */
+    @RequestMapping(value = "/{categoriaId}/eliminar-carrera/{carreraId}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteCarreraDeCategoria(@PathVariable("categoriaId") Long categoriaId, @PathVariable("carreraId") Long carreraId) {
+        //extrae los ids de la url y delega a service para validar y eliminar
+        try {
+            categoriaService.deleteCarreraDeCategoria(categoriaId, carreraId);
+            return ResponseEntity.ok("Carrera eliminada de la categoria"); //200 ok
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());//404 si no lo encontro
+        }
     }
 }

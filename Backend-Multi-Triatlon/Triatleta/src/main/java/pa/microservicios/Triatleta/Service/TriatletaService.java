@@ -6,7 +6,6 @@ package pa.microservicios.Triatleta.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +17,6 @@ import pa.microservicios.Triatleta.Model.CarreraResponse;
 import pa.microservicios.Triatleta.Model.TriatletaDTO;
 import pa.microservicios.Triatleta.Model.TriatletaResponse;
 import pa.microservicios.Triatleta.Repository.TriatletaRepository;
-import reactor.core.publisher.Mono;
 
 /**
  *
@@ -43,11 +41,11 @@ public class TriatletaService {
     @Value("${correo.asunto}")//extrae del application properties y lo guarda en esta variable global
     private String asuntoRegistro;
 
-    @Value("${correo.mensaje}")//extrae del applicaton properties y lo guarda en esta variable global
+    @Value("${correo.mensaje}")//extrae del application properties y lo guarda en esta variable global
     private String mensajeRegistro;
 
     /**
-     * Metodo para mapear listas de objetos TriatletasDTO's a TriatletasResponse
+     * Metodo para mapear listas de objetos TriatletaDTO a TriatletaResponse
      *
      * @param dtos
      * @return Lista de Responses
@@ -57,7 +55,7 @@ public class TriatletaService {
         List<TriatletaResponse> responses = new ArrayList<>();
         //Por cada Objeto de tipo TriatletaDTO en la lista dtos
         for (TriatletaDTO triatletaDTO : dtos) {
-            //mappear cada objeto de tipo TriatletDTO a la clase TrialtetaResponse y guardarlo en mi variable respones
+            //mapear cada objeto de tipo TriatletaDTO a la clase TriatletaResponse y guardarlo en mi variable responses
             TriatletaResponse response = mapper.map(triatletaDTO, TriatletaResponse.class);
             //Guardo los responses en mi lista de responses
             responses.add(response);
@@ -96,16 +94,16 @@ public class TriatletaService {
      * Consulta Triatleta por Identificacion
      *
      * @param identificacion La identificacion del triatleta a buscar
-     * @return Optional con el triatleta si existe
+     * @return TriatletaResponse si el triatleta existe
      */
     public TriatletaResponse getTriatletaByIdentificacion(String identificacion) {
-        Optional<TriatletaDTO> optionalTriatleta = triatletaRepository.findByIdentificacion(identificacion);//delega a repository
-        TriatletaDTO dto = optionalTriatleta.get();
+        TriatletaDTO dto = triatletaRepository.findByIdentificacion(identificacion)
+                .orElseThrow(() -> new RuntimeException("No existe triatleta con identificacion: " + identificacion));
         return mapper.map(dto, TriatletaResponse.class);
     }
 
     /**
-     * Consulta todos los tritatletas por su genero
+     * Consulta todos los triatletas por su genero
      *
      * @param genero Genero de los/las triatletas a consultar
      * @return Grupo de triatletas consultado por genero Femenino/Masculino
@@ -252,20 +250,69 @@ public class TriatletaService {
      * @param idCarrera
      * @return TriatletaResponse
      */
-    public TriatletaResponse registrarEnCarrera(Long idTriatleta, Long idCarrera) {
+    public TriatletaResponse registrarEnCarrera(Long idTriatleta, Long idCarrera) {//necesitamos el id del triatleta al que vamos a registrar en la carrera
+        //junto con el id de la carrera a la que se va a registrar
 
-        Optional<TriatletaDTO> extraido = triatletaRepository.findById(idTriatleta);
-        TriatletaDTO dto = extraido.get();
+        TriatletaDTO dto = triatletaRepository.findById(idTriatleta)
+                .orElseThrow(() -> new RuntimeException("No existe triatleta con id: " + idTriatleta));
 
-        CarreraResponse carrera = webClient.get()
+        //hacemos la llamada a la api de carreras pasando el id de la carrera a consultar para validar si existe
+        CarreraResponse carrera = webClient.get()//lo llamamos para validar que sea un id valido
                 .uri("/{id}", idCarrera)
-                .retrieve()
-                .bodyToMono(CarreraResponse.class)
-                .block();
+                .retrieve()//nos permite declarar como extraeremos la respuesta
+                .bodyToMono(CarreraResponse.class)//de JSON a objeto java
+                .block();//bloqueante para esperar la respuesta de forma sincrona
 
-        dto.setCarreraId(idCarrera);
-        TriatletaDTO guardado = triatletaRepository.save(dto);
-        return mapper.map(guardado, TriatletaResponse.class);
+        dto.setCarreraId(idCarrera);//a nuestro dto que extraimos de la base de datos le asignamos el id de la carrera, aqui ocurre el registro
+        TriatletaDTO guardado = triatletaRepository.save(dto);//actualizamos en la base de datos el id de la carrera asociada como referencia externa delegando a repository
+        return mapper.map(guardado, TriatletaResponse.class);//mapeamos y retornamos a nuestro response
+    }
+
+    /**
+     * Consulta la carrera en la que esta registrado un triatleta
+     *
+     * @param id
+     * @return Los datos del triatleta junto con los datos de la carrera
+     */
+    public TriatletaResponse consultarCarrera(Long id) {//pasamos como parametro el id del triatleta que vamos a consultar
+        TriatletaDTO dto = triatletaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("No existe triatleta con id: " + id));
+        Long idCarrera = dto.getCarreraId();//extraemos y guardamos en una variable el id de la carrera que tiene guardada en la bd este triatleta
+
+        CarreraResponse carreraConsultada = webClient.get()//llamamos a la api de carreras con web client para hacer la consulta
+                .uri("/{id}", idCarrera)//le mandamos como parametro a nuestra uri el id, recordar que el resto de la url esta definida ya en el @Bean de configuracion en la clase Config
+                .retrieve()//nos permite declarar como vamos a extraer la respuesta
+                .bodyToMono(CarreraResponse.class)//de JSON a nuestra clase response
+                .block();//bloqueante para que sea sincrono
+
+        TriatletaResponse guardado = mapper.map(dto, TriatletaResponse.class);//mapeamos nuestro dto a response
+        guardado.setCarrera(carreraConsultada);//a este response le colocamos nuestra nueva carrera response que acabamos de obtener del llamado a la api de esta forma
+        //cuando se haga la peticion a este metodo se retornan los datos de ambos
+
+        return guardado; //retornamos el triatletaresponse con la carrera consultada ya
+
+    }
+
+    /**
+     * Metodo usado para consultar todos los triatletas por carrera
+     *
+     * @param id
+     * @return Lista de responses por carrera
+     */
+    public List<TriatletaResponse> getTriatletasByCarrera(Long id) {
+        List<TriatletaDTO> dtos = triatletaRepository.findByCarreraId(id);//delega a repository para buscar los triatletas que tengan el id de
+        //esa carrera asociada
+        return mapperAResponse(dtos);//usamos nuestro metodo para mapear listas de dtos a responses
+    }
+
+    /**
+     * Quita la carrera asociada a un triatleta dejando el campo carreraId en
+     * null.
+     *
+     * @param idTriatleta id del triatleta que se va a quitar de la carrera
+     */
+    public void eliminarDeCarrera(Long idTriatleta){
+        triatletaRepository.eliminarDeCarrera(idTriatleta);
     }
 
 }

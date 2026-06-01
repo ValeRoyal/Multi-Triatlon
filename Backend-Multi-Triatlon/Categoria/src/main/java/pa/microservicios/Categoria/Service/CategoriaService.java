@@ -6,11 +6,11 @@ package pa.microservicios.Categoria.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import pa.microservicios.Categoria.Model.CarreraResponse;
 import pa.microservicios.Categoria.Model.CategoriaDTO;
 import pa.microservicios.Categoria.Model.CategoriaResponse;
@@ -57,8 +57,8 @@ public class CategoriaService {
      */
     public CategoriaResponse getCategoriaById(Long id) {
         //delegamos a repository para que busque la categoria por id, usamos optional para manejar el null
-        Optional<CategoriaDTO> optionalCategoria = categoriaRepository.findById(id);
-        CategoriaDTO dto = optionalCategoria.get();//devuelve el valor del optional si existe, si no, la excepcion NoSuchElementException
+        CategoriaDTO dto = categoriaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("No existe categoria con id: " + id));
         return mapper.map(dto, CategoriaResponse.class);//mapeamos de dto a response
     }
 
@@ -122,19 +122,63 @@ public class CategoriaService {
         categoriaRepository.deleteById(id);//delega a repository    
     }
 
-    //recibir id de la categoria a consultar con sus carreras asociadas
+    /**
+     * Consulta una categoria junto con todas las carreras asociadas a ella.
+     *
+     * @param categoriaId id de la categoria a consultar
+     * @return CategoriaResponse con sus datos y su lista de carreras
+     */
     public CategoriaResponse getCarreras(Long categoriaId) {
         //uso mi metodo ya creado en el service para buscar la categoria por su id
         CategoriaResponse response = getCategoriaById(categoriaId);
         //creo una lista de carreras response para consumir el endpoint del proyecto carrera
         List<CarreraResponse> carreras = webClient.get()//bean ya configurado, usamos su metodo get
                 .uri("/carreras-por-categoria/{categoriaId}", categoriaId)//colocamos el resto de la url, junto con su parametro
-                .retrieve()//extraemos los objetos este metodo reterieve() nos permite declarar como extraeremos la respuesta
+                .retrieve()//extraemos los objetos, este metodo retrieve() nos permite declarar como extraeremos la respuesta
                 .bodyToFlux(CarreraResponse.class)//convertir el JSON de respuesta en un flujo de objetos CarreraResponse
                 .collectList()//recolectamos los objetos
                 .block();//bloqueante para esperar la respuesta de forma sincrona
         response.setCarreras(carreras);
         return response;
+    }
+
+    /**
+     * Elimina una carrera asociada a una categoria especifica.
+     *
+     * @param categoriaId id de la categoria a la que debe pertenecer la carrera
+     * @param carreraId id de la carrera que se va a eliminar
+     */
+    public void deleteCarreraDeCategoria(Long categoriaId, Long carreraId) {
+        //validamos primero que la categoria exista en esta API
+        getCategoriaById(categoriaId);
+
+        try {
+            //consultamos la carrera en la API de carreras para validar su categoria asociada
+            CarreraResponse carrera = webClient.get()
+                    .uri("/{id}", carreraId)
+                    .retrieve()
+                    .bodyToMono(CarreraResponse.class)//de json a objeto java
+                    .block();//sincrono
+
+            //si la carrera no viene, no podemos validar ni eliminar
+            if (carrera == null) {
+                throw new RuntimeException("No existe carrera con id: " + carreraId);
+            }
+
+            //validamos que la carrera pertenezca realmente a la categoria indicada
+            if (!categoriaId.equals(carrera.getCategoriaId())) {
+                throw new RuntimeException("La carrera con id " + carreraId + " no pertenece a la categoria con id: " + categoriaId);
+            }
+
+            //si todo esta correcto, delegamos a la API de carreras para eliminarla completamente
+            webClient.delete()
+                    .uri("/eliminar/{id}", carreraId)
+                    .retrieve()
+                    .bodyToMono(Void.class)
+                    .block();
+        } catch (WebClientResponseException e) {
+            throw new RuntimeException("No existe carrera con id: " + carreraId);
+        }
     }
 
 }

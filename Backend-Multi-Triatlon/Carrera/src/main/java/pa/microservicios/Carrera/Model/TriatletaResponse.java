@@ -4,10 +4,35 @@
  */
 package pa.microservicios.Carrera.Model;
 
+import java.time.LocalDate;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
+
 /**
  *
  * @author Asus
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class TriatletaResponse {
-    
+    Long id;
+    String nombre;
+    LocalDate fechaNacimiento;
+    String identificacion;
+    String correo;
+    String genero;
+    Boolean activo;
+
+    String urlFoto;
+    String categoriaEdad;
+    Boolean modalidadCross;
+    String especialidad;
+
+    Long carreraId;
+
 }

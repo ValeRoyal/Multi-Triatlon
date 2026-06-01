@@ -5,6 +5,7 @@
 package pa.microservicios.Carrera.Model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,6 +29,6 @@ public class CarreraResponse {
     String paraQuien;
     
     Long categoriaId;
-    CategoriaResponse categoria;
+    CategoriaResponse categoria;//esta aqui porque el requerimiento pide consultar los datos de la carrera
     
 }
