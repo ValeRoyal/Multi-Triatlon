@@ -53,7 +53,7 @@ public class TriatletaRestController {
      * identificacion
      *
      * @param identificacion
-     * @return
+     * @return HTTP 200 si lo encuentra, HTTP 400 si falla
      */
     @RequestMapping(value = "/identificacion/{identificacion}", method = RequestMethod.GET)//define el endpoint y el verbo http
     public ResponseEntity<?> getTriatletaByIdentificacion(@PathVariable("identificacion") String identificacion) {//toma el id como parametro de la url
@@ -66,11 +66,11 @@ public class TriatletaRestController {
     }
 
     /**
-     * Define y expone el endpoint tipo GET para consultar un triatleta por su
-     * identificacion
+     * Define y expone el endpoint tipo GET para consultar triatletas por su
+     * genero
      *
      * @param genero
-     * @return HTTP 200 (exito) HTTP 400 si falla
+     * @return HTTP 200 con la lista de triatletas consultados
      */
     @RequestMapping(value = "/genero", method = RequestMethod.GET)
     public ResponseEntity<List<TriatletaResponse>> getTriatletasByGenero(@RequestParam String genero) {
@@ -86,7 +86,7 @@ public class TriatletaRestController {
      * @return HTTP 200 ok
      */
     @RequestMapping(value = "/categoria-edad", method = RequestMethod.GET)
-    public ResponseEntity<List<TriatletaResponse>> getTraitletasByCategoria(@RequestParam String categoriaEdad) { //viene en la url despues del ?categoria=...
+    public ResponseEntity<List<TriatletaResponse>> getTriatletasByCategoria(@RequestParam String categoriaEdad) { //viene en la url despues del ?categoriaEdad=...
         List<TriatletaResponse> triatletasPorCategoria = triatletaService.getTriatletasByCategoria(categoriaEdad);//delega a service
         return ResponseEntity.ok(triatletasPorCategoria); //retorna un HTTP 200 ok
     }
@@ -99,20 +99,20 @@ public class TriatletaRestController {
      * @return HTTP 200 ok
      */
     @RequestMapping(value = "/especialidad", method = RequestMethod.GET)
-    public ResponseEntity<List<TriatletaResponse>> getTraitletasByEspecialidad(@RequestParam String especialidad) { //viene en la url despues del ?especialidad=...
+    public ResponseEntity<List<TriatletaResponse>> getTriatletasByEspecialidad(@RequestParam String especialidad) { //viene en la url despues del ?especialidad=...
         List<TriatletaResponse> triatletasPorEspecialidad = triatletaService.getTriatletasByEspecialidad(especialidad);//delega a service
         return ResponseEntity.ok(triatletasPorEspecialidad); //retorna un HTTP 200 ok
     }
 
     /**
-     ** Expone y define el endpoint tipo GET para consultar todos los
-     * triatletas por si hacen o no modalidad cross
+     * Expone y define el endpoint tipo GET para consultar todos los
+     * triatletas por si hacen o no modalidad cross.
      *
      * @param modalidadCross
      * @return HTTP 200 ok
      */
     @RequestMapping(value = "/modalidad-cross", method = RequestMethod.GET)
-    public ResponseEntity<List<TriatletaResponse>> getTraitletasByModalidadCross(@RequestParam Boolean modalidadCross) {  //viene en la url despues del ?modalidadcross=
+    public ResponseEntity<List<TriatletaResponse>> getTriatletasByModalidadCross(@RequestParam Boolean modalidadCross) {  //viene en la url despues del ?modalidadCross=
         List<TriatletaResponse> triatletasPorCross = triatletaService.getTriatletasByModalidadCross(modalidadCross);//delega a service
         return ResponseEntity.ok(triatletasPorCross); //retorna un HTTP 200 ok
     }
@@ -168,15 +168,15 @@ public class TriatletaRestController {
         //toma el JSON del body con la etiqueta @RequestBody
         try {
             triatletaService.updateIdentificacion(id, body.get("identificacion"));//llama al service y extrae la identificacion del Map<>
-            return ResponseEntity.ok("Indentificacion actualizada"); //200 ok 
+            return ResponseEntity.ok("Identificacion actualizada"); //200 ok
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage()); //404 si no lo encuentra
         }
     }
 
     /**
-     * Expoen y define el endpoint tipo PATCH para actualizar el campo categoria
-     * del triatleta
+     * Expone y define el endpoint tipo PATCH para actualizar el campo categoria
+     * por edad del triatleta
      *
      * @param id
      * @param body
@@ -186,7 +186,7 @@ public class TriatletaRestController {
     public ResponseEntity<?> updateCategoria(@PathVariable("id") Long id, @RequestBody Map<String, String> body) {//Extrae el id de la URL, 
         //toma el JSON del body, luego lo guarda en el map
         try {
-            triatletaService.updateCategoria(id, body.get("categoriaEdad")); //delega a service para actualizar la categoria mandandole como parametro lo que extraiga de el campo categoria del Map<>
+            triatletaService.updateCategoria(id, body.get("categoriaEdad")); //delega a service para actualizar la categoria por edad extraida del Map<>
             return ResponseEntity.ok("Categoria actualizada"); //200 ok
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage()); //404, no lo encontro
@@ -194,7 +194,7 @@ public class TriatletaRestController {
     }
 
     /**
-     * Expoen y define el endpoint tipo PATCH para actualizar el campo genero
+     * Expone y define el endpoint tipo PATCH para actualizar el campo genero
      * del triatleta
      *
      * @param id
@@ -205,7 +205,7 @@ public class TriatletaRestController {
     public ResponseEntity<?> updateGenero(@PathVariable("id") Long id, @RequestBody Map<String, String> body) {
         //toma el JSON del body, luego lo guarda en el Map<>
         try {
-            triatletaService.updateGenero(id, body.get("genero")); //delega a service para actualizar la categoria mandandole como parametro lo que extraiga de el campo categoria del Map<>
+            triatletaService.updateGenero(id, body.get("genero")); //delega a service para actualizar el genero extraido del Map<>
             return ResponseEntity.ok("Genero actualizado"); //200 ok
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage()); //404, no lo encontro
@@ -228,6 +228,14 @@ public class TriatletaRestController {
         }
     }
 
+    /**
+     * Expone y define el endpoint tipo PATCH para registrar un triatleta en una
+     * carrera especifica.
+     *
+     * @param idTriatleta
+     * @param idCarrera
+     * @return HTTP 200 si se registra, HTTP 400 si falla
+     */
     @RequestMapping(value = "/{idTriatleta}/registrar-en-carrera/{idCarrera}", method = RequestMethod.PATCH)
     public ResponseEntity<?> registrarEnCarrera(@PathVariable("idTriatleta") Long idTriatleta, @PathVariable("idCarrera") Long idCarrera) {
         try {
@@ -239,4 +247,51 @@ public class TriatletaRestController {
         }
     }
 
+    /**
+     * Define y expone el endpoint que consulta la carrera a la que esta
+     * inscrito un triatleta.
+     *
+     * @param id
+     * @return ResponseEntity
+     */
+    @RequestMapping(value = "/{id}/carrera", method = RequestMethod.GET)
+    public ResponseEntity<?> consultarCarrera(@PathVariable("id") Long id) {
+        try {
+            TriatletaResponse consultar = triatletaService.consultarCarrera(id);
+            return ResponseEntity.ok(consultar);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    /**
+     * Define y expone el endpoint usado por el servicio carrera para consultar
+     * todos los triatletas que esten inscritos en una carrera
+     *
+     * @param id
+     * @return Response entity con una lista de responses
+     */
+    @RequestMapping(value = "/carrera/{id}", method = RequestMethod.GET)
+    public ResponseEntity<List<TriatletaResponse>> getTriatletasByCarrera(@PathVariable("id") Long id) {
+        List<TriatletaResponse> triatletasPorCarrera = triatletaService.getTriatletasByCarrera(id);//consulta todos los triatletas por su carrera delegando a service
+        return ResponseEntity.ok(triatletasPorCarrera);//200ok
+    }
+
+    /**
+     * Expone y define el endpoint tipo PATCH para quitar la carrera asociada a
+     * un triatleta. Lo usa la API de carreras cuando elimina un triatleta de
+     * una carrera especifica.
+     *
+     * @param idTriatleta id del triatleta que se va a quitar de la carrera
+     * @return HTTP 200 si todo salio bien, HTTP 400 si falla
+     */
+    @RequestMapping(value = "/{idTriatleta}/eliminar-de-carrera", method = RequestMethod.PATCH)
+    public ResponseEntity<?> eliminarDeCarrera(@PathVariable("idTriatleta") Long idTriatleta) {
+        try {
+            triatletaService.eliminarDeCarrera(idTriatleta);//delega a service para quitar la referencia externa
+            return ResponseEntity.ok("El triatleta ha sido eliminado de la carrera.");//200 ok
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());//400 si falla
+        }
+    }
 }

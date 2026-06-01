@@ -85,6 +85,7 @@ public interface TriatletaRepository extends JpaRepository<TriatletaDTO, Long> {
 
     /**
      * Encuentra todos los triatletas por genero (masculino o femenino)
+     *
      * @param genero
      * @return Lista de triatletas por genero
      */
@@ -92,6 +93,7 @@ public interface TriatletaRepository extends JpaRepository<TriatletaDTO, Long> {
 
     /**
      * Encuentra todos los triatletas por categoria segun su edad
+     *
      * @param categoriaEdad
      * @return Lista de triatletas por categoria segun edad
      */
@@ -99,6 +101,7 @@ public interface TriatletaRepository extends JpaRepository<TriatletaDTO, Long> {
 
     /**
      * Encuentra todos los triatletas por su especialidad
+     *
      * @param especialidad
      * @return Lista de triatletas por su especialidad
      */
@@ -106,8 +109,28 @@ public interface TriatletaRepository extends JpaRepository<TriatletaDTO, Long> {
 
     /**
      * Encuentra todos los triatletas por modalidad cross
+     *
      * @param modalidadCross
      * @return Lista de triatletas que hacen modalidad cross
      */
     List<TriatletaDTO> findByModalidadCross(Boolean modalidadCross);
+
+    /**
+     * Encuentra todos los triatletas por carrera
+     *
+     * @param carreraId
+     * @return Lista de triatletas por carrera
+     */
+    List<TriatletaDTO> findByCarreraId(Long carreraId);
+
+    /**
+     * Elimina de la carrera a un triatleta
+     *
+     * @param id
+     * @return entero para conocer el numero de filas actualizadas
+     */
+    @Modifying
+    @Transactional
+    @Query("UPDATE TriatletaDTO t SET t.carreraId = null WHERE t.id = :id")
+    int eliminarDeCarrera(@Param("id") Long id);
 }
