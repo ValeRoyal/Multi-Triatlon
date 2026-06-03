@@ -29,6 +29,5 @@ public class CarreraResponse {
     String paraQuien;
     
     Long categoriaId;
-    CategoriaResponse categoria;//esta aqui porque el requerimiento pide consultar los datos de la carrera
-    
+
 }

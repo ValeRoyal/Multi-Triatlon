@@ -50,7 +50,7 @@ public class TriatletaService {
      * @param dtos
      * @return Lista de Responses
      */
-    public List<TriatletaResponse> mapperAResponse(List<TriatletaDTO> dtos) {
+    private List<TriatletaResponse> mapperAResponse(List<TriatletaDTO> dtos) {
         //Creo mi nueva lista de responses donde los voy a guardar
         List<TriatletaResponse> responses = new ArrayList<>();
         //Por cada Objeto de tipo TriatletaDTO en la lista dtos
@@ -80,12 +80,12 @@ public class TriatletaService {
 
         TriatletaDTO guardado = triatletaRepository.save(triatletaDTO);
 
-//        try {
-//            String contenido = mensajeRegistro.replace("{nombre}", guardado.getNombre()); //remplazar la variable nombre por el nombre del triatleta creado
-//            enviarCorreoConfirmacion(guardado, asuntoRegistro, contenido); //usamos el metodo
-//        } catch (Exception e) {
-//            throw new RuntimeException("No fue posible enviar correo");
-//        }
+        try {
+            String contenido = mensajeRegistro.replace("{nombre}", guardado.getNombre()); //remplazar la variable nombre por el nombre del triatleta creado
+            enviarCorreoConfirmacion(guardado, asuntoRegistro, contenido); //usamos el metodo
+        } catch (Exception e) {
+            throw new RuntimeException("No fue posible enviar correo");
+        }
         return mapper.map(guardado, TriatletaResponse.class);
     }
 

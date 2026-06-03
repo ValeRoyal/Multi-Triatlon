@@ -59,7 +59,7 @@ public class CarreraService {
         CarreraDTO guardada = carreraRepository.save(carreraDTO);
 
         CarreraResponse response = mapper.map(guardada, CarreraResponse.class);
-        response.setCategoria(categoria);
+        response.setCategoriaId(categoria.getId());
         return response;
     }
 

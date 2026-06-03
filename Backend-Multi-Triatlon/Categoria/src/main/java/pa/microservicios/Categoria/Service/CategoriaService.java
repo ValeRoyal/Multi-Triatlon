@@ -128,7 +128,7 @@ public class CategoriaService {
      * @param categoriaId id de la categoria a consultar
      * @return CategoriaResponse con sus datos y su lista de carreras
      */
-    public CategoriaResponse getCarreras(Long categoriaId) {
+    public List<CarreraResponse> getCarreras(Long categoriaId) {
         //uso mi metodo ya creado en el service para buscar la categoria por su id
         CategoriaResponse response = getCategoriaById(categoriaId);
         //creo una lista de carreras response para consumir el endpoint del proyecto carrera
@@ -138,8 +138,7 @@ public class CategoriaService {
                 .bodyToFlux(CarreraResponse.class)//convertir el JSON de respuesta en un flujo de objetos CarreraResponse
                 .collectList()//recolectamos los objetos
                 .block();//bloqueante para esperar la respuesta de forma sincrona
-        response.setCarreras(carreras);
-        return response;
+        return carreras;
     }
 
     /**
