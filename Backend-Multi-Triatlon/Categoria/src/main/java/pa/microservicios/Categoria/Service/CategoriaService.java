@@ -119,6 +119,14 @@ public class CategoriaService {
         if (!categoriaRepository.existsById(id)) {//si no existe una categoria con ese id
             throw new RuntimeException("No existe categoria con id: " + id);
         }
+        //consulto las carreras por categoria que hay
+        List<CarreraResponse> carreras = getCarreras(id);
+        
+        //si no esta vacio, no borramos, para no dejar referencias huerfanas"
+        if(carreras != null && !carreras.isEmpty()){
+            throw new RuntimeException("No se puede eliminar la categoria porque tiene carreras asociadas");
+        }
+        
         categoriaRepository.deleteById(id);//delega a repository    
     }
 
