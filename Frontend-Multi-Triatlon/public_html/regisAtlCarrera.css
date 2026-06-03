@@ -1,0 +1,100 @@
+.nav-logo h3 { color: inherit; }
+.nav-logo { text-decoration: none; }
+
+.nav-link-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+}
+
+.hint {
+  opacity: 0.9;
+  font-size: 0.95rem;
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+.mensaje {
+  margin: 0.5rem 0 0.75rem;
+  font-size: 0.95rem;
+}
+
+.contador { opacity: 0.95; }
+
+/* Inputs mínimos (igual estilo que venimos usando) */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.input {
+  width: 100%;
+  padding: 0.75rem 0.85rem;
+  border-radius: var(--radio-mediano);
+  border: 1px solid var(--color-borde);
+  background: var(--color-claro);
+  color: var(--color-text);
+  outline: none;
+  box-shadow: var(--sombra-peque);
+}
+
+.confirm-box {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+/* Tabla */
+.table-wrap { overflow-x: auto; }
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-claro);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-grande);
+  overflow: hidden;
+  box-shadow: var(--sombra-peque);
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 0.75rem;
+  border-bottom: 1px dashed rgba(81, 141, 118, 0.7);
+  vertical-align: top;
+}
+
+.table th {
+  background: rgba(16, 86, 102, 0.14);
+  font-family: var(--font-titulo);
+}
+
+.table tr:hover td {
+  background: rgba(247, 244, 213, 0.65);
+}
+
+/* Botón seleccionar en tabla */
+.btn-select {
+  display: inline-flex;
+}
+
+/* Fila seleccionada */
+.row-selected td {
+  background: rgba(131, 153, 88, 0.20) !important;
+}
+
+@media (max-width: 900px) {
+  .confirm-box {
+    grid-template-columns: 1fr;
+  }
+}

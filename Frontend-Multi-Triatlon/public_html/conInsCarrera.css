@@ -1,0 +1,131 @@
+.nav-logo h3 { color: inherit; }
+.nav-logo { text-decoration: none; }
+
+.nav-link-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+}
+
+.hint {
+  opacity: 0.9;
+  font-size: 0.95rem;
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+.mensaje {
+  margin: 0.25rem 0 0.75rem;
+  font-size: 0.95rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.estado {
+  font-size: 0.95rem;
+  opacity: 0.95;
+}
+
+/* Scroll de carreras (similar al register) */
+.carreras-scroll {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(240px, 1fr);
+  gap: 0.75rem;
+
+  overflow-x: auto;
+  padding-bottom: 0.35rem;
+
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.carrera-item {
+  scroll-snap-align: start;
+
+  border-radius: var(--radio-grande);
+  border: 2px solid var(--color-borde);
+  background: var(--color-claro);
+  box-shadow: var(--sombra-peque);
+
+  padding: 0.75rem;
+  cursor: pointer;
+
+  transition: transform 150ms ease-out, box-shadow 150ms ease-out, border-color 150ms ease-out;
+}
+
+.carrera-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sombra-media);
+}
+
+.carrera-item.is-active {
+  border-color: var(--color-primario);
+  box-shadow: var(--sombra-grande);
+}
+
+.carrera-nombre {
+  margin: 0 0 0.25rem;
+  font-family: var(--font-titulo);
+  font-size: 1.1rem;
+}
+
+.carrera-meta {
+  display: grid;
+  gap: 0.2rem;
+  font-size: 0.95rem;
+  opacity: 0.98;
+}
+
+.contador { opacity: 0.95; }
+
+/* Tabla resultados */
+.table-wrap { overflow-x: auto; }
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-claro);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-grande);
+  overflow: hidden;
+  box-shadow: var(--sombra-peque);
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 0.75rem;
+  border-bottom: 1px dashed rgba(81, 141, 118, 0.7);
+  vertical-align: top;
+}
+
+.table th {
+  background: rgba(16, 86, 102, 0.14);
+  font-family: var(--font-titulo);
+}
+
+.table tr:hover td {
+  background: rgba(247, 244, 213, 0.65);
+}
+
+.foto-mini {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radio-circulo);
+  border: 2px solid var(--color-borde);
+  object-fit: cover;
+  display: block;
+  background: rgba(255, 250, 205, 0.35);
+}

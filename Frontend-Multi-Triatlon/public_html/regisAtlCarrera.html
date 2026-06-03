@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title>Registrarse en una carrera - Multi-Triatlón</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="regisAtlCarrera.css" />
+  </head>
+
+  <body>
+    <header class="nav">
+      <a class="nav-logo" href="home.html" aria-label="Volver al home">
+        <img src="../Resources/LogoSinFondo.png" alt="Logo de Multi-Triatlón" />
+        <h3>Multi-Triatlón</h3>
+      </a>
+
+      <nav aria-label="Navegación principal">
+        <ul class="nav-links">
+          <li><a href="home.html" class="nav-link">Home</a></li>
+          <li><a href="perfil.html" class="nav-link">Ver perfil</a></li>
+          <li>
+            <button class="nav-link nav-link-btn" id="btn-logout" type="button">
+              Cerrar sesión
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="page">
+      <!-- Intro -->
+      <section class="hero surface hero-wrap">
+        <div class="card hero-card">
+          <h1>Registrarse en una carrera</h1>
+          <p>
+            Hola, <strong id="user-nombre">Atleta</strong>. Aquí puedes ver las carreras disponibles y seleccionar una
+            para inscribirte.
+          </p>
+          
+        </div>
+      </section>
+
+      <!-- Selección / tabla de carreras -->
+      <section class="section" aria-labelledby="carreras">
+        <div class="section-head">
+          <h2 id="carreras">Carreras disponibles</h2>
+          <p id="contador" class="contador">Cargando carreras...</p>
+        </div>
+
+        <div class="card">
+          <div class="actions">
+            <button class="btn btn-principal" id="btn-recargar" type="button">Recargar</button>
+            <button class="btn btn-secundario" id="btn-limpiar" type="button">Limpiar selección</button>
+          </div>
+
+          <div id="mensaje" class="mensaje" aria-live="polite"></div>
+
+          <!-- Tabla se renderiza aquí -->
+          <div id="tabla-wrap"></div>
+        </div>
+      </section>
+
+      <!-- Confirmación -->
+      <section class="section" aria-labelledby="confirmacion">
+        <div class="card">
+          <h2 id="confirmacion">Confirmación</h2>
+          
+
+          <div class="confirm-box">
+            <div class="field">
+              <label>Triatleta (sesión)</label>
+              <input id="triatleta-info" class="input" type="text" disabled />
+              
+            </div>
+
+            <div class="field">
+              <label>Carrera seleccionada</label>
+              <input id="carrera-info" class="input" type="text" disabled value="Ninguna" />
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-principal" id="btn-inscribirme" type="button" disabled>
+              Inscribirme
+            </button>
+            <a class="btn btn-secundario" href="home.html">Volver</a>
+          </div>
+
+        </div>
+      </section>
+    </main>
+
+    <script src="regisAtlCarrera.js" defer></script>
+  </body>
+</html>

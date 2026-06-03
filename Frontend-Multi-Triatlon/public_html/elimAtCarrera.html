@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title>Eliminar atleta de una carrera - Multi-Triatlón</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="elimAtCarrera.css" />
+  </head>
+
+  <body>
+    <header class="nav">
+      <a class="nav-logo" href="home.html" aria-label="Volver al home">
+        <img src="../Resources/LogoSinFondo.png" alt="Logo de Multi-Triatlón" />
+        <h3>Multi-Triatlón</h3>
+      </a>
+
+      <nav aria-label="Navegación principal">
+        <ul class="nav-links">
+          <li><a href="home.html" class="nav-link">Home</a></li>
+          <li><a href="perfil.html" class="nav-link">Ver perfil</a></li>
+          <li>
+            <button class="nav-link nav-link-btn" id="btn-logout" type="button">
+              Cerrar sesión
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="page">
+      <!-- Intro -->
+      <section class="hero surface hero-wrap">
+        <div class="card hero-card">
+          <h1>Eliminar atleta de una carrera</h1>
+          <p>
+            Hola, <strong id="user-nombre">Atleta</strong>. Selecciona una carrera, luego un atleta inscrito, y prepara
+            la eliminación.
+          </p>
+          
+        </div>
+      </section>
+
+      <!-- Paso 1: Seleccionar carrera -->
+      <section class="section" aria-labelledby="paso1">
+        <div class="card">
+          <div class="section-head">
+            <h2 id="paso1">Paso 1: Selecciona la carrera</h2>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-principal" id="btn-carreras-recargar" type="button">Recargar carreras</button>
+            <button class="btn btn-secundario" id="btn-limpiar" type="button">Limpiar todo</button>
+          </div>
+
+          <div id="mensaje" class="mensaje" aria-live="polite"></div>
+
+          <div class="field">
+            <label>Carreras disponibles</label>
+            <div id="carreras-estado" class="estado">Cargando carreras...</div>
+            <div id="carreras-scroll" class="carreras-scroll" role="list"></div>
+            <input type="hidden" id="carrera-id" />
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-principal" id="btn-consultar-inscritos" type="button" disabled>
+              Consultar inscritos
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Paso 2: seleccionar triatleta inscrito -->
+      <section class="section" aria-labelledby="paso2">
+        <div class="section-head">
+          <h2 id="paso2">Paso 2: Selecciona el atleta a quitar</h2>
+          <p id="contador-inscritos" class="contador">Aún no has consultado inscritos.</p>
+        </div>
+
+        <div class="card">
+          <div id="inscritos-wrap"></div>
+        </div>
+      </section>
+
+      <!-- Paso 3: preparar eliminación -->
+      <section class="section" aria-labelledby="paso3">
+        <div class="card">
+          <h2 id="paso3">Paso 3: Preparar eliminación</h2>
+
+          <div class="confirm-box">
+            <div class="field">
+              <label>Carrera seleccionada</label>
+              <input id="carrera-info" class="input" type="text" disabled value="Ninguna" />
+            </div>
+
+            <div class="field">
+              <label>Atleta seleccionado</label>
+              <input id="atleta-info" class="input" type="text" disabled value="Ninguno" />
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-principal" id="btn-preparar-delete" type="button" disabled>
+              Eliminar inscripción 
+            </button>
+            <a class="btn btn-secundario" href="home.html">Volver</a>
+          </div>
+
+        </div>
+      </section>
+    </main>
+
+    <script src="elimAtCarrera.js" defer></script>
+  </body>
+</html>

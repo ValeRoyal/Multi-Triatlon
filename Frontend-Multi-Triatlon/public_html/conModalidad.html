@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title>Consultar por Modalidad Cross - Multi-Triatlón</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="conModalidad.css" />
+  </head>
+
+  <body>
+    <header class="nav">
+      <a class="nav-logo" href="home.html" aria-label="Volver al home">
+        <img src="../Resources/LogoSinFondo.png" alt="Logo de Multi-Triatlón" />
+        <h3>Multi-Triatlón</h3>
+      </a>
+
+      <nav aria-label="Navegación principal">
+        <ul class="nav-links">
+          <li><a href="home.html" class="nav-link">Home</a></li>
+          <li><a href="perfil.html" class="nav-link">Ver perfil</a></li>
+          <li>
+            <button class="nav-link nav-link-btn" id="btn-logout" type="button">
+              Cerrar sesión
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="page">
+      <section class="hero surface hero-wrap">
+        <div class="card hero-card">
+          <h1>Consultar triatletas por modalidad Cross</h1>
+          <p>Hola, <strong id="user-nombre">Atleta</strong>. Selecciona si participa o no en Cross.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="card">
+          <form id="form-modalidad" class="form-modalidad" novalidate>
+            <div class="field">
+              <label for="modalidad-cross">Modalidad Cross</label>
+              <select id="modalidad-cross" class="input" required>
+                <option value="">Selecciona...</option>
+                <option value="true">Sí</option>
+                <option value="false">No</option>
+              </select>             
+            </div>
+
+            <div class="actions">
+              <button type="submit" class="btn btn-principal" id="btn-consultar">Consultar</button>
+              <button type="button" class="btn btn-secundario" id="btn-limpiar">Limpiar</button>
+            </div>
+
+            <div id="mensaje" class="mensaje" aria-live="polite"></div>
+          </form>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="resultados">
+        <div class="section-head">
+          <h2 id="resultados">Resultados</h2>
+          <p id="contador" class="contador">Aún no has consultado.</p>
+        </div>
+
+        <div id="resultados-wrap"></div>
+      </section>
+    </main>
+
+    <script src="conModalidad.js" defer></script>
+  </body>
+</html>

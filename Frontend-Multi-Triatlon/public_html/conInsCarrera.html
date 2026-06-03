@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title>Triatletas inscritos en una carrera - Multi-Triatlón</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="conInsCarrera.css" />
+  </head>
+
+  <body>
+    <header class="nav">
+      <a class="nav-logo" href="home.html" aria-label="Volver al home">
+        <img src="../Resources/LogoSinFondo.png" alt="Logo de Multi-Triatlón" />
+        <h3>Multi-Triatlón</h3>
+      </a>
+
+      <nav aria-label="Navegación principal">
+        <ul class="nav-links">
+          <li><a href="home.html" class="nav-link">Home</a></li>
+          <li><a href="perfil.html" class="nav-link">Ver perfil</a></li>
+          <li>
+            <button class="nav-link nav-link-btn" id="btn-logout" type="button">
+              Cerrar sesión
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="page">
+      <!-- Intro -->
+      <section class="hero surface hero-wrap">
+        <div class="card hero-card">
+          <h1>Triatletas inscritos en una carrera</h1>
+          <p>
+            Hola, <strong id="user-nombre">Atleta</strong>. Selecciona una carrera y consulta sus inscritos.
+          </p>
+          
+        </div>
+      </section>
+
+      <!-- Selector de carrera (datos frescos) -->
+      <section class="section" aria-labelledby="carreras">
+        <div class="card">
+          <div class="section-head">
+            <h2 id="carreras">Carrera</h2>
+            <p class="hint">Selecciona una carrera para consultar.</p>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-principal" id="btn-carreras-recargar" type="button">Recargar carreras</button>
+            <button class="btn btn-secundario" id="btn-limpiar" type="button">Limpiar</button>
+          </div>
+
+          <div id="mensaje" class="mensaje" aria-live="polite"></div>
+
+          <div class="field">
+            <label>Carreras disponibles</label>
+            <div id="carreras-estado" class="estado">Cargando carreras...</div>
+            <div id="carreras-scroll" class="carreras-scroll" role="list"></div>
+
+            <!-- Carrera seleccionada -->
+            <input type="hidden" id="carrera-id" />
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-principal" id="btn-consultar" type="button" disabled>
+              Consultar inscritos
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Resultados -->
+      <section class="section" aria-labelledby="resultados">
+        <div class="section-head">
+          <h2 id="resultados">Resultados</h2>
+          <p id="contador" class="contador">Aún no has consultado.</p>
+        </div>
+
+        <div id="resultados-wrap"></div>
+      </section>
+    </main>
+
+    <script src="conInsCarrera.js" defer></script>
+  </body>
+</html>
