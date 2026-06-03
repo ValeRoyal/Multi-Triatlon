@@ -1,0 +1,427 @@
+/* Importamos las dos fuentes ssqeu vamos a usas desde Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tanker&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap');
+
+:root {
+    --dark-green:     #0A3323;
+    --moss-green:     #839958;
+    --beige:          #F7F4D5;
+    --rosy-brown:     #D3968C;
+    --midnight-green: #105666;
+    /* Definimos las variables de color para el tema claro */
+    --color-fondo: var(--beige);
+    --color-primario: var(--midnight-green);
+    --color-secundario: var(--rosy-brown);
+    --color-text: var(--dark-green);
+    --color-borde: #518d76;
+    --color-claro: var(--beige);
+
+    /* Tipografía */
+    --font-body: 'DM Sans', sans-serif;
+    --font-tanker: 'Tanker', cursive;
+    --font-titulo: 'Black Ops One', cursive;
+
+    /*Escala de la tipografía*/
+    --text-base: 1rem;      /*  16px */
+    --text-medio: 2rem;   /*  32px */
+    --text-grande: 3rem;   /*  48px */
+    --text-xl: 4rem;    /*  64px */
+    --text-2xl: 5rem;   /*  80px */
+
+    /* Radios de borde */
+    --radio-pequeño:   4px;
+    --radio-mediano:   8px;
+    --radio-grande:   12px;
+    --radio-xl:   20px;
+    --radio-2xl:  32px;
+    --radio-circulo: 9999px;
+
+    /*Sombras sombrías*/
+    --sombra-peque:  0 1px 3px rgba(10, 51, 35, 0.10);
+    --sombra-media:  0 4px 12px rgba(10, 51, 35, 0.14);
+    --sombra-grande: 0 8px 24px rgba(10, 51, 35, 0.18);
+    --sombra-xl:     0 16px 40px rgba(10, 51, 35, 0.22);
+    --sombra-pop: 4px 4px 0px var(--color-text);
+
+    /* Curvas de animación */
+    --ease-elastico: cubic-bezier(0.34, 1.56, 0.64, 1); /*este coso controla la velocidad de la animación, cómo pasa de su posición al hover por ejemplo*/
+}
+
+
+
+/* Resetamos algunas configuraciones que viene por defecto con algunos navegadores */
+*, *::before, *::after {
+    /* Volvemos el margen de la página cero para evitar espacios no deseados entre los elementos. */
+    margin: 0;
+    /* Volvemos el padding de la página cero para evitar espacios no deseados entre los elementos. */ 
+    padding: 0;
+    /*esto sirve para que cuándo hagamos lo del cálculo del ancho de un elemento, 
+    el padding y el borde no se sumen al ancho total, sino que se incluyan dentro de él.
+    Esto hace que sea más fácil trabajar con el diseño y evitar problemas de desbordamiento.*/
+    box-sizing: border-box; 
+}
+ 
+html {
+    /*Definimos que 1rem sea igual a 16px*/
+    font-size: 16px;
+    /*Es para que cuándo tenemos un link de la misma mágina no haya un salto
+    sino un desplazamiento lento*/
+    scroll-behavior: smooth;
+}
+
+/*Estilos para el cuerpo de la página*/
+body {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text);
+    background-color: var(--color-fondo);
+}
+
+img, video, svg {
+    /* Evitamos que se desborden de su contenedor. */
+    max-width: 100%;
+    /* Esto hace que la altura se ajuste automáticamente según la proporción de la imagen. */
+    height: auto;
+    /* Esto elimina el espacio debajo de las imágenes causado por el comportamiento inline por defecto. */
+    display: block; 
+}
+
+a {
+    /* Quitamos el subrayado de los enlaces. */
+    text-decoration: none;
+    /* Esto hace que el enlace herede el color del texto circundante, lo que es útil para mantener la coherencia visual. */
+    color: var(--color-primario);
+}
+
+a:hover {
+    /* Cambiamos el color del enlace al pasar el cursor por encima. */
+    color: var(--color-secundario);
+    /*Sin desplazamiento horizontal 
+    sin desplazamiento vertical
+    desenfoque de 8px
+    los otros tres son rgb del color 
+    el 0.8 es la opacidad*/
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+h1, h2, h3, h4, h5, h6, .headline {
+  font-family: var(--font-titulo);
+  color: var(--color-text);
+}
+
+h1 { 
+    font-size: var(--text-2xl); 
+}
+
+h2 { 
+    font-size: var(--text-xl); 
+}
+
+h3 { 
+    font-size: var(--text-grande); 
+    color: var(--rosy-brown);
+}
+
+h4 { 
+    font-size: var(--text-medio); 
+}
+
+p {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--color-text);
+}
+
+.hero {
+    /*Lo hacemos un contenedor */
+    display: flex;
+    flex-direction: column; /* que las cosas que hayan se distribuyan de forma vertical */
+    /*items y el texto en el centro*/
+    align-items: center; 
+    text-align: center;
+    /* Aplica un espacio vertical de 2 rem arriba y abajo (se supone)*/
+    padding-block: 2rem;
+    /*Espacio entre los elementos dentro de la sección hero*/
+    gap: 1.5rem;
+}
+
+/* TARJETAS DE COLORES Y ESTILOS */
+
+.surface {
+    background-color: var(--color-secundario);
+    /* Grosor de 1, línea sólida */
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio-xl);
+}
+ 
+.card {
+    background-color: var(--color-claro);
+    /* Grosor de 2, línea de rayitas */
+    border: 2px dashed var(--color-borde);
+    border-radius: var(--radio-xl);
+    /* Espacio entre las rayitas y el texto */
+    padding: 2rem;
+    box-shadow: var(--sombra-media);
+    
+    animation: flotar 4s ease-in-out infinite;
+}
+/*Animación de wingardium leviosa*/
+@keyframes flotar {
+    /*Al inicio y al final de la animación está en la posición cero*/
+    0%, 100% {
+        transform: translateY(0);
+    }
+    /*Cuándo ya está en la mitad de la animación la tarjeta sube 6px*/
+    50% {
+        transform: translateY(-6px);
+    }
+}
+ 
+.card:hover {
+    box-shadow: var(--sombra-grande);
+    transform: translateY(-8px) scale(1.02);
+
+    box-shadow: var(--sombra-grande);
+
+    border-color: var(--color-secundario);
+}
+ 
+.card-pop {
+    background-color: var(--color-secundario);
+    border: 2px solid var(--color-text);
+    border-radius: var(--radio-xl);
+    padding: 16px;
+    box-shadow: var(--sombra-pop);
+    /*Las siguientes tres líneas son de loo que sería la tansición 
+    que se va hacer en medio de lo que sería su estado cuándo
+     le pasamos el mouse por enciam*/
+    transition: transform 300ms ease-out,
+    box-shadow 155ms ease-out,
+    transform   150ms ease-out;
+}
+ 
+.card-pop:hover {
+    /* Cuadramos la sombra y que se mueva a la derecha y abajo*/
+    box-shadow: 2px 2px 0px var(--color-text);
+    transform: translate(2px, 2px);
+}
+ 
+.card-glass {
+    /* Lo mismo, los primeros tres son el color el último la opacidad*/
+    background: rgba(255, 250, 205, 0.6);
+    /* Esto es lo importante de tod, lo que hace es que detrás de todo esto coloca el fondo cómo borroso */
+    backdrop-filter: blur(12px); /* Así tipo le escucho borroso, así*/
+    /* Pues el borde lo más de normalito, pero lo mismo, con opacidad y hace que se vea mejor el efecto*/
+    border: 1px solid rgba(216, 202, 209, 0.50);
+    
+    border-radius: var(--radio-xl);
+    /*Espacio entre el bordde y el contenido*/
+    padding: 16px;
+}
+
+
+
+/* BOTONES Y OTRAS COSITAS*/
+.btn {
+    /* Hace que se comporte cómo un objeto en línea  */
+    display: inline-flex;
+    /*Centran contenido y texto*/
+    align-items: center;
+    justify-content: center;
+    /*Espacio entre los íconos y el texto*/
+    gap: 2px;
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    border-radius: var(--radio-grande);
+    /*Espacio arriba y abajo, después el de los lados*/
+    padding: 5px 6px;
+    /* Cambiamos el cursor para un efectoo más lindo*/
+    cursor: pointer;
+    /*Sin bordecito*/
+    border: none;
+    transition:
+        background-color 150ms ease-out, /*Color de fondo*/
+        color 150ms ease-out, /*color del texto*/
+        box-shadow 150ms ease-out,/*sombra*/
+        transform 150ms var(--ease-elatico);
+    /* Evita que el texto se parta en varias líneas. */
+    white-space: nowrap;
+}
+
+.btn:active {
+    /*HACE que la escala del botón, o sea el tamaño se haga más chiquis cuándo se oprime*/
+    transform: scale(0.97);
+}
+
+.btn-principal {
+    background-color: var(--middnight-green);
+    color: --beige;
+    box-shadow: var(--sombra-media);
+}
+
+.btn-principal:hover {
+    background-color: var(--moss-green);
+    color: var(--dark-green);
+    box-shadow: var(--sombra-grande);
+    /*Este es súper pro porque da la impresión que el botón flota, pero pues sólo sube un poquito*/
+    transform: translateY(-2px);
+}
+
+.btn-secundario {
+    background-color: var(--color-claro);
+    color: var(--color-text);
+    box-shadow: var(--sombra-media);
+}
+
+.btn-secundario:hover {
+    background-color: var(--color-primario);
+    color: white;
+    box-shadow: var(--sombra-grande);
+    transform: translateY(-2px);
+}
+
+.btn-ghost {
+    /*La idea del botón fantasma son esos botones sin relleno pero con borde*/
+    background-color: transparent;
+    color: var(--color-text);
+    border: 2px solid var(--color-text);
+    box-shadow: var(--sombra-peque);
+}
+
+
+
+.nav {
+    /*Lo hacemos un contenedor flex para que los elementos dentro de la barra de navegación se distribuyan en una fila*/
+    display: flex;
+    /*Espacio entre los elementos dentro de la barra de navegación*/
+    gap: var(--text-medio);
+    align-items: center;
+    /*ESto lo que hace es mandar un pedazo a la izquierda y otro a la derecha*/
+    justify-content: space-between;
+    /*Espacio arriba y abajo*/
+    padding: var(--text-base);
+    background-color: var(--dark-green);
+    box-shadow: var(--sombra-peque);
+    border-bottom: 1px solid var(--color-borde);
+    /* Hacer que se mantenga fija en la parte superior */
+    position: sticky;
+    /*Hace que se quede pegado al borde superior de la ventana*/
+    top: 0;
+    /* Hace que la barra de navegación se muestre por encima de otros elementos */
+    z-index: 1000;
+}
+
+.nav-logo {
+    font-family: var(--font-titulo);
+    font-size: var(--text-2xl);
+
+    color: var(--beige);
+    display: flex;
+    align-items: center;
+    /* Espacio entre el logo y el texto */
+    gap: 12px;
+}
+
+.nav-logo img {
+    /*Esto hace que el logo tenga un tamaño específico, pero sin deformarse*/
+    width: auto;
+    height: 40px;
+    /*Esto lo que hace es que quita espacios que se pueden colocar desde el navegador o cosas así*/
+    display: block;
+}
+
+.nav-logo:hover img {
+    /*Esto hace que el logo se agrande un poquito*/
+    transform: scale(1.1);
+}
+
+.nav-links {
+    display: flex;
+    /*Espacio entre cosos*/
+    gap: var(--text-medio);
+    /*Para las barras de navegación ponemos listas de las cositas que colocamos, 
+    entonces lo que hacemos es */
+    list-style: none;
+}
+
+.nav-link {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--moss-green);
+    transition: color 150ms ease-out;
+    list-style: none;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--color-claro);
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+/*-----------------------------*/
+.page {
+  width: min(1100px, 92vw);
+  margin: 0 auto;
+  padding: 2rem 0 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.hero-wrap {
+  padding: 2rem;
+}
+
+.hero-card {
+  width: min(900px, 100%);
+}
+
+.hero-emojis {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 2rem;
+}
+
+.hero-actions {
+  margin-top: 1.25rem;
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* Secciones */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.section-head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+
+/* Animación "pulse" para los botones/enlaces */
+.boton-animado {
+  animation: pulse 280ms ease-out;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.98); }
+  100% { transform: scale(1); }
+}
+ 
+ /*----------------------------*/
+
+
+
+
+
+
+
+
+
+
