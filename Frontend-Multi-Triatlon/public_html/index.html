@@ -1,15 +1,89 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html lang="es">
+  <head>
+    <title>Inicio - Multi-Triatlón</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="index.css" />
+  </head>
+
+  <body>
+    <!-- La barra superior que siempre se muestra -->
+    <header class="nav">
+      <div class="nav-logo">
+        <img src="../Resources/LogoSinFondo.png" alt="Multi-Triatlón Logo" class="nav-logo-image" />
+        <h3>Multi-Triatlón</h3>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link active">Inicio</a></li>
+        <li><a href="login.html" class="nav-link">Iniciar Sesión</a></li>
+        <li><a href="register.html" class="nav-link">Registrarse</a></li>
+      </ul>
+    </header>
+
+    <main class="page">
+      <!-- HERO -->
+      <section class="hero surface hero-wrap">        
+           <div class="card hero-card">
+          <h1>¡Bienvenido a Multi-Triatlón!</h1>
+          <p center>
+            Plataforma para gestionar eventos, atletas y resultados de manera sencilla y visual.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-principal" href="login.html" id="btn-inicio">Iniciar Sesión</a>
+            <a class="btn btn-secundario" href="register.html" id="btn-registrarse">Registrarse</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- QUIÉNES SOMOS -->
+      <section class="section">
+        <div class="section-head">
+          <h2>¿Quiénes somos?</h2>
+          <p>
+            Somos estudiantes de Ingeniería de Sistemas de la Universidad Distrital, dedicados a construir una app útil
+            para deportistas y equipos.
+          </p>
+        </div>
+
+        <div class="team-grid">
+          <article class="card team-card">
+            <div class="team-avatar" aria-hidden="true" >🌸</div>
+            <h4>Valentina Aguilar Perdomo</h4>
+            <a class="btn btn-ghost" href="https://www.linkedin.com/in/valen-aguilar-/" target="_blank" rel="noreferrer">
+              LinkedIn
+            </a>
+          </article>
+
+          <article class="card team-card">
+            <div class="team-avatar" aria-hidden="true">🚀</div>
+            <h4>Luis Sebastián Correa Barreto</h4>
+            <a class="btn btn-ghost" href="https://www.linkedin.com/in/luis-correa-60a729365/" target="_blank" rel="noreferrer">
+              LinkedIn
+            </a>
+          </article>
+
+          <article class="card team-card">
+            <div class="team-avatar" aria-hidden="true">⭐</div>
+            <h4>Sergio Steven Vanegas Cuervo</h4>
+            <a class="btn btn-ghost" href="https://www.linkedin.com/in/sergio-vanegas-612a82407/" target="_blank" rel="noreferrer">
+              LinkedIn
+            </a>
+          </article>
+        </div>
+      </section>
+
+      <!-- CONTACTO -->
+      <section class="section">
+        <div class="card-pop contact-card">
+          <h2>Contáctanos</h2>
+          <p>¿Tienes preguntas o quieres colaborar? Escríbenos a <strong>multitriatlon@udistrital.edu.co</strong></p>
+        </div>
+      </section>
+    </main>
+    <script src="index.js" defer></script>
+  </body>
 </html>

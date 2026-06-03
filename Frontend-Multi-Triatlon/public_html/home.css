@@ -1,0 +1,76 @@
+/* Fix mínimo para el logo */
+.nav-logo h3 { color: inherit; }
+.nav-logo { text-decoration: none; }
+
+/* Botón "Cerrar sesión" como link */
+.nav-link-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+}
+
+/* Nombre resaltado */
+.home-nombre {
+  color: var(--color-primario);
+}
+
+/* Paneles por módulo */
+.home-panel {
+  padding: 1.25rem;
+  border-radius: var(--radio-xl);
+}
+
+.home-panel-head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+}
+
+.home-panel-title {
+  /* h3 global ya está grande; lo dejamos así para jerarquía */
+  margin: 0;
+}
+
+.home-panel-subtitle {
+  margin: 0;
+  opacity: 0.95;
+}
+
+/* Fondos por módulo (sin tocar styles.css) */
+.home-panel--atleta {
+  background-color: rgba(211, 150, 140, 0.35); /* rosy-brown suave */
+}
+
+.home-panel--carrera {
+  background-color: rgba(16, 86, 102, 0.18); /* midnight-green suave */
+}
+
+.home-panel--categoria {
+  background-color: rgba(131, 153, 88, 0.28); /* moss-green suave */
+}
+
+/* Grid de acciones */
+.home-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.home-action {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.home-action .btn {
+  align-self: flex-start;
+}
+
+@media (max-width: 900px) {
+  .home-grid {
+    grid-template-columns: 1fr;
+  }
+}

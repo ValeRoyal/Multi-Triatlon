@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title>Home - Multi-Triatlón</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="home.css" />
+  </head>
+
+  <body>
+    <!-- NAV -->
+    <header class="nav">
+      <a class="nav-logo" href="home.html" aria-label="Ir al home">
+        <img src="../Resources/LogoSinFondo.png" alt="Logo de Multi-Triatlón" />
+        <h3>Multi-Triatlón</h3>
+      </a>
+
+      <nav aria-label="Navegación principal">
+        <ul class="nav-links">
+          <li><a href="perfil.html" class="nav-link" id="link-perfil">Ver perfil</a></li>
+          <li>
+            <button class="nav-link nav-link-btn" id="btn-logout" type="button">
+              Cerrar sesión
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="page">
+      <!-- BIENVENIDA -->
+      <section class="hero surface hero-wrap">
+        <div class="card hero-card">
+          <h1>Bienvenido, <span id="home-nombre" class="home-nombre">Atleta</span></h1>
+          <p>¿Qué nuevos retos quieres para hoy? Explora todas las posibilidades.</p>
+        </div>
+      </section>
+
+      <!-- ACCIONES -->
+      <section class="section" aria-labelledby="acciones">
+        <div class="section-head">
+          <h2 id="acciones">Acciones disponibles</h2>
+          <p>Explora por módulo. Cada tarjeta te lleva a su pantalla.</p>
+        </div>
+
+        <!-- ATLETA -->
+        <section class="surface home-panel home-panel--atleta" aria-labelledby="panel-atleta">
+          <div class="home-panel-head">
+            <h3 id="panel-atleta" class="home-panel-title">Atleta</h3>
+            <p class="home-panel-subtitle">Consultas y acciones relacionadas con triatletas.</p>
+          </div>
+
+          <div class="home-grid">
+            <article class="card home-action">
+              <h4>Triatletas por género</h4>
+              <p>Consulta grupos de triatletas filtrados por género.</p>
+              <a class="btn btn-secundario" href="conGenero.html">Ir</a>
+            </article>
+
+            <article class="card home-action">
+              <h4>Triatletas por categoría</h4>
+              <p>Consulta triatletas por categoría de edad.</p>
+              <a class="btn btn-secundario" href="conCategoria.html">Ir</a>
+            </article>
+
+            <article class="card home-action">
+              <h4>Triatletas por especialidad</h4>
+              <p>Filtra por especialidad de triatlón.</p>
+              <a class="btn btn-secundario" href="conEspecialidad.html">Ir</a>
+            </article>
+
+            <article class="card home-action">
+              <h4>Triatletas por modalidad Cross</h4>
+              <p>Consulta por participación en modalidad Cross (sí/no).</p>
+              <a class="btn btn-secundario" href="conModalidad.html">Ir</a>
+            </article>
+          </div>
+        </section>
+
+        <!-- CARRERA -->
+        <section class="surface home-panel home-panel--carrera" aria-labelledby="panel-carrera">
+          <div class="home-panel-head">
+            <h3 id="panel-carrera" class="home-panel-title">Carrera</h3>
+            <p class="home-panel-subtitle">Gestión y consultas sobre carreras e inscripciones.</p>
+          </div>
+
+          <div class="home-grid">
+            <article class="card home-action">
+              <h4>Registrarse en una carrera</h4>
+              <p>Asocia un triatleta a una carrera disponible.</p>
+              <a class="btn btn-principal" href="regisAtlCarrera.html">Ir</a>
+            </article>
+
+            <article class="card home-action">
+              <h4>Triatletas inscritos en una carrera</h4>
+              <p>Consulta todos los triatletas inscritos en una carrera específica.</p>
+              <a class="btn btn-secundario" href="conInsCarrera.html">Ir</a>
+            </article>
+
+            <article class="card home-action">
+              <h4>Eliminar atleta de una carrera</h4>
+              <p>Quita a un triatleta de una carrera (relación atleta-carrera).</p>
+              <a class="btn btn-secundario" href="elimAtCarrera.html">Ir</a>
+            </article>
+
+            <article class="card home-action">
+              <h4>Crear carrera</h4>
+              <p>Registra una nueva carrera de triatlón.</p>
+              <a class="btn btn-secundario" href="crearCarrera.html">Ir</a>
+            </article>
+
+            <article class="card home-action">
+              <h4>Modificar carrera</h4>
+              <p>Actualiza ubicación o fecha de ejecución de una carrera.</p>
+              <a class="btn btn-secundario" href="modfCarrera.html">Ir</a>
+            </article>
+
+            <article class="card home-action">
+              <h4>Eliminar carrera</h4>
+              <p>Elimina una carrera por su ID.</p>
+              <a class="btn btn-secundario" href="elimCarrera.html">Ir</a>
+            </article>
+
+            <article class="card home-action">
+              <h4>Categoría de una carrera</h4>
+              <p>Consulta la categoría asociada a una carrera específica.</p>
+              <a class="btn btn-secundario" href="conCategoriaCarrera.html">Ir</a>
+            </article>
+          </div>
+        </section>
+
+        <!-- CATEGORÍA -->
+        <section class="surface home-panel home-panel--categoria" aria-labelledby="panel-categoria">
+          <div class="home-panel-head">
+            <h3 id="panel-categoria" class="home-panel-title">Categoría</h3>
+            <p class="home-panel-subtitle">Gestión de categorías y relación categoría-carreras.</p>
+          </div>
+
+          <div class="home-grid">
+            <article class="card home-action">
+              <h4>Crear nueva categoría</h4>
+              <p>Registra una nueva categoría en el sistema.</p>
+              <a class="btn btn-secundario" href="crearCategoria.html">Ir</a>
+            </article>
+
+            <article class="card home-action">
+              <h4>Modificar categoría</h4>
+              <p>Actualiza la descripción o recomendación de una categoría.</p>
+              <a class="btn btn-secundario" href="modfCategoria.html">Ir</a>
+            </article>
+
+            <article class="card home-action">
+              <h4>Carreras por categoría</h4>
+              <p>Consulta todas las carreras asociadas a una categoría.</p>
+              <a class="btn btn-secundario" href="conCarreraCategoría.html">Ir</a>
+            </article>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="home.js" defer></script>
+  </body>
+</html>
