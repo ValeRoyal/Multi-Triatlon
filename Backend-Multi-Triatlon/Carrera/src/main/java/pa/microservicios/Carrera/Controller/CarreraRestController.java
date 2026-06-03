@@ -51,6 +51,18 @@ public class CarreraRestController {
     }
 
     /**
+     * Define y expone el endpoint de tipo GET para consultar todas las
+     * carreras disponibles
+     *
+     * @return 200 si todo salio bien
+     */
+    @RequestMapping(value = "/todas", method = RequestMethod.GET)
+    public ResponseEntity<List<CarreraResponse>> getAllCarreras() {
+        List<CarreraResponse> carreras = carreraService.getAllCarreras();
+        return ResponseEntity.ok(carreras);//200ok
+    }
+    
+    /**
      * Expone y define el endpoint tipo GET para consultar una carrera por su id
      *
      * @param id

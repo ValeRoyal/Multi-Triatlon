@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import pa.microservicios.Categoria.Model.CarreraResponse;
 import pa.microservicios.Categoria.Model.CategoriaDTO;
 import pa.microservicios.Categoria.Model.CategoriaResponse;
 import pa.microservicios.Categoria.Service.CategoriaService;
@@ -139,9 +140,9 @@ public class CategoriaRestController {
      * @return CategoriaResponse con sus datos y su lista de carreras
      */
     @RequestMapping(value = "/consultar-carreras-por-categoria/{categoriaId}", method = RequestMethod.GET)
-    public ResponseEntity<CategoriaResponse> getCarreras(@PathVariable("categoriaId") Long categoriaId){
-        CategoriaResponse response = categoriaService.getCarreras(categoriaId);//delega a service para consultar categoria y carreras
-        return ResponseEntity.ok(response);//200 ok
+    public ResponseEntity<List<CarreraResponse>> getCarreras(@PathVariable("categoriaId") Long categoriaId){
+        List<CarreraResponse> responsesCarreras = categoriaService.getCarreras(categoriaId);//delega a service para consultar categoria y carreras
+        return ResponseEntity.ok(responsesCarreras);//200 ok
     }
 
     /**

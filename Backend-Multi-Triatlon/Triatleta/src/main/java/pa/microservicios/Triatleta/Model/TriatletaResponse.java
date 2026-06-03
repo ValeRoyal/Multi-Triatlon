@@ -36,5 +36,7 @@ public class TriatletaResponse {
     
     //datos de la carrera que vienen de otro microservicio se guarda el id de esta carrera como referencia externa
     Long carreraId;
+    //aqui debe haber esta asociacion porque el requerimiento pide explicitamente que se debe traer la informacion de la carrera
+    //junto con todos los datos del triatleta
     CarreraResponse carrera;
 }

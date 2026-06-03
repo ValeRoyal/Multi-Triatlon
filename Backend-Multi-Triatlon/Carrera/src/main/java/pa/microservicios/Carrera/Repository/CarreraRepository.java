@@ -59,4 +59,5 @@ public interface CarreraRepository extends JpaRepository<CarreraDTO, Long> {
      * @return  Lista de dtos
      */
     List<CarreraDTO> findByCategoriaId(Long categoriaId);
+    
 }

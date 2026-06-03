@@ -1,8 +1,9 @@
-========================================================
- DESCRIPCIÓN DE LA BASE DE DATOS — PROYECTO TRIATLON
-========================================================
+DESCRIPCIÓN DE LA BASE DE DATOS — PROYECTO MULTI-TRIATLON
 
-Nombre de la base de datos : triatlon
+Nombre de las bases de datos :
+multitriatlonpacarrera,
+multitriatlonpatriatleta,
+multitriatlonpacategoria.
 Motor de base de datos     : MySQL
 Puerto                     : 3306 (se recomienda verificar en el XAMPP)
 Host                       : localhost
@@ -10,27 +11,27 @@ Host                       : localhost
 ----------------------------------------------------------------
 HERRAMIENTAS Y VERSIONES NECESARIAS
 -------------------------------------
-- XAMPP                  v3.3.0 o superior  (gestor del entorno local)
+- XAMPP                  v3.3.0 o superior
 - Java JDK               21
 - Conector JDBC          Dependencia de spring MySQL JDBC Driver 
 - NetBeans IDE           25
 
 --------------------------------------------------------
- CREDENCIALES DE ACCESO
+ CREDENCIALES DE ACCESO (en todas las bd)
 --------------------------------------------------------
 Usuario    : root
-Contraseña : (vacía / sin contraseña)
+Contraseña : (vacia)
 
 --------------------------------------------------------
- TABLA: se genera automaticamente
+ TABLAS: se generan automaticamente
 --------------------------------------------------------
 
-Descripción: Almacena la información de cada triatleta registrado en el sistema.
+Descripción: Almacena la información de cada triatleta, carrera y categoria registrada en el sistema.
 
 --------------------------------------------------------
  SCRIPT DE CREACIÓN
 --------------------------------------------------------
-Ver archivo: data/triatlon.sql
+Ver archivo: data/multitrialon.sql
 
 El script incluye:
   1. Creación de la base de datos
@@ -38,12 +39,32 @@ El script incluye:
 --------------------------------------------------------
  CONFIGURACIÓN EN ARCHIVO PROPERTIES
 --------------------------------------------------------
-El archivo application.properties contiene las claves:
+El archivo application.properties de cada proyecto contiene las claves:
 
-spring.datasource.url=jdbc:mysql://localhost:3306/triatlon
+----------------------TRIATLETA-----------------------------
+spring.datasource.url=jdbc:mysql://localhost:3306/multitriatlonpatriatleta
 spring.datasource.username=root
 spring.datasource.password=
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 spring.jpa.hibernate.ddl-auto=update
 logging.pattern.console=%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n 
 logging.level.org.hibernate.SQL=debug
+ 
+----------------------CARRERA-----------------------------
+spring.datasource.url=jdbc:mysql://localhost:3306/multitriatlonpacarrera
+spring.datasource.username=root
+spring.datasource.password=
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.jpa.hibernate.ddl-auto=update
+logging.pattern.console=%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n 
+logging.level.org.hibernate.SQL=debug
+ 
+----------------------CATEGORIA-----------------------------
+spring.datasource.url=jdbc:mysql://localhost:3306/multitriatlonpacategoria
+spring.datasource.username=root
+spring.datasource.password=
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.jpa.hibernate.ddl-auto=update
+logging.pattern.console=%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n 
+logging.level.org.hibernate.SQL=debug
+ 

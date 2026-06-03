@@ -59,7 +59,7 @@ public class CarreraService {
         CarreraDTO guardada = carreraRepository.save(carreraDTO);
 
         CarreraResponse response = mapper.map(guardada, CarreraResponse.class);
-        response.setCategoria(categoria);
+        response.setCategoriaId(categoria.getId());
         return response;
     }
 
@@ -91,6 +91,22 @@ public class CarreraService {
         } catch (WebClientResponseException e) {
             throw new RuntimeException("No existe categoria con id: " + categoriaId);
         }
+    }
+
+    /**
+     * Lista todas las carreras disponibles en la bd
+     * @return
+     */
+    public List<CarreraResponse> getAllCarreras() {
+        List<CarreraDTO> dtos = carreraRepository.findAll();
+        List<CarreraResponse> responses = new ArrayList<>();
+
+        for (CarreraDTO carreraDTO : dtos) {
+            CarreraResponse response = mapper.map(carreraDTO, CarreraResponse.class);
+            responses.add(response);
+        }
+
+        return responses;
     }
 
     /**
