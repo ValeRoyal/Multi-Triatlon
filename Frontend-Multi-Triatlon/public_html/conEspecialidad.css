@@ -1,0 +1,96 @@
+.nav-logo h3 { color: inherit; }
+.nav-logo { text-decoration: none; }
+
+.nav-link-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+}
+
+.form-especialidad {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.input {
+  width: 100%;
+  padding: 0.75rem 0.85rem;
+  border-radius: var(--radio-mediano);
+  border: 1px solid var(--color-borde);
+  background: var(--color-claro);
+  color: var(--color-text);
+  outline: none;
+  box-shadow: var(--sombra-peque);
+}
+
+.input:focus {
+  border-color: var(--color-primario);
+  box-shadow: 0 0 0 3px rgba(16, 86, 102, 0.18);
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.mensaje {
+  margin-top: 0.25rem;
+  font-size: 0.95rem;
+}
+
+.hint {
+  opacity: 0.9;
+  font-size: 0.95rem;
+}
+
+.contador { opacity: 0.95; }
+
+/* Tabla */
+.table-wrap { overflow-x: auto; }
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-claro);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-grande);
+  overflow: hidden;
+  box-shadow: var(--sombra-peque);
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 0.75rem;
+  border-bottom: 1px dashed rgba(81, 141, 118, 0.7);
+  vertical-align: top;
+}
+
+.table th {
+  background: rgba(211, 150, 140, 0.22); /* tono distinto */
+  font-family: var(--font-titulo);
+}
+
+.table tr:hover td {
+  background: rgba(247, 244, 213, 0.65);
+}
+
+.foto-mini {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radio-circulo);
+  border: 2px solid var(--color-borde);
+  object-fit: cover;
+  display: block;
+  background: rgba(255, 250, 205, 0.35);
+}

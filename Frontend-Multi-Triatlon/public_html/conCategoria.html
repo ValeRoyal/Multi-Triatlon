@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <title>Consultar por Género - Multi-Triatlón</title>
+    <title>Consultar por Categoría (Edad) - Multi-Triatlón</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="conGenero.css" />
+    <link rel="stylesheet" href="conCategoria.css" />
   </head>
 
   <body>
-    <!-- NAV (misma idea que home) -->
     <header class="nav">
       <a class="nav-logo" href="home.html" aria-label="Volver al home">
         <img src="../Resources/LogoSinFondo.png" alt="Logo de Multi-Triatlón" />
@@ -33,24 +32,35 @@
     <main class="page">
       <section class="hero surface hero-wrap">
         <div class="card hero-card">
-          <h1>Consultar triatletas por género</h1>
-          <p>
-            Hola, <strong id="user-nombre">Atleta</strong>. Selecciona un género y consulta el grupo.
-          </p>
+          <h1>Consultar triatletas por categoría (edad)</h1>
+          <p>Hola, <strong id="user-nombre">Atleta</strong>. Selecciona una categoría de edad.</p>
           
         </div>
       </section>
 
       <section class="section">
         <div class="card">
-          <form id="form-genero" class="form-genero" novalidate>
+          <form id="form-categoria" class="form-categoria" novalidate>
             <div class="field">
-              <label for="genero">Género</label>
-              <select id="genero" class="input" required>
+              <label for="categoria-edad">Categoría (edad)</label>
+              <select id="categoria-edad" class="input" required>
                 <option value="">Selecciona...</option>
-                <option value="Femenino">Femenino</option>
-                <option value="Masculino">Masculino</option>
+                <option>Pre-benjamin</option>
+                <option>Benjamin</option>
+                <option>Alevin</option>
+                <option>Infantil</option>
+                <option>Cadetes</option>
+                <option>Juvenil</option>
+                <option>Junior</option>
+                <option>Sub-23</option>
+                <option>Absoluta</option>
+                <option>Veterano 1</option>
+                <option>Veterano 2</option>
+                <option>Veterano 3</option>
               </select>
+              <small class="hint">
+                Esta consulta usa el endpoint <code>/api/triatletas/categoria-edad</code>.
+              </small>
             </div>
 
             <div class="actions">
@@ -73,12 +83,10 @@
           <p id="contador" class="contador">Aún no has consultado.</p>
         </div>
 
-        <div id="grid" class="grid">
-            
-        </div>
+        <div id="resultados-wrap"></div>
       </section>
     </main>
 
-    <script src="conGenero.js" defer></script>
+    <script src="conCategoria.js" defer></script>
   </body>
 </html>
