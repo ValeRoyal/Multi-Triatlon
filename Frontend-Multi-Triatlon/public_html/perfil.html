@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <title>Perfil - Multi-Triatlon</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="perfil.css" />
+</head>
+
+<body>
+  <header class="nav">
+    <a class="nav-logo" href="home.html" aria-label="Volver al home">
+      <img src="../Resources/LogoSinFondo.png" alt="Logo de Multi-Triatlon" />
+      <h3>Multi-Triatlon</h3>
+    </a>
+
+    <nav aria-label="Navegacion principal">
+      <ul class="nav-links">
+        <li><a href="home.html" class="nav-link">Home</a></li>
+        <li><a href="perfil.html" class="nav-link active">Ver perfil</a></li>
+        <li>
+          <button class="nav-link nav-link-btn" id="btn-logout" type="button">
+            Cerrar sesion
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="hero surface hero-wrap">
+      <div class="card hero-card">
+        <h1>Perfil del triatleta</h1>
+        <p>Hola, <strong id="user-nombre">Atleta</strong>. Aqui puedes ver y modificar tus datos principales.</p>
+
+        <div class="hero-actions">
+          <button type="button" class="btn btn-secundario" id="btn-recargar">
+            Recargar perfil
+          </button>
+        </div>
+
+        <div id="mensaje-carga" class="mensaje" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="datos-perfil">
+      <div class="section-head">
+        <h2 id="datos-perfil">Datos del perfil</h2>
+        <p id="estado-perfil" class="estado">Cargando perfil...</p>
+      </div>
+
+      <div class="card perfil-card" id="perfil-card" hidden>
+        <div class="perfil-top">
+          <img id="perfil-foto" class="perfil-foto" alt="Foto del triatleta" />
+
+          <div>
+            <h3 id="perfil-nombre">Triatleta</h3>
+            <p id="perfil-correo">Correo</p>
+          </div>
+        </div>
+
+        <dl class="perfil-grid">
+          <div>
+            <dt>ID</dt>
+            <dd id="dato-id"></dd>
+          </div>
+          <div>
+            <dt>Identificacion</dt>
+            <dd id="dato-identificacion"></dd>
+          </div>
+          <div>
+            <dt>Fecha nacimiento</dt>
+            <dd id="dato-fecha"></dd>
+          </div>
+          <div>
+            <dt>Genero</dt>
+            <dd id="dato-genero"></dd>
+          </div>
+          <div>
+            <dt>Activo</dt>
+            <dd id="dato-activo"></dd>
+          </div>
+          <div>
+            <dt>Categoria edad</dt>
+            <dd id="dato-categoria"></dd>
+          </div>
+          <div>
+            <dt>Modalidad Cross</dt>
+            <dd id="dato-cross"></dd>
+          </div>
+          <div>
+            <dt>Especialidad</dt>
+            <dd id="dato-especialidad"></dd>
+          </div>
+          <div>
+            <dt>Carrera ID</dt>
+            <dd id="dato-carrera-id"></dd>
+          </div>
+          <div>
+            <dt>URL foto</dt>
+            <dd id="dato-url-foto"></dd>
+          </div>
+        </dl>
+
+        <div id="carrera-wrap" class="carrera-wrap" hidden>
+          <h4>Carrera asociada</h4>
+
+          <dl class="perfil-grid">
+            <div>
+              <dt>Nombre</dt>
+              <dd id="dato-carrera-nombre"></dd>
+            </div>
+            <div>
+              <dt>Ubicacion</dt>
+              <dd id="dato-carrera-ubicacion"></dd>
+            </div>
+            <div>
+              <dt>Fecha</dt>
+              <dd id="dato-carrera-fecha"></dd>
+            </div>
+            <div>
+              <dt>Dificultad</dt>
+              <dd id="dato-carrera-dificultad"></dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="modificar-perfil">
+      <div class="card">
+        <div class="section-head">
+          <h2 id="modificar-perfil">Modificar caracteristica</h2>
+          <p>Selecciona un solo dato para actualizar.</p>
+        </div>
+
+        <form id="form-modificar" class="form-perfil" novalidate>
+          <div class="field">
+            <label for="campo-modificar">Caracteristica</label>
+            <select id="campo-modificar" class="input" required disabled>
+              <option value="">Selecciona...</option>
+              <option value="nombre">Nombre</option>
+              <option value="identificacion">Identificacion</option>
+              <option value="categoriaEdad">Categoria por edad</option>
+              <option value="genero">Genero</option>
+            </select>
+          </div>
+
+          <div class="field" id="valor-wrap">
+            <label for="nuevo-valor">Nuevo valor</label>
+            <input type="text" id="nuevo-valor" class="input" disabled required />
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="btn btn-principal" id="btn-guardar" disabled>
+              Guardar cambio
+            </button>
+          </div>
+
+          <div id="mensaje-modificar" class="mensaje" aria-live="polite"></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script src="perfil.js" defer></script>
+</body>
+
+</html>
