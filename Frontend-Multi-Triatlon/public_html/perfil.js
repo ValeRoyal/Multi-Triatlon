@@ -97,6 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function setSessionUser(triatleta) {
         localStorage.setItem("sessionUser", JSON.stringify({
+            id: triatleta.id,
             nombre: triatleta.nombre,
             identificacion: triatleta.identificacion,
             correo: triatleta.correo,

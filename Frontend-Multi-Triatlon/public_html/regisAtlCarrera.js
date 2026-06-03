@@ -31,6 +31,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Este es el patrón del endpoint de inscripción (lo armamos luego)
   const ENDPOINT_REGISTRO = (idTriatleta, idCarrera) =>
     `${API_TRIATLETA}/api/triatletas/${idTriatleta}/registrar-en-carrera/${idCarrera}`;
+  const ENDPOINT_TRIATLETA_IDENTIFICACION = (identificacion) =>
+    `${API_TRIATLETA}/api/triatletas/identificacion/${encodeURIComponent(identificacion)}`;
 
   // =========================
   // 2) DOM
@@ -93,6 +95,28 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     return await resp.json(); // List<CarreraResponse>
+  }
+
+  async function fetchTriatletaPorIdentificacion(identificacion) {
+    const resp = await fetch(ENDPOINT_TRIATLETA_IDENTIFICACION(identificacion), { method: "GET" });
+
+    if (!resp.ok) {
+      const txt = await resp.text().catch(() => "");
+      throw new Error(txt || `Error HTTP ${resp.status}`);
+    }
+
+    return await resp.json();
+  }
+
+  async function registrarTriatletaEnCarrera(idTriatleta, idCarrera) {
+    const resp = await fetch(ENDPOINT_REGISTRO(idTriatleta, idCarrera), { method: "PATCH" });
+
+    if (!resp.ok) {
+      const txt = await resp.text().catch(() => "");
+      throw new Error(txt || `Error HTTP ${resp.status}`);
+    }
+
+    return await resp.json();
   }
 
   // =========================
@@ -224,43 +248,57 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // =========================
-  // 8) ACCIÓN FINAL: preparar datos para fetch manual
+  // 8) ACCIÓN FINAL: registrar en carrera
   // =========================
-  function prepararRegistro() {
+  async function resolverTriatletaActual() {
     const sessionUser = getSessionUser();
 
-    // OJO: en tu login actual podrías no tener id (dependiendo de cómo lo guardes).
-    // Ideal: guardar también el id del triatleta tras consultarlo.
-    const idTriatleta = sessionUser?.id ?? null;
+    if (sessionUser?.id) return sessionUser;
+    if (!sessionUser?.identificacion) {
+      throw new Error("No hay una sesión válida para identificar al triatleta.");
+    }
+
+    const triatleta = await fetchTriatletaPorIdentificacion(sessionUser.identificacion);
+    localStorage.setItem("sessionUser", JSON.stringify({
+      ...sessionUser,
+      id: triatleta.id,
+      nombre: triatleta.nombre,
+      identificacion: triatleta.identificacion,
+      correo: triatleta.correo,
+    }));
+
+    return triatleta;
+  }
+
+  async function registrarSeleccion() {
     const idCarrera = carreraSeleccionada?.id ?? null;
 
-    // Este es el objeto que tú usarías luego en tu fetch manual:
-    const registro = {
-      idTriatleta,
-      idCarrera,
-      endpointSugerido:
-        idTriatleta && idCarrera ? ENDPOINT_REGISTRO(idTriatleta, idCarrera) : null,
-      metodo: "PATCH",
-      notas:
-        !idTriatleta
-          ? "Falta idTriatleta. Solución: consultar triatleta por identificación y guardar su id en sessionUser."
-          : "Listo para enviar.",
-      sessionUser, // útil para debug
-      carreraSeleccionada, // útil para debug
-    };
-
-    window.__registroCarrera = registro;
-    console.log("__registroCarrera =>", registro);
-
-    if (!idTriatleta) {
-      setMensaje(
-        "Carrera seleccionada, pero falta el id del triatleta en la sesión. Revisa consola: __registroCarrera.",
-        "error"
-      );
+    if (!idCarrera) {
+      setMensaje("Primero selecciona una carrera.", "error");
       return;
     }
 
-    setMensaje("Datos listos para tu fetch manual. Revisa consola: __registroCarrera.", "ok");
+    if (btnInscribirme) btnInscribirme.disabled = true;
+    setMensaje("Registrando inscripción...", "info");
+
+    try {
+      const triatleta = await resolverTriatletaActual();
+      const actualizado = await registrarTriatletaEnCarrera(triatleta.id, idCarrera);
+
+      localStorage.setItem("sessionUser", JSON.stringify({
+        id: actualizado.id ?? triatleta.id,
+        nombre: actualizado.nombre ?? triatleta.nombre,
+        identificacion: actualizado.identificacion ?? triatleta.identificacion,
+        correo: actualizado.correo ?? triatleta.correo,
+      }));
+
+      setMensaje(`Inscripción confirmada en "${safeText(carreraSeleccionada.nombreCarrera)}".`, "ok");
+    } catch (err) {
+      console.error(err);
+      setMensaje(`No fue posible inscribirte. ${err?.message || ""}`.trim(), "error");
+    } finally {
+      if (btnInscribirme) btnInscribirme.disabled = !carreraSeleccionada;
+    }
   }
 
   // =========================
@@ -292,7 +330,7 @@ document.addEventListener("DOMContentLoaded", () => {
       setMensaje("Primero selecciona una carrera.", "error");
       return;
     }
-    prepararRegistro();
+    registrarSeleccion();
   });
 
   async function loadCarreras() {

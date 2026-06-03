@@ -233,6 +233,8 @@ p {
     gap: 2px;
     font-family: var(--font-body);
     font-size: var(--text-base);
+    /*Tocó meterle esto porque sino esas letricas nada que ver*/
+    font-weight: bold;
     border-radius: var(--radio-grande);
     /*Espacio arriba y abajo, después el de los lados*/
     padding: 5px 6px;
@@ -269,14 +271,25 @@ p {
 }
 
 .btn-secundario {
-    background-color: var(--color-claro);
-    color: var(--color-text);
+    background-color: var(--rosy-brown);
+    color: var(--dark-green);
+    border: 2px solid var(--dark-green);
+    /* Sombra media definida en las variables globales */
     box-shadow: var(--sombra-media);
+    /* Espaciado de adento lo es que entre los cosos 12px arriba y abajo, 24px a los lados */
+    padding: 12px 24px;
+    /* Separación de afuera 1px arriba y abajo, 10px a los lados */
+    margin: 1 10px;
+    /* Animación suave para hover */
+    transition: all 0.3s ease;
 }
 
+/* Efecto al pasar el cursor sobre el botón */
 .btn-secundario:hover {
-    background-color: var(--color-primario);
-    color: white;
+    background-color: var(--moss-green);
+    color: var(--beige);
+    /* Bordecito rosado */
+    border-color: var(--rosy-brown);
     box-shadow: var(--sombra-grande);
     transform: translateY(-2px);
 }
@@ -314,7 +327,7 @@ p {
 
 .nav-logo {
     font-family: var(--font-titulo);
-    font-size: var(--text-2xl);
+    font-size: var(--text-medio);
 
     color: var(--beige);
     display: flex;
@@ -324,6 +337,7 @@ p {
 }
 
 .nav-logo img {
+    font-size: var(--text-pequeño);
     /*Esto hace que el logo tenga un tamaño específico, pero sin deformarse*/
     width: auto;
     height: 40px;

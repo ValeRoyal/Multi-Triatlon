@@ -12,7 +12,7 @@
   <body>
     <header class="nav">
       <a class="nav-logo" href="home.html" aria-label="Volver al home">
-        <img src="../Resources/LogoSinFondo.png" alt="Logo de Multi-Triatlón" />
+        <img src="../Resources/LogoSinFondo.png" alt="Logo" />
         <h3>Multi-Triatlón</h3>
       </a>
 
@@ -45,6 +45,9 @@
               <label for="categoria-edad">Categoría (edad)</label>
               <select id="categoria-edad" class="input" required>
                 <option value="">Selecciona...</option>
+                <option>Open</option>
+                <option>Master A</option>
+                <option>Master B</option>
                 <option>Pre-benjamin</option>
                 <option>Benjamin</option>
                 <option>Alevin</option>
@@ -58,9 +61,7 @@
                 <option>Veterano 2</option>
                 <option>Veterano 3</option>
               </select>
-              <small class="hint">
-                Esta consulta usa el endpoint <code>/api/triatletas/categoria-edad</code>.
-              </small>
+              
             </div>
 
             <div class="actions">

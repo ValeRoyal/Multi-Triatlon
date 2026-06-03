@@ -52,6 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         localStorage.setItem("sessionUser", JSON.stringify({
+        id: usuario.id,
         nombre: usuario.nombre,
         identificacion: usuario.identificacion,
         correo: usuario.correo

@@ -176,6 +176,14 @@ document.addEventListener("DOMContentLoaded", () => {
     return await resp.json(); // List<TriatletaResponse>
   }
 
+  async function deleteTriatletaDeCarrera(idCarrera, idTriatleta) {
+    const resp = await fetch(ENDPOINT_DELETE(idCarrera, idTriatleta), { method: "DELETE" });
+    if (!resp.ok) {
+      const txt = await resp.text().catch(() => "");
+      throw new Error(txt || `Error HTTP ${resp.status}`);
+    }
+  }
+
   // =========================
   // 6) RENDER: carreras scroll
   // =========================
@@ -343,37 +351,48 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // =========================
-  // 8) PREPARAR DELETE (no ejecutar)
+  // 8) EJECUTAR DELETE
   // =========================
-  function prepararDelete() {
+  async function ejecutarDelete() {
     if (!carreraSeleccionada || !triatletaSeleccionado) {
-      setMensaje("Selecciona carrera y atleta antes de preparar.", "error");
+      setMensaje("Selecciona carrera y atleta antes de eliminar.", "error");
       return;
     }
 
     const idCarrera = carreraSeleccionada.id;
     const idTriatleta = triatletaSeleccionado.id;
+    const nombreTriatleta = safeText(triatletaSeleccionado.nombre);
 
-    // Objeto para tu fetch manual
-    const payload = {
-      idCarrera,
-      idTriatleta,
-      metodo: "DELETE",
-      endpointSugerido: ENDPOINT_DELETE(idCarrera, idTriatleta),
-      notas: "El backend retorna 204 No Content si todo sale bien.",
-      carreraSeleccionada,
-      triatletaSeleccionado: {
-        // NO incluimos identificacion aquí intencionalmente (aunque venga del backend)
-        id: triatletaSeleccionado.id,
-        nombre: triatletaSeleccionado.nombre,
-        correo: triatletaSeleccionado.correo,
-      },
-    };
+    if (btnPrepararDelete) btnPrepararDelete.disabled = true;
+    setMensaje("Eliminando inscripción...", "info");
 
-    window.__elimAtletaCarrera = payload;
-    console.log("__elimAtletaCarrera =>", payload);
+    try {
+      await deleteTriatletaDeCarrera(idCarrera, idTriatleta);
 
-    setMensaje("DELETE preparado. Revisa consola: __elimAtletaCarrera.", "ok");
+      inscritos = inscritos.filter((t) => t?.id !== idTriatleta);
+      triatletaSeleccionado = null;
+      updateConfirmBox();
+
+      if (inscritosWrap) {
+        inscritosWrap.innerHTML = "";
+        if (inscritos.length > 0) {
+          inscritosWrap.appendChild(renderTablaInscritos(inscritos));
+        }
+      }
+
+      if (contadorInscritos) {
+        contadorInscritos.textContent =
+          inscritos.length > 0
+            ? `${inscritos.length} inscrito(s) en la carrera ID ${idCarrera}.`
+            : `0 inscritos en carrera ID ${idCarrera}.`;
+      }
+
+      setMensaje(`Inscripción de ${nombreTriatleta} eliminada correctamente.`, "ok");
+    } catch (err) {
+      console.error(err);
+      setMensaje(`No fue posible eliminar la inscripción. ${err?.message || ""}`.trim(), "error");
+      updateConfirmBox();
+    }
   }
 
   // =========================
@@ -488,7 +507,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  btnPrepararDelete?.addEventListener("click", prepararDelete);
+  btnPrepararDelete?.addEventListener("click", ejecutarDelete);
 
   // =========================
   // 11) INIT
