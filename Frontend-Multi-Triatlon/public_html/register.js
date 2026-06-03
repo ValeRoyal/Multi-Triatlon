@@ -16,14 +16,26 @@ document.addEventListener("DOMContentLoaded", () => {
   const inputIdentificacion = document.getElementById("identificacion");
   const inputFecha = document.getElementById("fecha-nacimiento");
   const inputGenero = document.getElementById("genero");
-  const inputFotoUrl = document.getElementById("foto-url");
-  const inputCategoria = document.getElementById("categoria");
+
+  // OJO: nombre exacto backend = urlFoto
+  const inputUrlFoto = document.getElementById("url-foto");
+
+  // nombre exacto backend = categoriaEdad
+  const inputCategoriaEdad = document.getElementById("categoria-edad");
+
   const inputEspecialidad = document.getElementById("especialidad");
+
+  // Boolean backend = modalidadCross
   const inputCross = document.getElementById("modalidad-cross");
 
+  // opcional
+  const inputCarreraId = document.getElementById("carrera-id");
+
+  // Preview
   const previewWrap = document.getElementById("foto-preview-wrap");
   const previewImg = document.getElementById("foto-preview");
 
+  // Carrete
   const carrete = document.getElementById("carrete-especialidad");
   const btnPrev = document.getElementById("carrete-prev");
   const btnNext = document.getElementById("carrete-next");
@@ -45,18 +57,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Preview para fotoUrl
   function updateFotoPreview() {
-    if (!inputFotoUrl || !previewWrap || !previewImg) return;
+    if (!inputUrlFoto || !previewWrap || !previewImg) return;
 
-    const url = inputFotoUrl.value.trim();
-    if (!url) {
-      previewWrap.hidden = true;
-      previewImg.removeAttribute("src");
-      return;
-    }
-
-    if (!isHttpUrl(url)) {
+    const url = inputUrlFoto.value.trim();
+    if (!url || !isHttpUrl(url)) {
       previewWrap.hidden = true;
       previewImg.removeAttribute("src");
       return;
@@ -66,8 +71,8 @@ document.addEventListener("DOMContentLoaded", () => {
     previewImg.src = url;
   }
 
-  inputFotoUrl?.addEventListener("input", updateFotoPreview);
-  inputFotoUrl?.addEventListener("change", updateFotoPreview);
+  inputUrlFoto?.addEventListener("input", updateFotoPreview);
+  inputUrlFoto?.addEventListener("change", updateFotoPreview);
 
   function limpiarSeleccionCarrete() {
     carrete?.querySelectorAll(".carrete-item.is-active").forEach((el) => {
@@ -140,6 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
     carrete.scrollBy({ left: dir * amount, behavior: "smooth" });
   }
 
+  // Init
   renderCarrete();
 
   inputEspecialidad?.addEventListener("change", () => {
@@ -158,47 +164,61 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
     setMensaje("");
 
-    const required = [
-      inputNombre,
-      inputCorreo,
-      inputIdentificacion,
-      inputFecha,
-      inputGenero,
-      inputFotoUrl,
-      inputCategoria,
-      inputEspecialidad,
-      inputCross,
-    ];
+    const nombre = (inputNombre?.value ?? "").trim();
+    const correo = (inputCorreo?.value ?? "").trim();
+    const identificacion = (inputIdentificacion?.value ?? "").trim();
+    const fechaNacimiento = (inputFecha?.value ?? "").trim(); // YYYY-MM-DD
+    const genero = (inputGenero?.value ?? "").trim();
 
-    const falta = required.find((el) => !el || !el.value.trim());
-    if (falta) {
+    const urlFoto = (inputUrlFoto?.value ?? "").trim();
+    const categoriaEdad = (inputCategoriaEdad?.value ?? "").trim();
+    const especialidad = (inputEspecialidad?.value ?? "").trim();
+
+    const modalidadCrossRaw = (inputCross?.value ?? "").trim(); // "true"/"false"
+    const carreraIdRaw = (inputCarreraId?.value ?? "").trim();
+
+    // Validación mínima de required según backend (@NotBlank/@NotNull)
+    if (!nombre || !correo || !identificacion || !fechaNacimiento || !genero || !urlFoto || !categoriaEdad || !especialidad || !modalidadCrossRaw) {
       setMensaje("Por favor completa todos los campos obligatorios (*).", "error");
       return;
     }
 
-    const fotoUrl = inputFotoUrl.value.trim();
-    if (!isHttpUrl(fotoUrl)) {
+    if (!isHttpUrl(urlFoto)) {
       setMensaje("La foto debe ser una URL válida que empiece por http:// o https://", "error");
       return;
     }
 
-    // Objeto de la persona ya listo para guardar en el back
+    // Boolean real para backend
+    const modalidadCross = modalidadCrossRaw === "true";
+
+    // carreraId opcional (Long)
+    const carreraId = carreraIdRaw ? Number(carreraIdRaw) : null;
+    if (carreraIdRaw && (!Number.isFinite(carreraId) || carreraId <= 0)) {
+      setMensaje("Carrera ID debe ser un número válido mayor que 0 (o vacío).", "error");
+      return;
+    }
+
+    // Backend exige activo @NotNull. Lo ponemos en true por defecto
+    const activo = true;
+
+    // OBJETO EXACTO para TriatletaDTO
     const datosRegistro = {
-      nombre: inputNombre.value.trim(),
-      correo: inputCorreo.value.trim(),
-      identificacion: inputIdentificacion.value.trim(),
-      fechaNacimiento: inputFecha.value, // YYYY-MM-DD
-      genero: inputGenero.value,
-      categoria: inputCategoria.value,
-      especialidad: inputEspecialidad.value,
-      modalidadCross: inputCross.value,
-      fotoUrl, // <- STRING
-      createdAt: new Date().toISOString(),
+      nombre,
+      fechaNacimiento,
+      identificacion,
+      correo,
+      genero,
+      activo,
+      urlFoto,
+      categoriaEdad,
+      modalidadCross,
+      especialidad,
+      ...(carreraId !== null ? { carreraId } : {}), // solo si viene
     };
 
     window.__datosRegistro = datosRegistro;
-    console.log("datosRegistro =>", datosRegistro);
+    console.log("datosRegistro (TriatletaDTO) =>", datosRegistro);
 
-    setMensaje("Datos capturados. Revisa la consola (datosRegistro).", "ok");
+    setMensaje("Datos capturados (TriatletaDTO). Revisa la consola: __datosRegistro.", "ok");
   });
 });

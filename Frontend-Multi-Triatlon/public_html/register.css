@@ -48,7 +48,7 @@
 
 .mensaje-registro { margin-top: 0.75rem; font-size: 0.95rem; }
 
-/* Preview de foto-url (mínimo) */
+/* Preview URL foto */
 .foto-preview {
   margin-top: 0.6rem;
   border-radius: var(--radio-grande);
@@ -65,7 +65,7 @@
   display: block;
 }
 
-/* CARRETE */
+/* Carrete */
 .carrete-wrap {
   margin-top: 0.75rem;
   padding: 0.9rem;
@@ -112,27 +112,18 @@
   transition: transform 150ms ease-out, box-shadow 150ms ease-out, border-color 150ms ease-out;
 }
 
-.carrete-item:hover { 
-    transform: translateY(-2px); 
-    box-shadow: var(--sombra-media); 
-}
+.carrete-item:hover { transform: translateY(-2px); box-shadow: var(--sombra-media); }
 
 .carrete-item.is-active {
   border-color: var(--color-primario);
   box-shadow: var(--sombra-grande);
 }
 
-.carrete-img { 
-    width: 100%; height: 140px; object-fit: cover; display: block; 
-}
+.carrete-img { width: 100%; height: 140px; object-fit: cover; display: block; }
 
-.carrete-caption { 
-    padding: 0.6rem 0.75rem; 
-}
+.carrete-caption { padding: 0.6rem 0.75rem; }
 
-.carrete-name { 
-    font-size: 0.95rem; 
-}
+.carrete-name { font-size: 0.95rem; }
 
 @media (max-width: 900px) {
   .form-grid { grid-template-columns: 1fr; }

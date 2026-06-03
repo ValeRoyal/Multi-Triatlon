@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <title>Registrarse</title>
+    <title>Registrarse - Multi-Triatlón</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -29,7 +29,7 @@
       <section class="hero surface hero-wrap">
         <div class="card hero-card">
           <h1>Registrarse</h1>
-          <p>Pega la URL pública de tu foto (Drive/Cloudinary/etc.). No subimos archivos.</p>
+          <p>Pega la URL pública de tu foto. No subimos archivos.</p>
         </div>
       </section>
 
@@ -73,30 +73,30 @@
                 </select>
               </div>
 
-              <!-- FOTO COMO STRING (URL) -->
+              <!-- URL FOTO: nombre exacto backend = urlFoto -->
               <div class="field">
-                <label for="foto-url">Foto (URL pública) *</label>
+                <label for="url-foto">Foto (URL pública) *</label>
                 <input
                   type="url"
-                  id="foto-url"
-                  name="fotoUrl"
+                  id="url-foto"
+                  name="urlFoto"
                   class="input"
                   placeholder="https://..."
                   required
                 />
                 <small class="hint">
-                  Ej: una imagen pública de Drive/Cloudinary/Imgur. Debe empezar por http:// o https://
+                  Debe empezar por http:// o https:// y ser pública.
                 </small>
 
-                <!-- Preview -->
                 <div class="foto-preview" id="foto-preview-wrap" hidden>
                   <img id="foto-preview" alt="Vista previa de la foto" />
                 </div>
               </div>
 
+              <!-- nombre exacto backend = categoriaEdad -->
               <div class="field">
-                <label for="categoria">Categoría *</label>
-                <select id="categoria" name="categoria" class="input" required>
+                <label for="categoria-edad">Categoría *</label>
+                <select id="categoria-edad" name="categoriaEdad" class="input" required>
                   <option value="">Selecciona...</option>
                   <option>Pre-benjamin</option>
                   <option>Benjamin</option>
@@ -138,13 +138,36 @@
                 </div>
               </div>
 
+              <!-- nombre exacto backend = modalidadCross (Boolean) -->
               <div class="field">
                 <label for="modalidad-cross">¿Participas en modalidad Cross? *</label>
                 <select id="modalidad-cross" name="modalidadCross" class="input" required>
                   <option value="">Selecciona...</option>
-                  <option value="Sí">Sí</option>
-                  <option value="No">No</option>
+                  <option value="true">Sí</option>
+                  <option value="false">No</option>
                 </select>
+                <small class="hint">Internamente se enviará como booleano true/false.</small>
+              </div>
+
+              <!-- opcional: carreraId -->
+              <div class="field">
+                <label for="carrera-id">Carrera ID (opcional)</label>
+                <input
+                  type="number"
+                  id="carrera-id"
+                  name="carreraId"
+                  class="input"
+                  placeholder="Ej: 1"
+                  min="1"
+                />
+                <small class="hint">Si no aplica, déjalo vacío.</small>
+              </div>
+
+              <!-- activo (backend lo exige @NotNull). Lo dejamos fijo en true -->
+              <div class="field">
+                <label>Estado</label>
+                <input type="text" class="input" value="Activo (true)" disabled />
+                <small class="hint">Por defecto se registra como activo = true.</small>
               </div>
             </div>
 
