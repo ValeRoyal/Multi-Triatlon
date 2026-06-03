@@ -30,9 +30,8 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 public class TriatletaDTO extends Persona {
 
-    @NotBlank //No puede ser en blanco
     //Nombre de la columna, no puede ser nula, no es unica, maxima cantidad 200 VarChar
-    @Column(name = "url_foto", nullable = false, unique = false, length = 200)
+    @Column(name = "url_foto", nullable = true, unique = false, length = 200)
     String urlFoto;
 
     @NotBlank

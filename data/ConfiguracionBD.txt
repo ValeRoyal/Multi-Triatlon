@@ -29,12 +29,15 @@ Contraseña : (vacia)
 Descripción: Almacena la información de cada triatleta, carrera y categoria registrada en el sistema.
 
 --------------------------------------------------------
- SCRIPT DE CREACIÓN
+ SCRIPT DE CREACIÓN y poblacion
 --------------------------------------------------------
 Ver archivo: data/multitrialon.sql
 
+Vara poblar un poco la bd se tienen estos datos de prueba en data/poblacion.sql
+se debe ejecutar el script en la consola de phpMyAdmin principal, es decir la de home
+
 El script incluye:
-  1. Creación de la base de datos
+  1. Creación de las bases de datos
 
 --------------------------------------------------------
  CONFIGURACIÓN EN ARCHIVO PROPERTIES
