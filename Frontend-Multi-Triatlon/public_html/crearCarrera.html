@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Crear carrera - Multi-Triatlón</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="crearCarrera.css" />
+</head>
+
+<body>
+    <header class="nav">
+        <a class="nav-logo" href="home.html" aria-label="Volver al home">
+            <img src="../Resources/LogoSinFondo.png" alt="Logo de Multi-Triatlón" />
+            <h3>Multi-Triatlón</h3>
+        </a>
+
+        <nav aria-label="Navegación principal">
+            <ul class="nav-links">
+                <li><a href="home.html" class="nav-link">Home</a></li>
+                <li><a href="perfil.html" class="nav-link">Ver perfil</a></li>
+                <li>
+                    <button class="nav-link nav-link-btn" id="btn-logout" type="button">
+                        Cerrar sesión
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="page">
+        <!-- Intro -->
+        <section class="hero surface hero-wrap">
+            <div class="card hero-card">
+                <h1>Crear carrera</h1>
+                <p>
+                    Hola, <strong id="user-nombre">Atleta</strong>. Registra una nueva carrera de triatlón.
+                </p>
+            </div>
+        </section>
+
+        <!-- Selector de categoría -->
+        <section class="section" aria-labelledby="categorias-titulo">
+            <div class="card">
+                <div class="section-head">
+                    <h2 id="categorias-titulo">Categoría</h2>
+                    <p class="hint">Selecciona la categoría a la que pertenece esta carrera.</p>
+                </div>
+
+                <div class="actions">
+                    <button class="btn btn-principal" id="btn-categorias-recargar" type="button">
+                        Recargar categorías
+                    </button>
+                </div>
+
+                <div id="mensaje-categorias" class="mensaje" aria-live="polite"></div>
+
+                <div class="field">
+                    <label>Categorías disponibles</label>
+                    <div id="categorias-estado" class="estado">Cargando categorías...</div>
+                    <div id="categorias-scroll" class="categorias-scroll" role="list"></div>
+                    <input type="hidden" id="categoria-id" />
+                </div>
+            </div>
+        </section>
+
+        <!-- Formulario -->
+        <section class="section" aria-labelledby="form-titulo">
+            <div class="card crear-card">
+                <div class="section-head">
+                    <h2 id="form-titulo">Datos de la carrera</h2>
+                    <p>Los campos con <strong>*</strong> son obligatorios.</p>
+                </div>
+
+                <form id="form-crear" class="crear-form" novalidate>
+                    <div class="form-grid">
+                        <div class="field">
+                            <label for="nombre-carrera">Nombre de la carrera *</label>
+                            <input type="text" id="nombre-carrera" name="nombreCarrera" class="input" required
+                                maxlength="100" placeholder="Ej: Triatlón Costera 2025" />
+                        </div>
+
+                        <div class="field">
+                            <label for="ubicacion">Ubicación *</label>
+                            <input type="text" id="ubicacion" name="ubicacion" class="input" required maxlength="100"
+                                placeholder="Ej: Cartagena, Colombia" />
+                        </div>
+
+                        <div class="field">
+                            <label for="fecha-ejecucion">Fecha y hora de ejecución *</label>
+                            <input type="datetime-local" id="fecha-ejecucion" name="fechaEjecucion" class="input"
+                                required />
+                        </div>
+
+                        <div class="field">
+                            <label for="nivel-dificultad">Nivel de dificultad *</label>
+                            <select id="nivel-dificultad" name="nivelDificultad" class="input" required>
+                                <option value="">Selecciona...</option>
+                                <option>Principiante</option>
+                                <option>Intermedio</option>
+                                <option>Avanzado</option>
+                                <option>Élite</option>
+                            </select>
+                        </div>
+
+                        <div class="field field-full">
+                            <label for="para-quien">¿Para quién es esta carrera? *</label>
+                            <textarea id="para-quien" name="paraQuien" class="input textarea" required maxlength="300"
+                                rows="3" placeholder="Describe el perfil de participante ideal..."></textarea>
+                            <small class="hint">Máximo 300 caracteres.</small>
+                        </div>
+
+                        <!-- Categoría seleccionada (display) -->
+                        <div class="field field-full">
+                            <label>Categoría seleccionada *</label>
+                            <div id="categoria-seleccionada" class="categoria-seleccionada">
+                                <span class="categoria-placeholder">Selecciona una categoría en el panel de
+                                    arriba.</span>
+                            </div>
+                            <small class="hint">La categoría se elige en la sección anterior.</small>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-principal" id="btn-crear">Crear carrera</button>
+                    </div>
+
+                    <div id="mensaje-form" class="mensaje" aria-live="polite"></div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <script src="crearCarrera.js" defer></script>
+</body>
+
+</html>

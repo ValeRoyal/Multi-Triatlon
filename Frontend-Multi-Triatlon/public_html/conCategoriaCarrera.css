@@ -1,0 +1,122 @@
+.nav-logo h3 {
+  color: inherit;
+}
+.nav-logo {
+  text-decoration: none;
+}
+
+.nav-link-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+}
+
+.hint {
+  opacity: 0.9;
+  font-size: 0.95rem;
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+.mensaje {
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.estado {
+  font-size: 0.95rem;
+  opacity: 0.95;
+}
+
+.carreras-scroll {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(240px, 1fr);
+  gap: 0.75rem;
+  overflow-x: auto;
+  padding-bottom: 0.35rem;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.carrera-item {
+  scroll-snap-align: start;
+  border-radius: var(--radio-grande);
+  border: 2px solid var(--color-borde);
+  background: var(--color-claro);
+  box-shadow: var(--sombra-peque);
+  padding: 0.75rem;
+  cursor: pointer;
+  transition:
+    transform 150ms ease-out,
+    box-shadow 150ms ease-out,
+    border-color 150ms ease-out;
+}
+
+.carrera-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sombra-media);
+}
+.carrera-item.is-active {
+  border-color: var(--color-primario);
+  box-shadow: var(--sombra-grande);
+}
+
+.carrera-nombre {
+  margin: 0 0 0.25rem;
+  font-family: var(--font-titulo);
+  font-size: 1.1rem;
+}
+.carrera-meta {
+  display: grid;
+  gap: 0.2rem;
+  font-size: 0.95rem;
+  opacity: 0.98;
+}
+
+/* Tarjeta de resultado */
+.categoria-resultado {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem 1.5rem;
+  padding: 1.25rem;
+}
+
+.cat-fila {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.cat-fila.fila-full {
+  grid-column: 1 / -1;
+}
+.cat-label {
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+.cat-valor {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+@media (max-width: 900px) {
+  .carreras-scroll {
+    grid-auto-columns: minmax(190px, 80%);
+  }
+  .categoria-resultado {
+    grid-template-columns: 1fr;
+  }
+}

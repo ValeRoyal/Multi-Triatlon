@@ -1,0 +1,150 @@
+.nav-logo h3 {
+  color: inherit;
+}
+
+.nav-logo {
+  text-decoration: none;
+}
+
+.nav-link-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+}
+
+.hint {
+  opacity: 0.9;
+  font-size: 0.95rem;
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+.mensaje {
+  margin: 0.25rem 0 0;
+  font-size: 0.95rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.estado {
+  font-size: 0.95rem;
+  opacity: 0.95;
+}
+
+/* Scroll de carreras */
+.carreras-scroll {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(240px, 1fr);
+  gap: 0.75rem;
+
+  overflow-x: auto;
+  padding-bottom: 0.35rem;
+
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.carrera-item {
+  scroll-snap-align: start;
+
+  border-radius: var(--radio-grande);
+  border: 2px solid var(--color-borde);
+  background: var(--color-claro);
+  box-shadow: var(--sombra-peque);
+
+  padding: 0.75rem;
+  cursor: pointer;
+
+  transition:
+    transform 150ms ease-out,
+    box-shadow 150ms ease-out,
+    border-color 150ms ease-out;
+}
+
+.carrera-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sombra-media);
+}
+
+.carrera-item.is-active {
+  border-color: var(--color-primario);
+  box-shadow: var(--sombra-grande);
+}
+
+.carrera-nombre {
+  margin: 0 0 0.25rem;
+  font-family: var(--font-titulo);
+  font-size: 1.1rem;
+}
+
+.carrera-meta {
+  display: grid;
+  gap: 0.2rem;
+  font-size: 0.95rem;
+  opacity: 0.98;
+}
+
+/* Grid de las dos tarjetas de modificación */
+.modif-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.modif-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+/* Input */
+.input {
+  width: 100%;
+  padding: 0.75rem 0.85rem;
+  border-radius: var(--radio-mediano);
+  border: 1px solid var(--color-borde);
+  background: var(--color-claro);
+  color: var(--color-text);
+  outline: none;
+  box-shadow: var(--sombra-peque);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+}
+
+.input:focus {
+  border-color: var(--color-primario);
+  box-shadow: 0 0 0 3px rgba(16, 86, 102, 0.18);
+}
+
+.input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.form-actions {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 0.75rem;
+}
+
+@media (max-width: 900px) {
+  .modif-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .carreras-scroll {
+    grid-auto-columns: minmax(190px, 80%);
+  }
+}

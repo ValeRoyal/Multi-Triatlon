@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Modificar carrera - Multi-Triatlón</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="modfCarrera.css" />
+</head>
+
+<body>
+    <header class="nav">
+        <a class="nav-logo" href="home.html" aria-label="Volver al home">
+            <img src="../Resources/LogoSinFondo.png" alt="Logo de Multi-Triatlón" />
+            <h3>Multi-Triatlón</h3>
+        </a>
+
+        <nav aria-label="Navegación principal">
+            <ul class="nav-links">
+                <li><a href="home.html" class="nav-link">Home</a></li>
+                <li><a href="perfil.html" class="nav-link">Ver perfil</a></li>
+                <li>
+                    <button class="nav-link nav-link-btn" id="btn-logout" type="button">
+                        Cerrar sesión
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="page">
+        <!-- Intro -->
+        <section class="hero surface hero-wrap">
+            <div class="card hero-card">
+                <h1>Modificar carrera</h1>
+                <p>
+                    Hola, <strong id="user-nombre">Atleta</strong>. Selecciona una carrera y actualiza su ubicación o
+                    fecha de ejecución.
+                </p>
+            </div>
+        </section>
+
+        <!-- Selector de carrera -->
+        <section class="section" aria-labelledby="carreras-titulo">
+            <div class="card">
+                <div class="section-head">
+                    <h2 id="carreras-titulo">Carrera</h2>
+                    <p class="hint">Selecciona la carrera que deseas modificar.</p>
+                </div>
+
+                <div class="actions">
+                    <button class="btn btn-principal" id="btn-carreras-recargar" type="button">
+                        Recargar carreras
+                    </button>
+                </div>
+
+                <div id="mensaje-carreras" class="mensaje" aria-live="polite"></div>
+
+                <div class="field">
+                    <label>Carreras disponibles</label>
+                    <div id="carreras-estado" class="estado">Cargando carreras...</div>
+                    <div id="carreras-scroll" class="carreras-scroll" role="list"></div>
+                    <input type="hidden" id="carrera-id" />
+                </div>
+            </div>
+        </section>
+
+        <!-- Formularios de modificación -->
+        <section class="section" id="seccion-modificar" aria-labelledby="modificar-titulo">
+            <div class="section-head">
+                <h2 id="modificar-titulo">Modificar campos</h2>
+                <p id="carrera-seleccionada-info" class="hint">Selecciona una carrera para habilitar los formularios.
+                </p>
+            </div>
+
+            <div class="modif-grid">
+                <!-- Modificar ubicación -->
+                <div class="card modif-card" id="card-ubicacion">
+                    <h4>Ubicación</h4>
+                    <p class="hint">Actualiza el lugar donde se realizará la carrera.</p>
+
+                    <form id="form-ubicacion" novalidate>
+                        <div class="field">
+                            <label for="nueva-ubicacion">Nueva ubicación *</label>
+                            <input type="text" id="nueva-ubicacion" name="ubicacion" class="input" required
+                                maxlength="100" placeholder="Ej: Medellín, Colombia" disabled />
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-principal" id="btn-ubicacion" disabled>
+                                Actualizar ubicación
+                            </button>
+                        </div>
+
+                        <div id="mensaje-ubicacion" class="mensaje" aria-live="polite"></div>
+                    </form>
+                </div>
+
+                <!-- Modificar fecha -->
+                <div class="card modif-card" id="card-fecha">
+                    <h4>Fecha de ejecución</h4>
+                    <p class="hint">Actualiza la fecha y hora en que se realizará la carrera.</p>
+
+                    <form id="form-fecha" novalidate>
+                        <div class="field">
+                            <label for="nueva-fecha">Nueva fecha y hora *</label>
+                            <input type="datetime-local" id="nueva-fecha" name="fechaEjecucion" class="input" required
+                                disabled />
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-principal" id="btn-fecha" disabled>
+                                Actualizar fecha
+                            </button>
+                        </div>
+
+                        <div id="mensaje-fecha" class="mensaje" aria-live="polite"></div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="modfCarrera.js" defer></script>
+</body>
+
+</html>
