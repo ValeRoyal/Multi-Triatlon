@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Crear categoría - Multi-Triatlón</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="crearCategoria.css" />
+</head>
+
+<body>
+    <header class="nav">
+        <a class="nav-logo" href="home.html" aria-label="Volver al home">
+            <img src="../Resources/LogoSinFondo.png" alt="Logo de Multi-Triatlón" />
+            <h3>Multi-Triatlón</h3>
+        </a>
+
+        <nav aria-label="Navegación principal">
+            <ul class="nav-links">
+                <li><a href="home.html" class="nav-link">Home</a></li>
+                <li><a href="perfil.html" class="nav-link">Ver perfil</a></li>
+                <li>
+                    <button class="nav-link nav-link-btn" id="btn-logout" type="button">
+                        Cerrar sesión
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="page">
+        <section class="hero surface hero-wrap">
+            <div class="card hero-card">
+                <h1>Crear categoría</h1>
+                <p>
+                    Hola, <strong id="user-nombre">Atleta</strong>. Registra una nueva categoría en el sistema.
+                </p>
+            </div>
+        </section>
+
+        <section class="section" aria-labelledby="form-titulo">
+            <div class="card crear-card">
+                <div class="section-head">
+                    <h2 id="form-titulo">Datos de la categoría</h2>
+                    <p>Los campos con <strong>*</strong> son obligatorios.</p>
+                </div>
+
+                <form id="form-crear" novalidate>
+                    <div class="form-grid">
+                        <div class="field">
+                            <label for="nombre-categoria">Nombre de la categoría *</label>
+                            <input type="text" id="nombre-categoria" name="nombreCategoria" class="input" required
+                                maxlength="50" placeholder="Ej: Élite Femenino" />
+                        </div>
+
+                        <div class="field">
+                            <label for="tipo-categoria">Tipo de categoría *</label>
+                            <input type="text" id="tipo-categoria" name="tipoCategoria" class="input" required
+                                maxlength="100" placeholder="Ej: Competitiva" />
+                        </div>
+
+                        <div class="field field-full">
+                            <label for="descripcion">Descripción *</label>
+                            <textarea id="descripcion" name="descripcion" class="input textarea" required
+                                maxlength="300" rows="3" placeholder="Describe esta categoría..."></textarea>
+                            <small class="hint">Máximo 300 caracteres.</small>
+                        </div>
+
+                        <div class="field field-full">
+                            <label for="recomendacion">Recomendación *</label>
+                            <textarea id="recomendacion" name="recomendacion" class="input textarea" required
+                                maxlength="300" rows="3"
+                                placeholder="¿A quién se recomienda esta categoría?"></textarea>
+                            <small class="hint">Máximo 300 caracteres.</small>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-principal" id="btn-crear">Crear categoría</button>
+                        <a class="btn btn-secundario" href="home.html">Volver al home</a>
+                    </div>
+
+                    <div id="mensaje" class="mensaje" aria-live="polite"></div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <script src="crearCategoria.js" defer></script>
+</body>
+
+</html>

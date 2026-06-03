@@ -1,0 +1,126 @@
+.nav-logo h3 {
+  color: inherit;
+}
+.nav-logo {
+  text-decoration: none;
+}
+
+.nav-link-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+}
+
+.hint {
+  opacity: 0.9;
+  font-size: 0.95rem;
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+.mensaje {
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.estado {
+  font-size: 0.95rem;
+  opacity: 0.95;
+}
+
+.categorias-scroll {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(220px, 1fr);
+  gap: 0.75rem;
+  overflow-x: auto;
+  padding-bottom: 0.35rem;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.categoria-item {
+  scroll-snap-align: start;
+  border-radius: var(--radio-grande);
+  border: 2px solid var(--color-borde);
+  background: var(--color-claro);
+  box-shadow: var(--sombra-peque);
+  padding: 0.75rem;
+  cursor: pointer;
+  transition:
+    transform 150ms ease-out,
+    box-shadow 150ms ease-out,
+    border-color 150ms ease-out;
+}
+
+.categoria-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sombra-media);
+}
+.categoria-item.is-active {
+  border-color: var(--color-primario);
+  box-shadow: var(--sombra-grande);
+}
+
+.categoria-nombre {
+  margin: 0 0 0.25rem;
+  font-family: var(--font-titulo);
+  font-size: 1.05rem;
+}
+.categoria-meta {
+  display: grid;
+  gap: 0.2rem;
+  font-size: 0.9rem;
+  opacity: 0.95;
+}
+
+/* Tabla resultados */
+.table-wrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-claro);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-grande);
+  overflow: hidden;
+  box-shadow: var(--sombra-peque);
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 0.75rem;
+  border-bottom: 1px dashed rgba(81, 141, 118, 0.7);
+  vertical-align: top;
+}
+
+.table th {
+  background: rgba(16, 86, 102, 0.14);
+  font-family: var(--font-titulo);
+}
+
+.table tr:hover td {
+  background: rgba(247, 244, 213, 0.65);
+}
+
+@media (max-width: 900px) {
+  .categorias-scroll {
+    grid-auto-columns: minmax(190px, 80%);
+  }
+}
