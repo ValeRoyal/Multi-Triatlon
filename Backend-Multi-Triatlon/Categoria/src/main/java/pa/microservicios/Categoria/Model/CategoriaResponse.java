@@ -26,7 +26,5 @@ public class CategoriaResponse {
     String tipoCategoria;
     String descripcion;
     String recomendacion;
-    
-    List<CarreraResponse> carreras;
 
 }
