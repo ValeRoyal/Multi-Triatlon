@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "Veterano 3",
     ];
 
-    const GENEROS = ["Femenino", "Masculino", "Otro", "Prefiero no decirlo"];
+    const GENEROS = ["Femenino", "Masculino"];
 
     // =========================
     // 2) DOM

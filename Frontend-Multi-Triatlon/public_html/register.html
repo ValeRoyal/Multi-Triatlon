@@ -68,8 +68,6 @@
                   <option value="">Selecciona...</option>
                   <option value="Femenino">Femenino</option>
                   <option value="Masculino">Masculino</option>
-                  <option value="Otro">Otro</option>
-                  <option value="Prefiero no decirlo">Prefiero no decirlo</option>
                 </select>
               </div>
 
@@ -138,7 +136,7 @@
                 </div>
               </div>
 
-              <!-- nombre exacto backend = modalidadCross (Boolean) -->
+              <!-- aquí metemos el coso del cross-->
               <div class="field">
                 <label for="modalidad-cross">¿Participas en modalidad Cross? *</label>
                 <select id="modalidad-cross" name="modalidadCross" class="input" required>
@@ -146,22 +144,22 @@
                   <option value="true">Sí</option>
                   <option value="false">No</option>
                 </select>
-                <small class="hint">Internamente se enviará como booleano true/false.</small>
+                
               </div>
 
-              <!-- activo (backend lo exige @NotNull). Lo dejamos fijo en true -->
+              <!-- dejamoa a la pipol activa porque si está registrándose es por algo :v -->
               <div class="field">
                 <label>Estado</label>
                 <input type="text" class="input" value="Activo (true)" disabled />
-                <small class="hint">Por defecto se registra como activo = true.</small>
+                <small class="hint">Por defecto te vamos a registrar como activo.</small>
               </div>
             </div>
               
-              <!-- CARRERA (selección desde microservicio Carrera) -->
+              <!-- CARRERA -->
     <div class="field field-full">
         <label>Carrera (opcional)</label>
         <p class="hint">
-        Selecciona una carrera de la lista (datos frescos desde el microservicio Carrera).
+        Selecciona una carrera de la lista.
         </p>
 
         <div class="carreras-panel">
