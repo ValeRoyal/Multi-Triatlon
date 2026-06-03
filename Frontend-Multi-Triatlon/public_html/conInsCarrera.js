@@ -1,56 +1,61 @@
 /**
  * conInsCarrera.js
  * ----------------
- * Objetivo:
- * - Consultar TODOS los triatletas inscritos en una carrera específica.
+ * Maneja la consulta de triatletas inscritos en una carrera específica.
+ * Carga las carreras disponibles desde el microservicio Carrera, permite
+ * seleccionar una y muestra sus inscritos en una tabla dinámica.
  *
  * Flujo:
- * 1) Traemos carreras "frescas" desde microservicio Carrera:
- *      GET http://localhost:9092/api/carreras/todas
- * 2) El usuario selecciona una carrera (guardamos su id).
- * 3) Consultamos inscritos en esa carrera (microservicio Carrera):
- *      GET http://localhost:9092/api/carreras/{id}/triatletas
- * 4) Mostramos tabla con datos NO sensibles:
- *      - NO: id, identificacion
- *      - SÍ: nombre, correo, fechaNacimiento, genero, activo, urlFoto,
- *            categoriaEdad, modalidadCross, especialidad, carreraId
+ * 1) Al cargar la página, trae todas las carreras disponibles vía GET
+ * 2) El usuario selecciona una carrera del scroll
+ * 3) Al presionar "Consultar", trae los triatletas inscritos en esa carrera
+ * 4) Renderiza los resultados en tabla
+ *
+ * Microservicios involucrados:
+ * - Carrera: GET http://localhost:9092/api/carreras/todas
+ * - Carrera: GET http://localhost:9092/api/carreras/{id}/triatletas
+ *
+ * Campos mostrados: nombre, correo, fechaNacimiento, genero, activo,
+ *                   urlFoto, categoriaEdad, modalidadCross, especialidad, carreraId
+ * Campos omitidos:  id, identificacion (privacidad)
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-  // =========================
-  // 1) CONFIG
-  // =========================
-  const API_CARRERA = "http://localhost:9092";
-  const ENDPOINT_CARRERAS_TODAS = `${API_CARRERA}/api/carreras/todas`;
-  const ENDPOINT_INSCRITOS = (idCarrera) => `${API_CARRERA}/api/carreras/${idCarrera}/triatletas`;
 
-  // =========================
-  // 2) DOM
-  // =========================
-  const btnLogout = document.getElementById("btn-logout");
-  const userNombreEl = document.getElementById("user-nombre");
+  // ─── CONFIGURACIÓN ───────────────────────────────────────────────────────────
+  // URLs base y endpoints del microservicio Carrera
+  const API_CARRERA             = "http://localhost:9092";
+  const ENDPOINT_CARRERAS_TODAS = `${API_CARRERA}/api/carreras/todas`;
+  const ENDPOINT_INSCRITOS      = (idCarrera) => `${API_CARRERA}/api/carreras/${idCarrera}/triatletas`;
+
+  // ─── DOM ─────────────────────────────────────────────────────────────────────
+  // Referencias a los elementos del HTML que se manipulan durante la interacción
+  const btnLogout           = document.getElementById("btn-logout");
+  const userNombreEl        = document.getElementById("user-nombre");
 
   const btnCarrerasRecargar = document.getElementById("btn-carreras-recargar");
-  const btnLimpiar = document.getElementById("btn-limpiar");
-  const btnConsultar = document.getElementById("btn-consultar");
+  const btnLimpiar          = document.getElementById("btn-limpiar");
+  const btnConsultar        = document.getElementById("btn-consultar");
 
-  const carrerasEstado = document.getElementById("carreras-estado");
-  const carrerasScroll = document.getElementById("carreras-scroll");
-  const inputCarreraId = document.getElementById("carrera-id");
+  const carrerasEstado      = document.getElementById("carreras-estado");
+  const carrerasScroll      = document.getElementById("carreras-scroll");
+  const inputCarreraId      = document.getElementById("carrera-id");
 
-  const mensaje = document.getElementById("mensaje");
-  const contador = document.getElementById("contador");
-  const resultadosWrap = document.getElementById("resultados-wrap");
+  const mensaje             = document.getElementById("mensaje");
+  const contador            = document.getElementById("contador");
+  const resultadosWrap      = document.getElementById("resultados-wrap");
 
-  // =========================
-  // 3) STATE
-  // =========================
+  // ─── STATE ────────────────────────────────────────────────────────────────────
+  // Lista de carreras cargadas y carrera actualmente seleccionada por el usuario
   let carrerasDisponibles = [];
   let carreraSeleccionada = null;
 
-  // =========================
-  // 4) HELPERS
-  // =========================
+  // ─── HELPERS ─────────────────────────────────────────────────────────────────
+
+  /**
+   * Lee y parsea el usuario de sesión guardado en localStorage.
+   * @returns {Object|null} Objeto con datos del usuario, o null si no hay sesión.
+   */
   function getSessionUser() {
     try {
       const raw = localStorage.getItem("sessionUser");
@@ -61,6 +66,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  /**
+   * Muestra un mensaje de retroalimentación al usuario.
+   * @param {string} texto - Texto a mostrar.
+   * @param {"info"|"ok"|"error"} tipo - Define el color del mensaje.
+   */
   function setMensaje(texto, tipo = "info") {
     if (!mensaje) return;
     mensaje.textContent = texto;
@@ -69,6 +79,11 @@ document.addEventListener("DOMContentLoaded", () => {
     else mensaje.style.color = "";
   }
 
+  /**
+   * Muestra el estado de carga del scroll de carreras.
+   * @param {string} texto - Texto a mostrar.
+   * @param {"info"|"ok"|"error"} tipo - Define el color del mensaje.
+   */
   function setEstadoCarreras(texto, tipo = "info") {
     if (!carrerasEstado) return;
     carrerasEstado.textContent = texto;
@@ -77,21 +92,39 @@ document.addEventListener("DOMContentLoaded", () => {
     else carrerasEstado.style.color = "";
   }
 
+  /**
+   * Convierte un valor a string seguro para mostrarlo en la tabla.
+   * Retorna "—" si el valor es null, undefined o vacío.
+   * @param {*} value
+   * @returns {string}
+   */
   function safeText(value) {
     if (value === null || value === undefined || value === "") return "—";
     return String(value);
   }
 
+  /**
+   * Convierte un booleano a texto legible en español.
+   * @param {*} value
+   * @returns {"Sí"|"No"|"—"}
+   */
   function boolToSiNo(value) {
     if (value === true) return "Sí";
     if (value === false) return "No";
     return "—";
   }
 
+  /** Vacía el contenedor de resultados. */
   function clearResultados() {
     if (resultadosWrap) resultadosWrap.innerHTML = "";
   }
 
+  /**
+   * Crea un elemento <img> para mostrar la foto del triatleta en miniatura.
+   * Si la URL falla o está vacía, muestra un SVG de reemplazo con ícono de meta.
+   * @param {string} urlFoto - URL de la foto del triatleta.
+   * @returns {HTMLImageElement}
+   */
   function createFotoMini(urlFoto) {
     const img = document.createElement("img");
     img.className = "foto-mini";
@@ -113,30 +146,45 @@ document.addEventListener("DOMContentLoaded", () => {
     return img;
   }
 
-  // =========================
-  // 5) FETCH
-  // =========================
+  // ─── FETCH ───────────────────────────────────────────────────────────────────
+
+  /**
+   * Consulta al microservicio Carrera la lista completa de carreras disponibles.
+   * Lanza un error si la respuesta HTTP no es exitosa.
+   * @returns {Promise<Array>} Lista de objetos CarreraResponse.
+   */
   async function fetchCarrerasTodas() {
     const resp = await fetch(ENDPOINT_CARRERAS_TODAS, { method: "GET" });
     if (!resp.ok) {
       const txt = await resp.text().catch(() => "");
       throw new Error(txt || `Error HTTP ${resp.status}`);
     }
-    return await resp.json(); // List<CarreraResponse>
+    return await resp.json();
   }
 
+  /**
+   * Consulta al microservicio Carrera los triatletas inscritos en una carrera.
+   * Lanza un error si la respuesta HTTP no es exitosa.
+   * @param {string|number} idCarrera - ID de la carrera a consultar.
+   * @returns {Promise<Array>} Lista de objetos TriatletaResponse.
+   */
   async function fetchInscritos(idCarrera) {
     const resp = await fetch(ENDPOINT_INSCRITOS(idCarrera), { method: "GET" });
     if (!resp.ok) {
       const txt = await resp.text().catch(() => "");
       throw new Error(txt || `Error HTTP ${resp.status}`);
     }
-    return await resp.json(); // List<TriatletaResponse>
+    return await resp.json();
   }
 
-  // =========================
-  // 6) RENDER: carreras scroll
-  // =========================
+  // ─── RENDER: scroll de carreras ───────────────────────────────────────────────
+
+  /**
+   * Construye el scroll de carreras con los datos recibidos.
+   * Marca visualmente la carrera seleccionada y habilita el botón Consultar
+   * al elegir una. Limpia resultados anteriores al cambiar la selección.
+   * @param {Array} lista - Lista de objetos CarreraResponse.
+   */
   function renderCarreras(lista) {
     if (!carrerasScroll) return;
     carrerasScroll.innerHTML = "";
@@ -148,9 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
       item.setAttribute("tabindex", "0");
       item.dataset.id = String(c.id);
 
-      if (carreraSeleccionada && carreraSeleccionada.id === c.id) {
-        item.classList.add("is-active");
-      }
+      if (carreraSeleccionada && carreraSeleccionada.id === c.id) item.classList.add("is-active");
 
       const nombre = document.createElement("p");
       nombre.className = "carrera-nombre";
@@ -172,30 +218,28 @@ document.addEventListener("DOMContentLoaded", () => {
         carreraSeleccionada = c;
         if (inputCarreraId) inputCarreraId.value = String(c.id);
         if (btnConsultar) btnConsultar.disabled = false;
-
-        // Re-render para marcar visualmente
         renderCarreras(carrerasDisponibles);
-
-        // Limpio resultados anteriores (para evitar confusión)
         clearResultados();
         if (contador) contador.textContent = `Carrera seleccionada: ${safeText(c.nombreCarrera)} (ID: ${c.id}).`;
       }
 
       item.addEventListener("click", seleccionar);
       item.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          seleccionar();
-        }
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); seleccionar(); }
       });
 
       carrerasScroll.appendChild(item);
     });
   }
 
-  // =========================
-  // 7) RENDER: tabla triatletas (sin datos sensibles)
-  // =========================
+  // ─── RENDER: tabla de triatletas inscritos ────────────────────────────────────
+
+  /**
+   * Construye y retorna una tabla HTML con los datos de los triatletas inscritos.
+   * Cada fila representa un triatleta con sus campos visibles.
+   * @param {Array} triatletas - Lista de objetos TriatletaResponse del backend.
+   * @returns {HTMLDivElement} Contenedor con la tabla lista para insertar en el DOM.
+   */
   function renderTablaTriatletas(triatletas) {
     const wrap = document.createElement("div");
     wrap.className = "table-wrap";
@@ -204,16 +248,8 @@ document.addEventListener("DOMContentLoaded", () => {
     table.className = "table";
 
     const headers = [
-      "Foto",
-      "Nombre",
-      "Correo",
-      "Fecha nacimiento",
-      "Género",
-      "Activo",
-      "Categoría",
-      "Especialidad",
-      "Cross",
-      "Carrera ID",
+      "Foto", "Nombre", "Correo", "Fecha nacimiento", "Género",
+      "Activo", "Categoría", "Especialidad", "Cross", "Carrera ID",
     ];
 
     const thead = document.createElement("thead");
@@ -279,9 +315,13 @@ document.addEventListener("DOMContentLoaded", () => {
     return wrap;
   }
 
-  // =========================
-  // 8) LOAD: carreras
-  // =========================
+  // ─── CARGA DE CARRERAS ────────────────────────────────────────────────────────
+
+  /**
+   * Carga las carreras desde el microservicio y actualiza el scroll.
+   * Si ya había una carrera seleccionada, intenta mantenerla si sigue disponible.
+   * Deshabilita el botón Consultar si no hay carreras o se pierde la selección.
+   */
   async function loadCarreras() {
     setMensaje("");
     setEstadoCarreras("Cargando carreras...", "info");
@@ -299,7 +339,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       carrerasDisponibles = data;
 
-      // Si había selección previa, intentamos mantenerla
+      // Mantener selección previa si la carrera sigue existiendo tras recargar
       if (carreraSeleccionada) {
         const sigue = carrerasDisponibles.find((c) => c.id === carreraSeleccionada.id);
         if (!sigue) {
@@ -324,31 +364,37 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // =========================
-  // 9) EVENTOS
-  // =========================
+  // ─── EVENTOS ─────────────────────────────────────────────────────────────────
+
+  // Muestra el nombre del usuario logueado en el encabezado
   const sessionUser = getSessionUser();
   if (userNombreEl) userNombreEl.textContent = sessionUser?.nombre?.trim() || "Atleta";
 
+  // Cierra la sesión eliminando el usuario de localStorage y redirige al inicio
   btnLogout?.addEventListener("click", () => {
     localStorage.removeItem("sessionUser");
     window.location.href = "index.html";
   });
 
+  // Recarga la lista de carreras desde el microservicio
   btnCarrerasRecargar?.addEventListener("click", loadCarreras);
 
+  // Limpia la selección de carrera, los resultados y el contador
   btnLimpiar?.addEventListener("click", () => {
     setMensaje("");
     clearResultados();
-
     carreraSeleccionada = null;
     if (inputCarreraId) inputCarreraId.value = "";
     if (btnConsultar) btnConsultar.disabled = true;
-
     renderCarreras(carrerasDisponibles);
     if (contador) contador.textContent = "Aún no has consultado.";
   });
 
+  /**
+   * Al presionar "Consultar", verifica que haya una carrera seleccionada,
+   * consulta sus inscritos al backend y renderiza los resultados en tabla.
+   * Maneja casos de lista vacía y errores de red.
+   */
   btnConsultar?.addEventListener("click", async () => {
     setMensaje("");
 
@@ -381,8 +427,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // =========================
-  // 10) INIT
-  // =========================
+  // ─── INIT ─────────────────────────────────────────────────────────────────────
+  // Carga las carreras disponibles al entrar a la página
   loadCarreras();
 });

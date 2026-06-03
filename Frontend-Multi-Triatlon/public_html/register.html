@@ -149,20 +149,6 @@
                 <small class="hint">Internamente se enviará como booleano true/false.</small>
               </div>
 
-              <!-- opcional: carreraId -->
-              <div class="field">
-                <label for="carrera-id">Carrera ID (opcional)</label>
-                <input
-                  type="number"
-                  id="carrera-id"
-                  name="carreraId"
-                  class="input"
-                  placeholder="Ej: 1"
-                  min="1"
-                />
-                <small class="hint">Si no aplica, déjalo vacío.</small>
-              </div>
-
               <!-- activo (backend lo exige @NotNull). Lo dejamos fijo en true -->
               <div class="field">
                 <label>Estado</label>
@@ -170,6 +156,29 @@
                 <small class="hint">Por defecto se registra como activo = true.</small>
               </div>
             </div>
+              
+              <!-- CARRERA (selección desde microservicio Carrera) -->
+    <div class="field field-full">
+        <label>Carrera (opcional)</label>
+        <p class="hint">
+        Selecciona una carrera de la lista (datos frescos desde el microservicio Carrera).
+        </p>
+
+        <div class="carreras-panel">
+            <div class="carreras-head">
+            <span class="carreras-title">Carreras disponibles</span>
+            <button type="button" class="btn btn-ghost" id="btn-carreras-recargar">Recargar</button>
+            </div>
+
+            <div id="carreras-estado" class="carreras-estado">Cargando carreras...</div>
+
+            <!-- Scroll -->
+            <div id="carreras-scroll" class="carreras-scroll" role="list"></div>
+
+         <!-- Input oculto para guardar el id seleccionado (no editable) -->
+            <input type="hidden" id="carrera-id" name="carreraId" />
+        </div>
+        </div>
 
             <div class="form-actions">
               <button type="submit" class="btn btn-principal" id="btn-registrar">Registrar</button>

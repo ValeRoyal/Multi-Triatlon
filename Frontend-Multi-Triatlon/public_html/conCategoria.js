@@ -1,31 +1,24 @@
 /**
  * conCategoria.js
- * --------------
- * Objetivo:
- * - Consultar triatletas por "categoriaEdad" (categoría de edad)
- * Endpoint:
- *   GET http://localhost:9091/api/triatletas/categoria-edad?categoriaEdad=Veterano%201
+ * ---------------
+ * Maneja la consulta de triatletas filtrados por categoría de edad.
+ * Se comunica con el microservicio de triatletas vía GET y renderiza
+ * los resultados en una tabla dinámica dentro de la página.
  *
- * Privacidad:
- * - NO mostramos: id, identificacion
- * - SÍ mostramos: nombre, correo, fechaNacimiento, genero, activo, urlFoto,
- *                categoriaEdad, modalidadCross, especialidad, carreraId
- *
- * Nota:
- * - En tu backend esta consulta NO involucra género.
- * - Si quisieras "categoría + género", sería filtrar en front o crear endpoint nuevo.
+ * Campos mostrados: nombre, correo, fechaNacimiento, genero, activo,
+ *                   urlFoto, categoriaEdad, modalidadCross, especialidad, carreraId
+ * Campos omitidos:  id, identificacion (privacidad)
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-  // =========================
-  // 1) CONFIGURACIÓN
-  // =========================
+
+  // ─── CONFIGURACIÓN ───────────────────────────────────────────────────────────
+  // URL base del microservicio y endpoint de consulta por categoría
   const API_BASE_URL = "http://localhost:9091";
   const ENDPOINT = `${API_BASE_URL}/api/triatletas/categoria-edad`;
 
-  // =========================
-  // 2) DOM
-  // =========================
+  // ─── DOM ─────────────────────────────────────────────────────────────────────
+  // Referencias a los elementos del HTML que se manipulan durante la interacción
   const btnLogout = document.getElementById("btn-logout");
   const userNombreEl = document.getElementById("user-nombre");
 
@@ -37,9 +30,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const contador = document.getElementById("contador");
   const resultadosWrap = document.getElementById("resultados-wrap");
 
-  // =========================
-  // 3) HELPERS
-  // =========================
+  // ─── HELPERS ─────────────────────────────────────────────────────────────────
+
+  /**
+   * Lee y parsea el usuario de sesión guardado en localStorage.
+   * @returns {Object|null} Objeto con datos del usuario, o null si no hay sesión.
+   */
   function getSessionUser() {
     try {
       const raw = localStorage.getItem("sessionUser");
@@ -50,6 +46,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  /**
+   * Muestra un mensaje de retroalimentación al usuario.
+   * @param {string} texto - Texto a mostrar.
+   * @param {"info"|"ok"|"error"} tipo - Define el color del mensaje.
+   */
   function setMensaje(texto, tipo = "info") {
     if (!mensaje) return;
     mensaje.textContent = texto;
@@ -58,21 +59,39 @@ document.addEventListener("DOMContentLoaded", () => {
     else mensaje.style.color = "";
   }
 
+  /**
+   * Convierte un valor a string seguro para mostrarlo en la tabla.
+   * Retorna "—" si el valor es null, undefined o vacío.
+   * @param {*} value
+   * @returns {string}
+   */
   function safeText(value) {
     if (value === null || value === undefined || value === "") return "—";
     return String(value);
   }
 
+  /**
+   * Convierte un booleano a texto legible en español.
+   * @param {*} value
+   * @returns {"Sí"|"No"|"—"}
+   */
   function boolToSiNo(value) {
     if (value === true) return "Sí";
     if (value === false) return "No";
     return "—";
   }
 
+  /** Vacía el contenedor de resultados. */
   function clearResultados() {
     if (resultadosWrap) resultadosWrap.innerHTML = "";
   }
 
+  /**
+   * Crea un elemento <img> para mostrar la foto del triatleta en miniatura.
+   * Si la URL falla o está vacía, muestra un SVG de reemplazo con ícono de natación.
+   * @param {string} urlFoto - URL de la foto del triatleta.
+   * @returns {HTMLImageElement}
+   */
   function createFotoMini(urlFoto) {
     const img = document.createElement("img");
     img.className = "foto-mini";
@@ -95,9 +114,14 @@ document.addEventListener("DOMContentLoaded", () => {
     return img;
   }
 
-  // =========================
-  // 4) FETCH
-  // =========================
+  // ─── FETCH ───────────────────────────────────────────────────────────────────
+
+  /**
+   * Consulta al backend los triatletas que pertenecen a una categoría de edad.
+   * Lanza un error si la respuesta HTTP no es exitosa.
+   * @param {string} categoriaEdad - Categoría a consultar (ej: "Veterano 1").
+   * @returns {Promise<Array>} Lista de objetos TriatletaResponse.
+   */
   async function fetchTriatletasPorCategoria(categoriaEdad) {
     const url = `${ENDPOINT}?categoriaEdad=${encodeURIComponent(categoriaEdad)}`;
 
@@ -111,9 +135,14 @@ document.addEventListener("DOMContentLoaded", () => {
     return await resp.json();
   }
 
-  // =========================
-  // 5) RENDER TABLA
-  // =========================
+  // ─── RENDER ──────────────────────────────────────────────────────────────────
+
+  /**
+   * Construye y retorna una tabla HTML con los datos de los triatletas recibidos.
+   * Cada fila representa un triatleta con sus campos visibles.
+   * @param {Array} triatletas - Lista de objetos TriatletaResponse del backend.
+   * @returns {HTMLDivElement} Contenedor con la tabla lista para insertar en el DOM.
+   */
   function renderTablaTriatletas(triatletas) {
     const wrap = document.createElement("div");
     wrap.className = "table-wrap";
@@ -122,16 +151,8 @@ document.addEventListener("DOMContentLoaded", () => {
     table.className = "table";
 
     const headers = [
-      "Foto",
-      "Nombre",
-      "Correo",
-      "Fecha nacimiento",
-      "Género",
-      "Activo",
-      "Categoría",
-      "Especialidad",
-      "Cross",
-      "Carrera ID",
+      "Foto", "Nombre", "Correo", "Fecha nacimiento", "Género",
+      "Activo", "Categoría", "Especialidad", "Cross", "Carrera ID",
     ];
 
     const thead = document.createElement("thead");
@@ -197,17 +218,19 @@ document.addEventListener("DOMContentLoaded", () => {
     return wrap;
   }
 
-  // =========================
-  // 6) EVENTOS
-  // =========================
+  // ─── EVENTOS ─────────────────────────────────────────────────────────────────
+
+  // Muestra el nombre del usuario logueado en el encabezado
   const sessionUser = getSessionUser();
   if (userNombreEl) userNombreEl.textContent = sessionUser?.nombre?.trim() || "Atleta";
 
+  // Cierra la sesión eliminando el usuario de localStorage y redirige al inicio
   btnLogout?.addEventListener("click", () => {
     localStorage.removeItem("sessionUser");
     window.location.href = "index.html";
   });
 
+  // Limpia el formulario, los resultados y el contador al presionar "Limpiar"
   btnLimpiar?.addEventListener("click", () => {
     if (selectCategoria) selectCategoria.value = "";
     setMensaje("");
@@ -215,6 +238,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (contador) contador.textContent = "Aún no has consultado.";
   });
 
+  /**
+   * Al enviar el formulario, valida la selección, consulta el backend
+   * y renderiza los resultados. Maneja casos de lista vacía y errores de red.
+   */
   form?.addEventListener("submit", async (e) => {
     e.preventDefault();
     setMensaje("");

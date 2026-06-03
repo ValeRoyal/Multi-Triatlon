@@ -1,14 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("form-login");
   const mensaje = document.getElementById("mensaje-login");
-
   const inputIdentificacion = document.getElementById("identificacion");
   const inputCorreo = document.getElementById("correo");
 
   function setMensaje(texto, tipo = "info") {
     if (!mensaje) return;
     mensaje.textContent = texto;
-
     if (tipo === "error") mensaje.style.color = "#8b1d1d";
     else if (tipo === "ok") mensaje.style.color = "#0A3323";
     else mensaje.style.color = "";
@@ -18,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
   }
 
-  form?.addEventListener("submit", (e) => {
+  form?.addEventListener("submit", async (e) => {
     e.preventDefault();
     setMensaje("");
 
@@ -35,11 +33,36 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const datosLogin = { identificacion, correo };
+    try {
+      const peticion = await fetch(" http://localhost:9091/api/triatletas/identificacion/" + encodeURIComponent(identificacion), {
+        method: "GET",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        }
+      });
 
-    window.__datosLogin = datosLogin;
-    console.log("datosLogin =>", datosLogin);
+      if (peticion.ok) {
+        const usuario = await peticion.json();
 
-    setMensaje("Datos capturados. Revisa la consola: __datosLogin.", "ok");
+        // Verificación del correo contra el dato real del backend
+        if (usuario.correo !== correo) {
+          setMensaje("Los datos no coinciden. Verifica tu identificación y correo.", "error");
+          return;
+        }
+
+        localStorage.setItem("sessionUser", JSON.stringify({
+        nombre: usuario.nombre,
+        identificacion: usuario.identificacion,
+        correo: usuario.correo
+        }));
+        setMensaje("¡Inicio de sesión exitoso!", "ok");
+        window.location.href = "home.html";
+      } else {
+        setMensaje("No se encontró un triatleta con esa identificación.", "error");
+      }
+    } catch (error) {
+      setMensaje("Error de conexión con el servidor.", "error");
+    }
   });
 });

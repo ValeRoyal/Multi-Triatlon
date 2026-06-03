@@ -1,41 +1,24 @@
 /**
  * conGenero.js
- * -----------
- * Objetivo de esta pantalla:
- * 1) El usuario elige un género (Femenino/Masculino/...)
- * 2) Consumimos el endpoint del microservicio Triatleta:
- *      GET http://localhost:8383/api/triatletas/genero?genero=Femenino
- * 3) El backend nos responde una lista JSON (List<TriatletaResponse>)
- * 4) MOSTRAMOS una tabla con datos NO sensibles.
- *    - NO mostramos: id, identificacion
- *    - SÍ mostramos: nombre, correo, fechaNacimiento, genero, activo,
- *                   urlFoto, categoriaEdad, modalidadCross, especialidad, carreraId
+ * ------------
+ * Maneja la consulta de triatletas filtrados por género.
+ * Se comunica con el microservicio de triatletas vía GET y renderiza
+ * los resultados en una tabla dinámica dentro de la página.
  *
- * Importante:
- * - Aquí solo hacemos consulta (GET). No modificamos nada.
- * - Si el fetch falla, mostramos un mensaje de error.
+ * Campos mostrados: nombre, correo, fechaNacimiento, genero, activo,
+ *                   urlFoto, categoriaEdad, modalidadCross, especialidad, carreraId
+ * Campos omitidos:  id, identificacion (privacidad)
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-  // =========================
-  // 1) CONFIGURACIÓN
-  // =========================
 
-  /**
-   * Base URL de tu backend. Como me dijiste que corre en 8383:
-   * Si luego lo cambias, solo editas esto.
-   */
-  const API_BASE_URL = "http://localhost:8383";
-
-  /**
-   * Endpoint específico para consultar por género.
-   * (Lo usamos junto a query param: ?genero=...)
-   */
+  // ─── CONFIGURACIÓN ───────────────────────────────────────────────────────────
+  // URL base del microservicio y endpoint de consulta por género
+  const API_BASE_URL = "http://localhost:9091";
   const ENDPOINT = `${API_BASE_URL}/api/triatletas/genero`;
 
-  // =========================
-  // 2) REFERENCIAS A ELEMENTOS (DOM)
-  // =========================
+  // ─── DOM ─────────────────────────────────────────────────────────────────────
+  // Referencias a los elementos del HTML que se manipulan durante la interacción
   const btnLogout = document.getElementById("btn-logout");
   const userNombreEl = document.getElementById("user-nombre");
 
@@ -47,13 +30,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const contador = document.getElementById("contador");
   const resultadosWrap = document.getElementById("resultados-wrap");
 
-  // =========================
-  // 3) UTILIDADES (helpers)
-  // =========================
+  // ─── HELPERS ─────────────────────────────────────────────────────────────────
 
   /**
-   * Lee el usuario de sesión desde localStorage.
-   * (Tú ya lo estás guardando en home/login)
+   * Lee y parsea el usuario de sesión guardado en localStorage.
+   * @returns {Object|null} Objeto con datos del usuario, o null si no hay sesión.
    */
   function getSessionUser() {
     try {
@@ -66,20 +47,23 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /**
-   * Pinta mensajes de estado (ok/error/info) en la UI.
+   * Muestra un mensaje de retroalimentación al usuario.
+   * @param {string} texto - Texto a mostrar.
+   * @param {"info"|"ok"|"error"} tipo - Define el color del mensaje.
    */
   function setMensaje(texto, tipo = "info") {
     if (!mensaje) return;
     mensaje.textContent = texto;
-
-    // Color mínimo para diferenciar tipo de mensaje
     if (tipo === "error") mensaje.style.color = "#8b1d1d";
     else if (tipo === "ok") mensaje.style.color = "#0A3323";
     else mensaje.style.color = "";
   }
 
   /**
-   * Convierte valores nulos/vacíos en un guion para que la tabla sea consistente.
+   * Convierte un valor a string seguro para mostrarlo en la tabla.
+   * Retorna "—" si el valor es null, undefined o vacío.
+   * @param {*} value
+   * @returns {string}
    */
   function safeText(value) {
     if (value === null || value === undefined || value === "") return "—";
@@ -87,7 +71,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /**
-   * Para mostrar booleanos de forma bonita (Sí/No).
+   * Convierte un booleano a texto legible en español.
+   * @param {*} value
+   * @returns {"Sí"|"No"|"—"}
    */
   function boolToSiNo(value) {
     if (value === true) return "Sí";
@@ -95,49 +81,16 @@ document.addEventListener("DOMContentLoaded", () => {
     return "—";
   }
 
-  /**
-   * Limpia los resultados (tabla) del contenedor.
-   */
+  /** Vacía el contenedor de resultados. */
   function clearResultados() {
     if (resultadosWrap) resultadosWrap.innerHTML = "";
   }
 
-  // =========================
-  // 4) FETCH / LÓGICA DE CONSULTA
-  // =========================
-
   /**
-   * Esta función se encarga SOLAMENTE de pedir datos al backend.
-   * - Construye la URL con query param
-   * - Hace fetch
-   * - Valida respuesta
-   * - Retorna el JSON parseado (una lista)
-   */
-  async function fetchTriatletasPorGenero(genero) {
-    // Construimos URL: /genero?genero=Femenino
-    const url = `${ENDPOINT}?genero=${encodeURIComponent(genero)}`;
-
-    const resp = await fetch(url, { method: "GET" });
-
-    // Si el backend responde con error (400/500/etc.)
-    if (!resp.ok) {
-      // Intentamos leer texto por si el backend envía mensaje
-      const txt = await resp.text().catch(() => "");
-      throw new Error(txt || `Error HTTP ${resp.status}`);
-    }
-
-    // Respuesta OK => esperamos un array de TriatletaResponse
-    const data = await resp.json();
-    return data;
-  }
-
-  // =========================
-  // 5) RENDER (armar la tabla)
-  // =========================
-
-  /**
-   * Crea un <img> mini para la tabla usando urlFoto.
-   * Si la URL falla, usamos un fallback en SVG (data-uri).
+   * Crea un elemento <img> para mostrar la foto del triatleta en miniatura.
+   * Si la URL falla o está vacía, muestra un SVG de reemplazo con ícono de natación.
+   * @param {string} urlFoto - URL de la foto del triatleta.
+   * @returns {HTMLImageElement}
    */
   function createFotoMini(urlFoto) {
     const img = document.createElement("img");
@@ -156,109 +109,102 @@ document.addEventListener("DOMContentLoaded", () => {
     img.src = urlFoto ? urlFoto : fallback;
     img.loading = "lazy";
     img.decoding = "async";
-
-    // Si la URL está rota, sustituimos por fallback
-    img.addEventListener("error", () => {
-      img.src = fallback;
-    });
+    img.addEventListener("error", () => (img.src = fallback));
 
     return img;
   }
 
+  // ─── FETCH ───────────────────────────────────────────────────────────────────
+
   /**
-   * Dado un array de triatletas, construye una tabla HTML.
-   * Importante: aquí decidimos qué columnas mostrar.
-   *
-   * ¿Por qué tabla y no cards?
-   * - Una consulta “por grupo” suele leerse mejor en tabla.
-   * - Te permite comparar filas (categoría, cross, etc.) rápidamente.
+   * Consulta al backend los triatletas que pertenecen a un género dado.
+   * Lanza un error si la respuesta HTTP no es exitosa.
+   * @param {string} genero - Género a consultar (ej: "Femenino", "Masculino").
+   * @returns {Promise<Array>} Lista de objetos TriatletaResponse.
+   */
+  async function fetchTriatletasPorGenero(genero) {
+    const url = `${ENDPOINT}?genero=${encodeURIComponent(genero)}`;
+
+    const resp = await fetch(url, { method: "GET" });
+
+    if (!resp.ok) {
+      const txt = await resp.text().catch(() => "");
+      throw new Error(txt || `Error HTTP ${resp.status}`);
+    }
+
+    return await resp.json();
+  }
+
+  // ─── RENDER ──────────────────────────────────────────────────────────────────
+
+  /**
+   * Construye y retorna una tabla HTML con los datos de los triatletas recibidos.
+   * Cada fila representa un triatleta con sus campos visibles.
+   * @param {Array} triatletas - Lista de objetos TriatletaResponse del backend.
+   * @returns {HTMLDivElement} Contenedor con la tabla lista para insertar en el DOM.
    */
   function renderTablaTriatletas(triatletas) {
-    // Contenedor scroll horizontal (por móvil)
     const wrap = document.createElement("div");
     wrap.className = "table-wrap";
 
     const table = document.createElement("table");
     table.className = "table";
 
-    // ========== HEAD (encabezados) ==========
-    const thead = document.createElement("thead");
-    const headRow = document.createElement("tr");
-
-    // Columnas NO sensibles (id/identificacion NO van)
     const headers = [
-      "Foto",
-      "Nombre",
-      "Correo",
-      "Fecha nacimiento",
-      "Género",
-      "Activo",
-      "Categoría",
-      "Especialidad",
-      "Cross",
-      "Carrera ID",
+      "Foto", "Nombre", "Correo", "Fecha nacimiento", "Género",
+      "Activo", "Categoría", "Especialidad", "Cross", "Carrera ID",
     ];
 
+    const thead = document.createElement("thead");
+    const headRow = document.createElement("tr");
     headers.forEach((h) => {
       const th = document.createElement("th");
       th.textContent = h;
       headRow.appendChild(th);
     });
-
     thead.appendChild(headRow);
 
-    // ========== BODY (filas) ==========
     const tbody = document.createElement("tbody");
 
     triatletas.forEach((t) => {
       const tr = document.createElement("tr");
 
-      // 1) Foto
       const tdFoto = document.createElement("td");
       tdFoto.appendChild(createFotoMini(t?.urlFoto));
       tr.appendChild(tdFoto);
 
-      // 2) Nombre
       const tdNombre = document.createElement("td");
       tdNombre.textContent = safeText(t?.nombre);
       tr.appendChild(tdNombre);
 
-      // 3) Correo
       const tdCorreo = document.createElement("td");
       tdCorreo.textContent = safeText(t?.correo);
       tr.appendChild(tdCorreo);
 
-      // 4) Fecha nacimiento
       const tdFecha = document.createElement("td");
       tdFecha.textContent = safeText(t?.fechaNacimiento);
       tr.appendChild(tdFecha);
 
-      // 5) Género
       const tdGenero = document.createElement("td");
       tdGenero.textContent = safeText(t?.genero);
       tr.appendChild(tdGenero);
 
-      // 6) Activo
       const tdActivo = document.createElement("td");
       tdActivo.textContent = boolToSiNo(t?.activo);
       tr.appendChild(tdActivo);
 
-      // 7) Categoría
       const tdCategoria = document.createElement("td");
       tdCategoria.textContent = safeText(t?.categoriaEdad);
       tr.appendChild(tdCategoria);
 
-      // 8) Especialidad
       const tdEspecialidad = document.createElement("td");
       tdEspecialidad.textContent = safeText(t?.especialidad);
       tr.appendChild(tdEspecialidad);
 
-      // 9) Cross
       const tdCross = document.createElement("td");
       tdCross.textContent = boolToSiNo(t?.modalidadCross);
       tr.appendChild(tdCross);
 
-      // 10) Carrera ID (no es tan sensible como identificación, y es útil para consultas)
       const tdCarreraId = document.createElement("td");
       tdCarreraId.textContent = t?.carreraId ? String(t.carreraId) : "—";
       tr.appendChild(tdCarreraId);
@@ -269,25 +215,22 @@ document.addEventListener("DOMContentLoaded", () => {
     table.appendChild(thead);
     table.appendChild(tbody);
     wrap.appendChild(table);
-
     return wrap;
   }
 
-  // =========================
-  // 6) EVENTOS (UI)
-  // =========================
+  // ─── EVENTOS ─────────────────────────────────────────────────────────────────
 
-  // Pinta nombre del usuario en la bienvenida
+  // Muestra el nombre del usuario logueado en el encabezado
   const sessionUser = getSessionUser();
   if (userNombreEl) userNombreEl.textContent = sessionUser?.nombre?.trim() || "Atleta";
 
-  // Cerrar sesión: limpiamos sessionUser y vamos al index
+  // Cierra la sesión eliminando el usuario de localStorage y redirige al inicio
   btnLogout?.addEventListener("click", () => {
     localStorage.removeItem("sessionUser");
     window.location.href = "index.html";
   });
 
-  // Botón limpiar: resetea select + mensajes + resultados
+  // Limpia el formulario, los resultados y el contador al presionar "Limpiar"
   btnLimpiar?.addEventListener("click", () => {
     if (selectGenero) selectGenero.value = "";
     setMensaje("");
@@ -296,10 +239,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   /**
-   * Submit del formulario:
-   * - valida que haya género
-   * - llama fetch
-   * - renderiza tabla
+   * Al enviar el formulario, valida la selección, consulta el backend
+   * y renderiza los resultados. Maneja casos de lista vacía y errores de red.
    */
   form?.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -311,26 +252,19 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Feedback visual
     clearResultados();
     if (contador) contador.textContent = "Consultando...";
 
     try {
-      // 1) Pedimos datos al backend
       const triatletas = await fetchTriatletasPorGenero(genero);
 
-      // 2) Validamos que sea una lista
       if (!Array.isArray(triatletas) || triatletas.length === 0) {
         if (contador) contador.textContent = `0 resultados para "${genero}".`;
         setMensaje("No se encontraron triatletas para ese género.", "info");
         return;
       }
 
-      // 3) Renderizamos tabla
-      const tabla = renderTablaTriatletas(triatletas);
-      resultadosWrap.appendChild(tabla);
-
-      // 4) Contador + mensaje OK
+      resultadosWrap.appendChild(renderTablaTriatletas(triatletas));
       if (contador) contador.textContent = `${triatletas.length} resultado(s) para "${genero}".`;
       setMensaje("Consulta realizada correctamente.", "ok");
     } catch (err) {

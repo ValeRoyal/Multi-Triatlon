@@ -1,4 +1,25 @@
+﻿/**
+ * perfil.js
+ * ---------
+ * Objetivo:
+ * - Consultar y mostrar el perfil del triatleta autenticado.
+ * - Permitir modificar datos puntuales del perfil mediante endpoints PATCH.
+ *
+ * Flujo:
+ * 1) Se toma el usuario guardado en localStorage como sessionUser.
+ * 2) Se consulta el triatleta por identificacion:
+ *      GET http://localhost:9091/api/triatletas/identificacion/{identificacion}
+ * 3) Se renderizan los datos personales, foto, modalidad, especialidad y carrera asociada.
+ * 4) El usuario selecciona el campo que desea modificar.
+ * 5) Se envia el cambio al endpoint correspondiente:
+ *      PATCH http://localhost:9091/api/triatletas/{id}/{campo}
+ * 6) Se recarga el perfil para mantener la pantalla y la sesion sincronizadas.
+ */
+
 document.addEventListener("DOMContentLoaded", () => {
+    // =========================
+    // 1) CONFIG
+    // =========================
     const API_BASE_URL = "http://localhost:9091";
 
     const ENDPOINT_IDENTIFICACION = (identificacion) =>
@@ -35,6 +56,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const GENEROS = ["Femenino", "Masculino", "Otro", "Prefiero no decirlo"];
 
+    // =========================
+    // 2) DOM
+    // =========================
     const btnLogout = document.getElementById("btn-logout");
     const btnRecargar = document.getElementById("btn-recargar");
     const userNombreEl = document.getElementById("user-nombre");
@@ -53,8 +77,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnGuardar = document.getElementById("btn-guardar");
     const mensajeModificar = document.getElementById("mensaje-modificar");
 
+    // =========================
+    // 3) STATE
+    // =========================
     let triatletaActual = null;
 
+    // =========================
+    // 4) HELPERS
+    // =========================
     function getSessionUser() {
         try {
             const raw = localStorage.getItem("sessionUser");
@@ -112,6 +142,9 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     }
 
+    // =========================
+    // 5) FETCH
+    // =========================
     async function fetchTriatletaPorIdentificacion(identificacion) {
         const resp = await fetch(ENDPOINT_IDENTIFICACION(identificacion), { method: "GET" });
 
@@ -138,6 +171,9 @@ document.addEventListener("DOMContentLoaded", () => {
         return await resp.text();
     }
 
+    // =========================
+    // 6) RENDER: perfil
+    // =========================
     function renderPerfil(triatleta) {
         triatletaActual = triatleta;
 
@@ -176,10 +212,14 @@ document.addEventListener("DOMContentLoaded", () => {
             carreraWrap.hidden = true;
         }
 
+        // Mantener localStorage actualizado si cambia nombre, correo o identificacion.
         setSessionUser(triatleta);
         habilitarModificacion(true);
     }
 
+    // =========================
+    // 7) RENDER: formulario de modificacion
+    // =========================
     function habilitarModificacion(activo) {
         if (selectCampo) selectCampo.disabled = !activo;
         if (btnGuardar) btnGuardar.disabled = !activo;
@@ -237,6 +277,9 @@ document.addEventListener("DOMContentLoaded", () => {
         valorWrap.appendChild(control);
     }
 
+    // =========================
+    // 8) LOAD: perfil
+    // =========================
     async function cargarPerfil() {
         const sessionUser = getSessionUser();
 
@@ -267,6 +310,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    // =========================
+    // 9) EVENTOS
+    // =========================
     btnLogout?.addEventListener("click", () => {
         localStorage.removeItem("sessionUser");
         window.location.href = "index.html";
@@ -302,6 +348,7 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             await patchCampo(triatletaActual.id, campo, valor);
 
+            // Si cambia identificacion, recargamos usando el nuevo valor.
             const identificacionParaRecargar =
                 campo === "identificacion" ? valor : triatletaActual.identificacion;
 
@@ -317,5 +364,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    // =========================
+    // 10) INIT
+    // =========================
     cargarPerfil();
 });
