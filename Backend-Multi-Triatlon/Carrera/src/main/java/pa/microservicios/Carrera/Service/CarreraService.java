@@ -94,6 +94,22 @@ public class CarreraService {
     }
 
     /**
+     * Lista todas las carreras disponibles en la bd
+     * @return
+     */
+    public List<CarreraResponse> getAllCarreras() {
+        List<CarreraDTO> dtos = carreraRepository.findAll();
+        List<CarreraResponse> responses = new ArrayList<>();
+
+        for (CarreraDTO carreraDTO : dtos) {
+            CarreraResponse response = mapper.map(carreraDTO, CarreraResponse.class);
+            responses.add(response);
+        }
+
+        return responses;
+    }
+
+    /**
      * Actualiza la ubicacion de una carrera por su id delegando a repository
      *
      * @param id
