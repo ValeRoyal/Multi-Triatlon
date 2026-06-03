@@ -2,7 +2,9 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Tanker&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap");
-
+/*lcrédito de las fuentes y los colores son para pigment fontpair googlefonts
+también a animate.css , animisteCSS, CSShake, por las animaciones los hover, transiciones,
+créditos a claude por hacer la configuración de las sombras para que sí se vieran de verdad*/
 :root {
   --dark-green: #0a3323;
   --moss-green: #839958;
