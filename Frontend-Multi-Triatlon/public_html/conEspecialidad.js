@@ -1,46 +1,33 @@
 /**
- * conGenero.js
- * -----------
- * Objetivo de esta pantalla:
- * 1) El usuario elige un género (Femenino/Masculino/...)
- * 2) Consumimos el endpoint del microservicio Triatleta:
- *      GET http://localhost:8383/api/triatletas/genero?genero=Femenino
- * 3) El backend nos responde una lista JSON (List<TriatletaResponse>)
- * 4) MOSTRAMOS una tabla con datos NO sensibles.
- *    - NO mostramos: id, identificacion
- *    - SÍ mostramos: nombre, correo, fechaNacimiento, genero, activo,
- *                   urlFoto, categoriaEdad, modalidadCross, especialidad, carreraId
+ * conEspecialidad.js
+ * -----------------
+ * Objetivo:
+ * - Consultar triatletas por especialidad.
  *
- * Importante:
- * - Aquí solo hacemos consulta (GET). No modificamos nada.
- * - Si el fetch falla, mostramos un mensaje de error.
+ * Endpoint:
+ *   GET http://localhost:8383/api/triatletas/especialidad?especialidad=Media%20Distancia
+ *
+ * Privacidad:
+ * - NO mostramos: id, identificacion
+ * - SÍ mostramos: nombre, correo, fechaNacimiento, genero, activo, urlFoto,
+ *                categoriaEdad, modalidadCross, especialidad, carreraId
  */
 
 document.addEventListener("DOMContentLoaded", () => {
   // =========================
-  // 1) CONFIGURACIÓN
+  // 1) CONFIG
   // =========================
-
-  /**
-   * Base URL de tu backend. Como me dijiste que corre en 8383:
-   * Si luego lo cambias, solo editas esto.
-   */
   const API_BASE_URL = "http://localhost:8383";
-
-  /**
-   * Endpoint específico para consultar por género.
-   * (Lo usamos junto a query param: ?genero=...)
-   */
-  const ENDPOINT = `${API_BASE_URL}/api/triatletas/genero`;
+  const ENDPOINT = `${API_BASE_URL}/api/triatletas/especialidad`;
 
   // =========================
-  // 2) REFERENCIAS A ELEMENTOS (DOM)
+  // 2) DOM
   // =========================
   const btnLogout = document.getElementById("btn-logout");
   const userNombreEl = document.getElementById("user-nombre");
 
-  const form = document.getElementById("form-genero");
-  const selectGenero = document.getElementById("genero");
+  const form = document.getElementById("form-especialidad");
+  const selectEspecialidad = document.getElementById("especialidad");
   const btnLimpiar = document.getElementById("btn-limpiar");
 
   const mensaje = document.getElementById("mensaje");
@@ -48,13 +35,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const resultadosWrap = document.getElementById("resultados-wrap");
 
   // =========================
-  // 3) UTILIDADES (helpers)
+  // 3) HELPERS
   // =========================
-
-  /**
-   * Lee el usuario de sesión desde localStorage.
-   * (Tú ya lo estás guardando en home/login)
-   */
   function getSessionUser() {
     try {
       const raw = localStorage.getItem("sessionUser");
@@ -65,80 +47,29 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  /**
-   * Pinta mensajes de estado (ok/error/info) en la UI.
-   */
   function setMensaje(texto, tipo = "info") {
     if (!mensaje) return;
     mensaje.textContent = texto;
-
-    // Color mínimo para diferenciar tipo de mensaje
     if (tipo === "error") mensaje.style.color = "#8b1d1d";
     else if (tipo === "ok") mensaje.style.color = "#0A3323";
     else mensaje.style.color = "";
   }
 
-  /**
-   * Convierte valores nulos/vacíos en un guion para que la tabla sea consistente.
-   */
   function safeText(value) {
     if (value === null || value === undefined || value === "") return "—";
     return String(value);
   }
 
-  /**
-   * Para mostrar booleanos de forma bonita (Sí/No).
-   */
   function boolToSiNo(value) {
     if (value === true) return "Sí";
     if (value === false) return "No";
     return "—";
   }
 
-  /**
-   * Limpia los resultados (tabla) del contenedor.
-   */
   function clearResultados() {
     if (resultadosWrap) resultadosWrap.innerHTML = "";
   }
 
-  // =========================
-  // 4) FETCH / LÓGICA DE CONSULTA
-  // =========================
-
-  /**
-   * Esta función se encarga SOLAMENTE de pedir datos al backend.
-   * - Construye la URL con query param
-   * - Hace fetch
-   * - Valida respuesta
-   * - Retorna el JSON parseado (una lista)
-   */
-  async function fetchTriatletasPorGenero(genero) {
-    // Construimos URL: /genero?genero=Femenino
-    const url = `${ENDPOINT}?genero=${encodeURIComponent(genero)}`;
-
-    const resp = await fetch(url, { method: "GET" });
-
-    // Si el backend responde con error (400/500/etc.)
-    if (!resp.ok) {
-      // Intentamos leer texto por si el backend envía mensaje
-      const txt = await resp.text().catch(() => "");
-      throw new Error(txt || `Error HTTP ${resp.status}`);
-    }
-
-    // Respuesta OK => esperamos un array de TriatletaResponse
-    const data = await resp.json();
-    return data;
-  }
-
-  // =========================
-  // 5) RENDER (armar la tabla)
-  // =========================
-
-  /**
-   * Crea un <img> mini para la tabla usando urlFoto.
-   * Si la URL falla, usamos un fallback en SVG (data-uri).
-   */
   function createFotoMini(urlFoto) {
     const img = document.createElement("img");
     img.className = "foto-mini";
@@ -149,43 +80,43 @@ document.addEventListener("DOMContentLoaded", () => {
       encodeURIComponent(
         `<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80">
           <rect width="100%" height="100%" fill="#F7F4D5"/>
-          <text x="50%" y="52%" text-anchor="middle" font-size="26" fill="#105666">🏊</text>
+          <text x="50%" y="52%" text-anchor="middle" font-size="26" fill="#105666">🚴</text>
         </svg>`
       );
 
     img.src = urlFoto ? urlFoto : fallback;
     img.loading = "lazy";
     img.decoding = "async";
-
-    // Si la URL está rota, sustituimos por fallback
-    img.addEventListener("error", () => {
-      img.src = fallback;
-    });
-
+    img.addEventListener("error", () => (img.src = fallback));
     return img;
   }
 
-  /**
-   * Dado un array de triatletas, construye una tabla HTML.
-   * Importante: aquí decidimos qué columnas mostrar.
-   *
-   * ¿Por qué tabla y no cards?
-   * - Una consulta “por grupo” suele leerse mejor en tabla.
-   * - Te permite comparar filas (categoría, cross, etc.) rápidamente.
-   */
+  // =========================
+  // 4) FETCH
+  // =========================
+  async function fetchTriatletasPorEspecialidad(especialidad) {
+    const url = `${ENDPOINT}?especialidad=${encodeURIComponent(especialidad)}`;
+
+    const resp = await fetch(url, { method: "GET" });
+
+    if (!resp.ok) {
+      const txt = await resp.text().catch(() => "");
+      throw new Error(txt || `Error HTTP ${resp.status}`);
+    }
+
+    return await resp.json();
+  }
+
+  // =========================
+  // 5) RENDER TABLA
+  // =========================
   function renderTablaTriatletas(triatletas) {
-    // Contenedor scroll horizontal (por móvil)
     const wrap = document.createElement("div");
     wrap.className = "table-wrap";
 
     const table = document.createElement("table");
     table.className = "table";
 
-    // ========== HEAD (encabezados) ==========
-    const thead = document.createElement("thead");
-    const headRow = document.createElement("tr");
-
-    // Columnas NO sensibles (id/identificacion NO van)
     const headers = [
       "Foto",
       "Nombre",
@@ -199,66 +130,56 @@ document.addEventListener("DOMContentLoaded", () => {
       "Carrera ID",
     ];
 
+    const thead = document.createElement("thead");
+    const headRow = document.createElement("tr");
     headers.forEach((h) => {
       const th = document.createElement("th");
       th.textContent = h;
       headRow.appendChild(th);
     });
-
     thead.appendChild(headRow);
 
-    // ========== BODY (filas) ==========
     const tbody = document.createElement("tbody");
 
     triatletas.forEach((t) => {
       const tr = document.createElement("tr");
 
-      // 1) Foto
       const tdFoto = document.createElement("td");
       tdFoto.appendChild(createFotoMini(t?.urlFoto));
       tr.appendChild(tdFoto);
 
-      // 2) Nombre
       const tdNombre = document.createElement("td");
       tdNombre.textContent = safeText(t?.nombre);
       tr.appendChild(tdNombre);
 
-      // 3) Correo
       const tdCorreo = document.createElement("td");
       tdCorreo.textContent = safeText(t?.correo);
       tr.appendChild(tdCorreo);
 
-      // 4) Fecha nacimiento
       const tdFecha = document.createElement("td");
       tdFecha.textContent = safeText(t?.fechaNacimiento);
       tr.appendChild(tdFecha);
 
-      // 5) Género
       const tdGenero = document.createElement("td");
       tdGenero.textContent = safeText(t?.genero);
       tr.appendChild(tdGenero);
 
-      // 6) Activo
       const tdActivo = document.createElement("td");
       tdActivo.textContent = boolToSiNo(t?.activo);
       tr.appendChild(tdActivo);
 
-      // 7) Categoría
       const tdCategoria = document.createElement("td");
       tdCategoria.textContent = safeText(t?.categoriaEdad);
       tr.appendChild(tdCategoria);
 
-      // 8) Especialidad
       const tdEspecialidad = document.createElement("td");
       tdEspecialidad.textContent = safeText(t?.especialidad);
       tr.appendChild(tdEspecialidad);
 
-      // 9) Cross
       const tdCross = document.createElement("td");
       tdCross.textContent = boolToSiNo(t?.modalidadCross);
       tr.appendChild(tdCross);
 
-      // 10) Carrera ID (no es tan sensible como identificación, y es útil para consultas)
       const tdCarreraId = document.createElement("td");
       tdCarreraId.textContent = t?.carreraId ? String(t.carreraId) : "—";
       tr.appendChild(tdCarreraId);
@@ -269,69 +190,51 @@ document.addEventListener("DOMContentLoaded", () => {
     table.appendChild(thead);
     table.appendChild(tbody);
     wrap.appendChild(table);
-
     return wrap;
   }
 
   // =========================
-  // 6) EVENTOS (UI)
+  // 6) EVENTOS
   // =========================
-
-  // Pinta nombre del usuario en la bienvenida
   const sessionUser = getSessionUser();
   if (userNombreEl) userNombreEl.textContent = sessionUser?.nombre?.trim() || "Atleta";
 
-  // Cerrar sesión: limpiamos sessionUser y vamos al index
   btnLogout?.addEventListener("click", () => {
     localStorage.removeItem("sessionUser");
     window.location.href = "index.html";
   });
 
-  // Botón limpiar: resetea select + mensajes + resultados
   btnLimpiar?.addEventListener("click", () => {
-    if (selectGenero) selectGenero.value = "";
+    if (selectEspecialidad) selectEspecialidad.value = "";
     setMensaje("");
     clearResultados();
     if (contador) contador.textContent = "Aún no has consultado.";
   });
 
-  /**
-   * Submit del formulario:
-   * - valida que haya género
-   * - llama fetch
-   * - renderiza tabla
-   */
   form?.addEventListener("submit", async (e) => {
     e.preventDefault();
     setMensaje("");
 
-    const genero = (selectGenero?.value ?? "").trim();
-    if (!genero) {
-      setMensaje("Selecciona un género para consultar.", "error");
+    const especialidad = (selectEspecialidad?.value ?? "").trim();
+    if (!especialidad) {
+      setMensaje("Selecciona una especialidad para consultar.", "error");
       return;
     }
 
-    // Feedback visual
     clearResultados();
     if (contador) contador.textContent = "Consultando...";
 
     try {
-      // 1) Pedimos datos al backend
-      const triatletas = await fetchTriatletasPorGenero(genero);
+      const triatletas = await fetchTriatletasPorEspecialidad(especialidad);
 
-      // 2) Validamos que sea una lista
       if (!Array.isArray(triatletas) || triatletas.length === 0) {
-        if (contador) contador.textContent = `0 resultados para "${genero}".`;
-        setMensaje("No se encontraron triatletas para ese género.", "info");
+        if (contador) contador.textContent = `0 resultados para "${especialidad}".`;
+        setMensaje("No se encontraron triatletas para esa especialidad.", "info");
         return;
       }
 
-      // 3) Renderizamos tabla
-      const tabla = renderTablaTriatletas(triatletas);
-      resultadosWrap.appendChild(tabla);
-
-      // 4) Contador + mensaje OK
-      if (contador) contador.textContent = `${triatletas.length} resultado(s) para "${genero}".`;
+      resultadosWrap.appendChild(renderTablaTriatletas(triatletas));
+      if (contador) contador.textContent = `${triatletas.length} resultado(s) para "${especialidad}".`;
       setMensaje("Consulta realizada correctamente.", "ok");
     } catch (err) {
       console.error(err);
